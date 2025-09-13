@@ -43,7 +43,6 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const [selectedAnswer, setSelectedAnswer] = React.useState('');
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
-  const [isAnswerRevealed, setIsAnswerRevealed] = React.useState(false);
   const [isTimeUp, setIsTimeUp] = React.useState(false);
   
   const timerDuration = isTieBreaker ? 15 : roundNumber === 4 ? 60 : 30;
@@ -87,7 +86,6 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         setAnswerStatus('unanswered');
         setSelectedAnswer('');
         setTextAnswer('');
-        setIsAnswerRevealed(false);
         setIsTimeUp(false);
     }
   }, [isOpen, question.id]);
@@ -97,12 +95,6 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     // so the new team gets a fresh timer.
     setIsTimeUp(false);
   }, [teamName]);
-
-  const handleManualAnswer = (isCorrect: boolean) => {
-    if (answerStatus !== 'unanswered') return;
-    setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
-    onAnswer(isCorrect, question.answer);
-  }
 
   const renderQuestionContent = () => {
     switch (question.type) {
@@ -143,7 +135,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   };
 
   const renderAnswerResult = () => {
-    if (answerStatus === 'unanswered' && !(roundNumber === 2 && isAnswerRevealed)) return null;
+    if (answerStatus === 'unanswered') return null;
 
     if (answerStatus === 'correct') {
       return (
@@ -156,20 +148,9 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
       );
     }
     
-    if (roundNumber === 2 && isAnswerRevealed && answerStatus === 'unanswered') {
-        return (
-             <Alert variant="default" className="mt-4 bg-blue-100 border-blue-200 text-blue-800 text-center">
-                <AlertTitle>Correct Answer</AlertTitle>
-                <AlertDescription>
-                    The correct answer is: <span className="font-bold text-lg">{question.answer}</span>
-                </AlertDescription>
-            </Alert>
-        )
-    }
-
     return (
       <Alert variant="destructive" className="mt-4 text-center">
-        <AlertTitle>{isTieBreaker ? `${teamName} is ELIMINATED!` : 'Incorrect!'}</AlertTitle>
+        <AlertTitle>{isTieBreaker ? 'Incorrect!' : 'Incorrect!'}</AlertTitle>
         <AlertDescription>
           The correct answer was: <span className="font-bold text-lg">{question.answer}</span>
         </AlertDescription>
@@ -204,26 +185,8 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         </div>
       );
     }
-
-    if (roundNumber === 2) {
-        if (isAnswerRevealed) {
-            return (
-                <div className="flex w-full justify-center gap-4">
-                    <Button onClick={() => handleManualAnswer(true)} className="font-headline bg-green-600 hover:bg-green-700">Correct</Button>
-                    <Button onClick={() => handleManualAnswer(false)} className="font-headline" variant="destructive">Wrong</Button>
-                </div>
-            )
-        }
-        return (
-            <>
-              <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
-              <div className="flex gap-2">
-                <Button type="button" onClick={() => setIsAnswerRevealed(true)} className="font-headline">Show Answer</Button>
-                <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>
-              </div>
-            </>
-        )
-    }
+    
+    const showPassButton = !isTieBreaker && roundNumber < 4;
 
     return (
         <>
@@ -240,7 +203,8 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
                     />
                 )}
                 <Button type="submit" className="font-headline" disabled={(!selectedAnswer && !textAnswer)}>Submit</Button>
-                {!isTieBreaker && roundNumber < 4 && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
+                {showPassButton && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
+                 {isTieBreaker && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
             </form>
         </>
     )

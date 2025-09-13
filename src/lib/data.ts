@@ -757,15 +757,19 @@ const round4Questions: Question[] = [
 ];
 
 // Tie Breaker Question
-export const tieBreakerQuestion: Question = {
-  id: 999,
-  round: 0, // Not part of a regular round
-  type: 'tie-breaker',
-  content: 'What is the decimal equivalent of the binary number 1011?',
-  options: ['9', '10', '11', '12'],
-  answer: '11',
-  status: 'available'
-};
+export const tieBreakerQuestions: Question[] = [
+    { id: 901, round: 0, type: 'tie-breaker', content: 'What is the decimal equivalent of the binary number 1011?', options: ['9', '10', '11', '12'], answer: '11', status: 'available' },
+    { id: 902, round: 0, type: 'tie-breaker', content: 'What does the acronym "SaaS" stand for?', options: ['Software as a Service', 'System as a Service', 'Security as a Service', 'Software as a System'], answer: 'Software as a Service', status: 'available' },
+    { id: 903, round: 0, type: 'tie-breaker', content: 'In object-oriented programming, what is the term for creating a new class from an existing class?', options: ['Inheritance', 'Polymorphism', 'Encapsulation', 'Abstraction'], answer: 'Inheritance', status: 'available' },
+    { id: 904, round: 0, type: 'tie-breaker', content: 'Which HTTP status code means "Not Found"?', options: ['200', '301', '404', '500'], answer: '404', status: 'available' },
+    { id: 905, round: 0, type: 'tie-breaker', content: 'What is the default port for HTTPS?', options: ['80', '8080', '21', '443'], answer: '443', status: 'available' },
+    { id: 906, round: 0, type: 'tie-breaker', content: 'In CSS, which property is used to change the text color of an element?', options: ['text-color', 'font-color', 'color', 'text-style'], answer: 'color', status: 'available' },
+    { id: 907, round: 0, type: 'tie-breaker', content: 'What data structure uses a Last-In, First-Out (LIFO) method?', options: ['Queue', 'Stack', 'Linked List', 'Tree'], answer: 'Stack', status: 'available' },
+    { id: 908, round: 0, type: 'tie-breaker', content: 'Which company developed the Python programming language?', options: ['Google', 'Microsoft', 'Dropbox', 'Not a company'], answer: 'Not a company', status: 'available' },
+    { id: 909, round: 0, type: 'tie-breaker', content: 'What is the full form of JSON?', options: ['Java Standard Object Notation', 'JavaScript Object Notation', 'Java Source Object Notation', 'JavaScript Oriented Notation'], answer: 'JavaScript Object Notation', status: 'available' },
+    { id: 910, round: 0, type: 'tie-breaker', content: 'Which version control system was created by Linus Torvalds?', options: ['SVN', 'Mercurial', 'Git', 'CVS'], answer: 'Git', status: 'available' }
+];
+
 
 export const allQuestions: Question[] = [
   ...round1Questions,
