@@ -290,9 +290,9 @@ export default function Home() {
       case 'round':
         const activeTeam = activeTeams[activeTeamIndex];
         return (
-          <main className="w-[90%] mx-auto p-4 md:p-8 flex flex-col lg:flex-row gap-8 min-h-screen">
-            <div className="flex-grow lg:w-2/3">
-              <div className="mb-4 text-center">
+          <main className="w-full h-screen p-4 flex flex-col lg:flex-row gap-4">
+            <div className="flex-grow flex flex-col gap-4 h-full">
+              <div className="text-center">
                  <div className="flex items-center justify-center gap-4">
                     <h2 className="text-3xl font-headline text-primary">Round {currentRound}: {roundDetails[currentRound]?.title}</h2>
                     <Button variant="outline" size="icon" onClick={() => setIsRulesOpen(true)}>
@@ -302,12 +302,38 @@ export default function Home() {
                  </div>
                  <p className="text-xl text-muted-foreground mt-2">Up Next: <span className="font-bold text-accent">{activeTeam?.name || 'N/A'}</span></p>
               </div>
-              <QuestionGrid
-                questions={questionsForRound}
-                onQuestionSelect={handleSelectQuestion}
-              />
+              <div className="flex-grow flex items-center justify-center">
+                <QuestionGrid
+                  questions={questionsForRound}
+                  onQuestionSelect={handleSelectQuestion}
+                />
+              </div>
+              <div className="flex justify-center items-center gap-4">
+                <Button onClick={saveState} variant="outline" className="bg-card/70 backdrop-blur-sm">
+                  <Save className="mr-2" /> Save Progress
+                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive">
+                      <RotateCcw className="mr-2" /> Reset Game
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will reset the entire game, including all scores and question states. This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={resetGame}>Confirm Reset</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             </div>
-            <aside className="lg:w-1/3">
+            <aside className="lg:w-1/3 lg:max-w-sm h-full">
               <Scoreboard teams={teams} />
             </aside>
           </main>
@@ -366,33 +392,6 @@ export default function Home() {
         />
         )}
       </AnimatePresence>
-
-      {gameState !== 'intro' && gameState !== 'gameover' && (
-        <div className="flex justify-center items-center gap-4 my-8">
-          <Button onClick={saveState} variant="outline" className="bg-card/70 backdrop-blur-sm">
-            <Save className="mr-2" /> Save Progress
-          </Button>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive">
-                <RotateCcw className="mr-2" /> Reset Game
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This will reset the entire game, including all scores and question states. This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={resetGame}>Confirm Reset</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
-      )}
     </div>
   );
 }

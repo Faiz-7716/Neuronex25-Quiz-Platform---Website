@@ -12,15 +12,15 @@ const Scoreboard = ({ teams }: ScoreboardProps) => {
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
 
   return (
-    <Card className="bg-transparent backdrop-blur-sm border-none shadow-none sticky top-8 h-full flex flex-col">
+    <Card className="bg-transparent backdrop-blur-sm border-none shadow-none h-full flex flex-col">
       <CardHeader>
         <CardTitle className="font-headline text-3xl text-primary flex items-center gap-2">
             <Trophy className="w-7 h-7" />
             Live Scoreboard
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <ScrollArea className="h-[calc(100vh-120px)] pr-4">
+      <CardContent className="flex-grow h-0">
+        <ScrollArea className="h-full pr-4">
             <ul className="space-y-3">
             <AnimatePresence>
                 {sortedTeams.map((team, index) => (
