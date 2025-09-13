@@ -43,7 +43,7 @@ const QuestionGrid = ({ questions, onQuestionSelect }: QuestionGridProps) => {
 
   return (
     <motion.div 
-        className="grid grid-cols-10 grid-rows-3 gap-2 md:gap-3"
+        className="grid grid-cols-5 md:grid-cols-10 gap-2 md:gap-3"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
