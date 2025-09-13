@@ -54,7 +54,7 @@ const QuestionGrid = ({ questions, onQuestionSelect }: QuestionGridProps) => {
                 onClick={() => onQuestionSelect(question)}
                 disabled={question.status !== 'available'}
                 className={cn(
-                    'w-[100px] h-[100px] rounded-lg flex items-center justify-center font-headline text-4xl text-primary-foreground font-bold shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50',
+                    'w-[70px] h-[70px] rounded-lg flex items-center justify-center font-headline text-3xl text-primary-foreground font-bold shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50',
                     getStatusColor(question.status),
                     question.status !== 'available' && 'cursor-not-allowed opacity-70'
                 )}
