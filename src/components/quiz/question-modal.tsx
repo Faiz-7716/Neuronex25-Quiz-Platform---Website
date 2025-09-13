@@ -19,6 +19,7 @@ type QuestionModalProps = {
   onAnswer: (isCorrect: boolean, answer: string) => void;
   onPass: () => void;
   roundNumber: number;
+  isTieBreaker?: boolean;
 };
 
 type AnswerStatus = 'unanswered' | 'correct' | 'incorrect';
@@ -38,14 +39,14 @@ const CodeSnippet = ({ code, language }: { code: string; language: keyof typeof 
   );
 };
 
-const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber }: QuestionModalProps) => {
+const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
   const [selectedAnswer, setSelectedAnswer] = React.useState('');
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
   const [isAnswerRevealed, setIsAnswerRevealed] = React.useState(false);
   const [isTimeUp, setIsTimeUp] = React.useState(false);
   
-  const timerDuration = roundNumber === 4 ? 60 : 30;
+  const timerDuration = isTieBreaker ? 15 : roundNumber === 4 ? 60 : 30;
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -68,7 +69,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const handleTimeUp = () => {
     if (answerStatus !== 'unanswered') return;
     
-    if(roundNumber === 4 || question.type === 'tie-breaker') {
+    if(isTieBreaker || roundNumber === 4) {
       setAnswerStatus('incorrect');
       onAnswer(false, "");
     } else {
@@ -149,7 +150,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <Alert variant="default" className="mt-4 bg-green-600 border-green-600 text-white text-center">
           <AlertTitle>Correct!</AlertTitle>
           <AlertDescription>
-            Well done, {teamName}!
+            {isTieBreaker ? 'You are safe!' : `Well done, ${teamName}!`}
           </AlertDescription>
         </Alert>
       );
@@ -168,7 +169,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
     return (
       <Alert variant="destructive" className="mt-4 text-center">
-        <AlertTitle>Incorrect!</AlertTitle>
+        <AlertTitle>{isTieBreaker ? 'Incorrect! You are eliminated.' : 'Incorrect!'}</AlertTitle>
         <AlertDescription>
           The correct answer was: <span className="font-bold text-lg">{question.answer}</span>
         </AlertDescription>
@@ -239,23 +240,24 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
                     />
                 )}
                 <Button type="submit" className="font-headline" disabled={(!selectedAnswer && !textAnswer)}>Submit</Button>
-                {roundNumber < 4 && question.type !== 'tie-breaker' && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
+                {!isTieBreaker && roundNumber < 4 && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
             </form>
         </>
     )
   }
+  
+  const title = isTieBreaker
+    ? `Tie-Breaker for ${teamName}!`
+    : `Question for ${teamName}`;
+
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-3xl bg-background/90 backdrop-blur-lg border-primary/30">
         <DialogHeader>
-          <DialogTitle className="font-headline text-3xl text-primary">Question for {teamName}</DialogTitle>
+          <DialogTitle className="font-headline text-3xl text-primary">{title}</DialogTitle>
           <DialogDescription className="text-lg">
-            {question.type === 'mcq' || question.type === 'tie-breaker' ? question.content : 
-             question.type === 'logo' ? 'Identify this brand:' :
-             question.type === 'code' ? 'What is the output of this code snippet?' :
-             ''
-            }
+            {question.content}
           </DialogDescription>
         </DialogHeader>
         
@@ -273,3 +275,5 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 };
 
 export default QuestionModal;
+
+    
