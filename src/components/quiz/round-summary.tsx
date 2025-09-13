@@ -45,22 +45,22 @@ const RoundSummary = ({ roundNumber, teams, onContinue }: RoundSummaryProps) => 
                 return (
                   <li
                     key={team.id}
-                    className="flex justify-between items-center p-4 rounded-lg transition-all duration-1000"
+                    className="flex justify-between items-center p-4 rounded-lg"
                   >
                     <div className="flex items-center gap-4">
                         <span 
-                            className={`font-bold text-xl w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-1000 ${
+                            className={`font-bold text-xl w-8 h-8 flex items-center justify-center rounded-full ${
                                 isEliminated ? 'bg-red-500 text-white' : 'bg-primary text-primary-foreground'
                             }`}
                         >
                             {index + 1}
                         </span>
-                        <span className={`font-headline text-xl transition-colors duration-1000 ${isEliminated ? 'text-muted-foreground line-through' : 'text-foreground'}`}>
+                        <span className={`font-headline text-xl ${isEliminated ? 'text-muted-foreground line-through' : 'text-foreground'}`}>
                           {team.name}
                         </span>
                     </div>
                     <div 
-                        className={`font-mono text-xl font-bold p-2 rounded-md transition-colors duration-1000 ${
+                        className={`font-mono text-xl font-bold p-2 rounded-md ${
                             isEliminated ? 'text-red-500' : 'text-accent'
                         }`}
                     >
