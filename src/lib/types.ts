@@ -10,7 +10,7 @@ export type QuestionStatus = 'available' | 'attempted' | 'correct' | 'wrong';
 export type Question = {
   id: number;
   round: number;
-  type: 'mcq' | 'logo' | 'code' | 'tie-breaker';
+  type: 'mcq' | 'logo' | 'code';
   language?: 'python' | 'java' | 'cpp';
   content: string;
   options?: string[];
@@ -18,7 +18,7 @@ export type Question = {
   status: QuestionStatus;
 };
 
-export type GameState = 'intro' | 'transition' | 'round' | 'roundover' | 'gameover' | 'tie-breaker';
+export type GameState = 'intro' | 'transition' | 'round' | 'roundover' | 'gameover';
 
 export type RoundDetail = {
   title: string;

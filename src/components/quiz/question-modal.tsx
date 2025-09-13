@@ -45,7 +45,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
   const [isTimeUp, setIsTimeUp] = React.useState(false);
   
-  const timerDuration = isTieBreaker ? 15 : roundNumber === 4 ? 60 : 30;
+  const timerDuration = roundNumber === 5 ? 15 : roundNumber === 4 ? 60 : 30;
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -54,7 +54,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     let isCorrect = false;
     let answer = '';
 
-    if (question.type === 'mcq' || question.type === 'tie-breaker') {
+    if (question.type === 'mcq') {
       isCorrect = selectedAnswer === question.answer;
       answer = selectedAnswer;
     } else { // logo or code
@@ -68,7 +68,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const handleTimeUp = () => {
     if (answerStatus !== 'unanswered') return;
     
-    if(isTieBreaker || roundNumber === 4) {
+    if(isTieBreaker || roundNumber >= 4) {
       setAnswerStatus('incorrect');
       onAnswer(false, "");
     } else {
@@ -99,7 +99,6 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const renderQuestionContent = () => {
     switch (question.type) {
       case 'mcq':
-      case 'tie-breaker':
         return (
           <RadioGroup value={selectedAnswer} onValueChange={setSelectedAnswer} className="space-y-4 my-6" disabled={answerStatus !== 'unanswered'}>
             {question.options?.map((option, index) => (
@@ -192,7 +191,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <>
             <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
             <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-                {(question.type === 'logo' || question.type === 'code' || question.type === 'tie-breaker') && (question.options === undefined) && (
+                {(question.type === 'logo' || question.type === 'code' || question.type === 'mcq') && (question.options === undefined) && (
                     <Input
                         type="text"
                         placeholder="Your answer..."
@@ -210,8 +209,8 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     )
   }
   
-  const title = isTieBreaker
-    ? `Tie-Breaker for ${teamName}!`
+  const title = roundNumber === 5
+    ? `Tie-Breaker Question for ${teamName}`
     : `Question for ${teamName}`;
 
 
