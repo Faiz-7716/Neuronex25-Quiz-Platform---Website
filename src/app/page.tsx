@@ -141,6 +141,21 @@ export default function Home() {
     setActiveTeamIndex(prev => (prev + 1) % activeTeams.length);
   };
   
+  const endTieBreaker = (finalTeamsState: Team[]) => {
+      // Find who was eliminated
+      const eliminatedInTieBreaker = tiedTeams.filter(tiedTeam => 
+        !finalTeamsState.find(t => t.id === tiedTeam.id && t.status === 'active')
+      );
+
+      toast({
+          title: "Tie-Breaker Over!",
+          description: `${eliminatedInTieBreaker.map(t => t.name).join(', ')} have been eliminated.`,
+          duration: 5000,
+      });
+
+      setGameState('roundover');
+  };
+  
   const handleModalClose = () => {
     if (!activeQuestion) return;
 
@@ -155,16 +170,33 @@ export default function Home() {
         }
     }
     
-    // Check if the tie-breaker round is over
     if (gameState === 'tie-breaker') {
-        const spotsLeft = roundDetails[currentRound].teamsAdvancing - (activeTeams.length - tiedTeams.length);
-        const teamsStillTied = tiedTeams.filter(t => teams.find(team => team.id === t.id)?.status === 'active');
+        const nonTiedActiveTeamsCount = teams.filter(t => t.status === 'active' && !tiedTeams.some(tied => tied.id === t.id)).length;
+        const spotsLeft = roundDetails[currentRound].teamsAdvancing - nonTiedActiveTeamsCount;
         
-        if (teamsStillTied.length <= spotsLeft) {
-            // Tie is broken, enough teams have been eliminated
-            setGameState('roundover');
+        const teamsThatSurvivedTie = teams.filter(t => t.status === 'active' && tiedTeams.some(tied => tied.id === t.id));
+        const teamsEliminatedInTie = tiedTeams.length - teamsThatSurvivedTie.length;
+
+        const tiedTeamsRemainingToPlay = tiedTeams.length - tieBreakerIndex - 1;
+
+        if (teamsThatSurvivedTie.length === spotsLeft) {
+            // All spots are filled. Eliminate the rest.
+            const teamsToEliminate = tiedTeams.filter(tt => !teamsThatSurvivedTie.some(survivor => survivor.id === tt.id));
+            const finalTeams = teams.map(t => teamsToEliminate.some(elim => elim.id === t.id) ? { ...t, status: 'eliminated' } : t);
+            setTeams(finalTeams);
+            endTieBreaker(finalTeams);
+
+        } else if (tiedTeamsRemainingToPlay === (spotsLeft - teamsThatSurvivedTie.length)) {
+             // The rest of the teams automatically qualify as there are enough spots.
+            const teamsToEliminateCount = tiedTeams.length - spotsLeft;
+            const eliminatedCount = teamsEliminatedInTie;
+
+            if(eliminatedCount === teamsToEliminateCount) {
+                endTieBreaker(teams);
+            } else {
+                 setTieBreakerIndex(prev => prev + 1);
+            }
         } else {
-             // Move to the next team in the tie-breaker
             setTieBreakerIndex(prev => prev + 1);
         }
     }
@@ -181,7 +213,7 @@ export default function Home() {
         
         toast({
             title: `Tie-Breaker: ${currentTiedTeam.name}`,
-            description: isCorrect ? 'Answered correctly and is SAFE!' : 'Answered incorrectly and is ELIMINATED!'
+            description: isCorrect ? 'Answered correctly!' : 'Answered incorrectly and is ELIMINATED!'
         });
         
         if (!isCorrect) {
@@ -189,8 +221,10 @@ export default function Home() {
             setTeams(prev => prev.map(t => t.id === currentTiedTeam.id ? { ...t, status: 'eliminated' } : t));
         }
 
-        // We don't change question status so the next tied team gets a fresh question
-        return; // The modal close will handle moving to the next team or ending the tie-breaker
+        // We use a temporary status on the activeQuestion to show correct/incorrect in the modal
+        // This status isn't saved to the main questions array.
+        setActiveQuestion(prev => prev ? { ...prev, status: isCorrect ? 'correct' : 'wrong' } : null);
+        return;
     }
 
     const currentTeam = activeTeams[activeTeamIndex];
@@ -247,36 +281,36 @@ export default function Home() {
         return;
     }
 
-    const sortedActiveTeams = [...activeTeams].sort((a, b) => a.score - b.score);
-    const teamsToKeepCount = teamsAdvancing;
-    const scoreToBeat = sortedActiveTeams[activeTeams.length - teamsToKeepCount]?.score;
-    
-    const teamsToEliminate = sortedActiveTeams.filter(t => t.score < scoreToBeat);
+    const sortedActiveTeams = [...activeTeams].sort((a, b) => b.score - a.score);
+    const scoreToBeat = sortedActiveTeams[teamsAdvancing - 1].score;
+    const teamsBelowCutoff = sortedActiveTeams.filter(t => t.score < scoreToBeat);
     const teamsOnBubble = sortedActiveTeams.filter(t => t.score === scoreToBeat);
-    
-    const safeTeamsCount = activeTeams.length - teamsToEliminate.length - teamsOnBubble.length;
-    const spotsLeft = teamsToKeepCount - safeTeamsCount;
 
+    const safeTeamsCount = sortedActiveTeams.length - teamsBelowCutoff.length - teamsOnBubble.length;
+    const spotsLeft = teamsAdvancing - safeTeamsCount;
+    
     if (teamsOnBubble.length > spotsLeft) {
-        // Tie-breaker needed
+         // Tie-breaker needed
         toast({
             title: "Tie-Breaker!",
             description: `${teamsOnBubble.length} teams tied for the final ${spotsLeft} spots. Sudden death!`,
             duration: 5000,
         });
         
-        setTiedTeams(teamsOnBubble);
+        const teamsToEliminate = teamsBelowCutoff.map(t => t.id);
+        if (teamsToEliminate.length > 0) {
+            setTeams(prev => prev.map(t => teamsToEliminate.includes(t.id) ? { ...t, status: 'eliminated' } : t));
+        }
+
+        setTiedTeams(teamsOnBubble.sort((a,b) => a.id - b.id)); // Sort by ID for consistent order
         setTieBreakerIndex(0);
         setGameState('tie-breaker');
-        // The question will be set in the useEffect for tie-breaker
         return;
-
     } else {
-        // No tie-breaker needed or bubble teams are all safe
-        const eliminatedTeamIds = teamsToEliminate.map(t => t.id);
+        const teamsToEliminate = teamsBelowCutoff.map(t => t.id);
         setTeams(prev =>
             prev.map(t =>
-                eliminatedTeamIds.includes(t.id) ? { ...t, status: 'eliminated' } : t
+                teamsToEliminate.includes(t.id) ? { ...t, status: 'eliminated' } : t
             )
         );
         setGameState('roundover');
@@ -317,7 +351,7 @@ export default function Home() {
   React.useEffect(() => {
     if (gameState === 'tie-breaker' && tiedTeams.length > 0 && tieBreakerIndex < tiedTeams.length) {
         // A new tie-breaker question needs to be shown
-        setActiveQuestion({ ...tieBreakerQuestion, id: Date.now() }); // Use new ID to force re-render
+        setActiveQuestion({ ...tieBreakerQuestion, id: Date.now(), status: 'available' }); // Use new ID to force re-render
     }
   }, [gameState, tiedTeams, tieBreakerIndex]);
 
@@ -326,7 +360,7 @@ export default function Home() {
     setGameState('intro');
     setCurrentRound(1);
     setTeams(initialTeams);
-    setQuestions(allQuestions);
+setQuestions(allQuestions);
     setActiveQuestion(null);
     setActiveTeamIndex(0);
     setPassChain([]);
