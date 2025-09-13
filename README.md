@@ -1,17 +1,17 @@
 # QuizVerse Showdown
 
-An interactive quiz competition application for the sharpest minds in tech. Built with Next.js, TypeScript, and Tailwind CSS.
+An interactive quiz competition for the sharpest minds in tech. Built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Features
 
-- **4 Exciting Rounds**: Tech Titans Challenge, Acronym Assassins, Brand Busters Arena, and Code Toaster Ultimate
-- **Real-time Scoreboard**: Live scoring with team elimination tracking
-- **Interactive Question Types**: Multiple choice, logo recognition, and code output questions
-- **Timer System**: Countdown timers with audio feedback
-- **Pass System**: Teams can pass questions to other teams (except in final round)
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
-- **Game State Management**: Save and restore game progress
-- **Smooth Animations**: Framer Motion powered transitions
+- **5 Exciting Rounds**: Tech Titans Challenge, Brand Busters Arena, Acronym Assassins, Cyber Security, and a manual Tie-Breaker round.
+- **Real-time Scoreboard**: Live scoring with team elimination tracking.
+- **Interactive Question Types**: Multiple choice and logo recognition.
+- **Timer System**: Countdown timers with audio feedback.
+- **Pass System**: Teams can pass questions to other teams (Rounds 1-3).
+- **Responsive Design**: Works on desktop, tablet, and mobile devices.
+- **Game State Management**: Save and restore game progress.
+- **Smooth Animations**: Framer Motion powered transitions.
 
 ## Tech Stack
 
@@ -36,38 +36,42 @@ An interactive quiz competition application for the sharpest minds in tech. Buil
 
 3. **Open your browser** and navigate to `http://localhost:9002`
 
-## Game Rules
+## Game Format and Rules
 
-### Round 1: Tech Titans Challenge
-- 10 teams start, 8 advance
-- Basic computer knowledge MCQs
-- 30 seconds per question
-- Bottom 2 teams eliminated
-
-### Round 2: Acronym Assassins
-- 8 teams compete, 6 advance
-- Technology acronym MCQs
-- 30 seconds per question
-- Bottom 2 teams eliminated
-
-### Round 3: Brand Busters Arena
-- 6 teams compete, 3 advance to final
-- Logo identification questions
-- 30 seconds per logo
-- Bottom 3 teams eliminated
-
-### Round 4: Code Toaster Ultimate
-- 3 finalists compete
-- Code output questions (Python, Java, C++)
-- 60 seconds per question
-- No passing allowed
-- Winner determined by total points
-
-## Scoring System
-
+### Scoring System
 - **Direct Correct Answer**: +10 points
 - **Passed Correct Answer**: +5 points (Rounds 1-3 only)
 - **Wrong/No Answer**: 0 points
+
+### Round 1: Tech Titans Challenge
+- **Teams**: 10 teams start, 8 advance.
+- **Format**: Basic computer and IT knowledge multiple-choice questions.
+- **Timer**: 30 seconds per question.
+- **Elimination**: The bottom 2 teams with the lowest scores are eliminated.
+
+### Round 2: Brand Busters Arena
+- **Teams**: 8 teams compete, 6 advance.
+- **Format**: Logo identification questions. Teams must type the correct brand name.
+- **Timer**: 30 seconds per logo.
+- **Elimination**: The bottom 2 teams, based on cumulative scores, are eliminated.
+
+### Round 3: Acronym Assassins
+- **Teams**: 6 teams compete, 3 advance to the final.
+- **Format**: Multiple-choice questions based on technology and computer science acronyms.
+- **Timer**: 30 seconds per question.
+- **Elimination**: The bottom 3 teams, based on cumulative scores, are eliminated.
+
+### Round 4: Cyber Security
+- **Teams**: 3 finalists compete for the championship.
+- **Format**: Multiple-choice questions focused on cybersecurity concepts.
+- **Timer**: 60 seconds per question.
+- **No Passing**: Passing is disabled in the final round.
+- **Winner**: The team with the highest total cumulative score at the end of this round is crowned the winner.
+
+### Round 5: Tie Breaker (Manual Round)
+- **Purpose**: This is a special round that is not part of the automatic game flow. It is intended for manual use by the quiz master to resolve ties.
+- **Format**: Contains a set of general knowledge tech questions.
+- **How to Use**: If a tie occurs that needs resolving (e.g., for the final advancement spots), the host can manually navigate to this round using the round selector dropdown. The host can then conduct a "first to answer" or "sudden death" challenge as they see fit to break the tie.
 
 ## Project Structure
 
