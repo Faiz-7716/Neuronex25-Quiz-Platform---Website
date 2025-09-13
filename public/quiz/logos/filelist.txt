@@ -1,0 +1,31 @@
+accenture.jpg
+Adobe.jpg
+AT&T.jpg
+Atlassian.png
+CircleCI.jpg
+Cisco.jpg
+congnizant.jpg
+Databrics.jpg
+Docker.jpg
+DropBox.jpg
+Figma.jpg
+filelist.txt
+FireBase.jpg
+FitBit.jpg
+GitLab.jpg
+Hexaware.jpg
+JENKINS.jpg
+Larsen and Turbo.jpg
+Linux.jpg
+Nvidia.jpg
+Oracle.jpeg
+Paypal.jpg
+Postman.jpg
+reddit.jpg
+Sentry.jpg
+SpaceX.jpg
+tensorflow.jpg
+Uber.jpg
+Visual Studio.jpg
+Wikipedia.jpg
+wordpress.jpg

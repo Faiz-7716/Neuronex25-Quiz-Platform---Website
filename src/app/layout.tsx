@@ -1,0 +1,29 @@
+import type {Metadata} from 'next';
+import './globals.css';
+import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/toaster';
+
+export const metadata: Metadata = {
+  title: 'QuizVerse Showdown',
+  description: 'An interactive quiz competition for the sharpest minds in tech.',
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className={cn("font-body antialiased", "bg-gradient-to-br from-background to-slate-100")}>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}

@@ -1,0 +1,361 @@
+Of course! Here are the questions with the full correct answers written out.
+
+1. Which of the following is the smallest unit of information in a computer?
+
+A) Byte
+
+B) Bit
+
+C) Kilobyte
+
+D) Word
+
+Correct Answer: B) Bit
+
+2. Which of the following memory types is volatile, meaning it loses its data when the power is turned off?
+
+A) ROM
+
+B) RAM
+
+C) Hard Disk
+
+D) SSD
+
+Correct Answer: B) RAM
+
+3. Which number system do computers use to process and store data?
+
+A) Decimal
+
+B) Binary
+
+C) Octal
+
+D) Hexadecimal
+
+Correct Answer: B) Binary
+
+4. Which type of software controls the overall working of the computer and manages hardware and software resources?
+
+A) Operating System
+
+B) Utility Software
+
+C) Application Software
+
+D) Firmware
+
+Correct Answer: A) Operating System
+
+5. Which of the following is an example of a cloud storage service widely used for both personal and business purposes?
+
+A) Dropbox
+
+B) Oracle
+
+C) Visual Studio
+
+D) Linux
+
+Correct Answer: A) Dropbox
+
+6. Which type of malware is designed to demand payment from users by locking their files or system?
+
+A) Virus
+
+B) Worm
+
+C) Ransomware
+
+D) Spyware
+
+Correct Answer: C) Ransomware
+
+7. Which of the following is a type of software that helps manage business operations, such as accounting, sales, and inventory?
+
+A) ERP (Enterprise Resource Planning)
+
+B) Antivirus
+
+C) Graphic Design Software
+
+D) Text Editor
+
+Correct Answer: A) ERP (Enterprise Resource Planning)
+
+8. Which of the following network types is typically used to connect computers within a single building or campus?
+
+A) LAN (Local Area Network)
+
+B) WAN (Wide Area Network)
+
+C) MAN (Metropolitan Area Network)
+
+D) VPN (Virtual Private Network)
+
+Correct Answer: A) LAN (Local Area Network)
+
+9. Which of the following platforms is primarily used for professional networking and career development?
+
+A) Instagram
+
+B) LinkedIn
+
+C) Facebook
+
+D) Twitter
+
+Correct Answer: B) LinkedIn
+
+10. Which of the following is the main purpose of a firewall in computer networks?
+
+A) To cool down the CPU
+
+B) To protect a network from unauthorized access
+
+C) To speed up internet connections
+
+D) To manage files on a hard disk
+
+Correct Answer: B) To protect a network from unauthorized access
+
+11. Which of the following is an example of cloud-based office software that allows editing documents online?
+
+A) MS Word (offline)
+
+B) Google Docs
+
+C) Notepad
+
+D) Paint
+
+Correct Answer: B) Google Docs
+
+12. Which of the following is a primary function of an operating system?
+
+A) Compile programs
+
+B) Manage hardware resources
+
+C) Create graphics
+
+D) Design websites
+
+Correct Answer: B) Manage hardware resources
+
+13. Which of the following is a widely used software for data analysis and visualization in business and IT?
+
+A) Tableau
+
+B) Power BI
+
+C) QlikView
+
+D) Excel
+
+Correct Answer: A) Tableau
+
+14. Which of the following programming languages is primarily used for statistical computing and data analysis?
+
+A) Python
+
+B) R
+
+C) MATLAB
+
+D) SAS
+
+Correct Answer: B) R
+
+15. Which of the following is a primary function of spreadsheet software in business and IT?
+
+A) Data entry and calculations
+
+B) Image editing
+
+C) Video rendering
+
+D) Network management
+
+Correct Answer: A) Data entry and calculations
+
+16. Which of the following is a protocol used to securely transfer files over the internet?
+
+A) FTP
+
+B) SFTP
+
+C) HTTP
+
+D) Telnet
+
+Correct Answer: B) SFTP
+
+17. Which of the following software tools is commonly used for managing relational databases in business and IT?
+
+A) MySQL
+
+B) PostgreSQL
+
+C) Oracle Database
+
+D) Microsoft SQL Server
+
+Correct Answer: A) MySQL
+
+18. Which of the following is a type of non-volatile memory used to store firmware in computers?
+
+A) ROM
+
+B) RAM
+
+C) Cache
+
+D) Registers
+
+Correct Answer: A) ROM
+
+19. Which of the following devices is used to convert digital signals to analog signals for transmission over telephone lines?
+
+A) Modem
+
+B) Router
+
+C) Switch
+
+D) Hub
+
+Correct Answer: A) Modem
+
+20. Which of the following is a type of software that helps detect and remove viruses from a computer?
+
+A) Antivirus
+
+B) Firewall
+
+C) Compiler
+
+D) Text Editor
+
+Correct Answer: A) Antivirus
+
+21. Which of the following software is widely used for accounting and financial management in businesses?
+
+A) Tally ERP 9
+
+B) QuickBooks
+
+C) Zoho Books
+
+D) Sage 50
+
+Correct Answer: A) Tally ERP 9
+
+22. Which of the following office software is primarily used for data analysis, charting, and financial calculations?
+
+A) MS Excel
+
+B) Google Sheets
+
+C) LibreOffice Calc
+
+D) WPS Spreadsheets
+
+Correct Answer: A) MS Excel
+
+23. Which of the following is a primary function of presentation software in academics and business?
+
+A) Creating slides with text, images, and charts
+
+B) Designing databases
+
+C) Performing complex calculations
+
+D) Writing programming code
+
+Correct Answer: A) Creating slides with text, images, and charts
+
+24. Which of the following software tools is commonly used to prepare professional reports, brochures, and presentations in business?
+
+A) MS Publisher
+
+B) Canva
+
+C) Adobe InDesign
+
+D) Scribus
+
+Correct Answer: A) MS Publisher
+
+25. Which of the following types of storage is most suitable for backing up large amounts of business data for long-term archival?
+
+A) Magnetic Tape
+
+B) SSD (Solid State Drive)
+
+C) USB Flash Drive
+
+D) Cache Memory
+
+Correct Answer: A) Magnetic Tape
+
+26. Which of the following business software is primarily used for enterprise resource planning (ERP) to integrate core business processes?
+
+A) SAP
+
+B) Oracle NetSuite
+
+C) Microsoft Dynamics 365
+
+D) Infor
+
+Correct Answer: A) SAP
+
+27. Which of the following is a widely used barcode scanning system in retail and inventory management?
+
+A) QR Code
+
+B) UPC (Universal Product Code)
+
+C) EAN (European Article Number)
+
+D) ISBN (International Standard Book Number)
+
+Correct Answer: B) UPC (Universal Product Code)
+
+28. What is the defining characteristic of "Open Source" software?
+
+A) It is always provided free of charge.
+
+B) It is only developed by community volunteers.
+
+C) Its source code is publicly available for modification and redistribution.
+
+D) It is incompatible with proprietary operating systems like Windows.
+
+Correct Answer: C) Its source code is publicly available for modification and redistribution.
+
+29. In computer hardware, what does the CPU's clock speed (measured in GHz) primarily indicate?
+
+A) The number of cores the processor has.
+
+B) The number of processing cycles it performs per second.
+
+C) The amount of data it can transfer simultaneously.
+
+D) The size of its internal cache memory.
+
+Correct Answer: B) The number of processing cycles it performs per second.
+
+30. What is the primary function of cache memory in a computer?
+
+A) To permanently store the operating system and user files.
+
+B) To act as a virtual memory extension when the main RAM is full.
+
+C) To store the computer's startup instructions, like the BIOS.
+
+D) To provide the CPU with extremely fast, temporary access to frequently used data.
+
+Correct Answer: D) To provide the CPU with extremely fast, temporary access to frequently used data.

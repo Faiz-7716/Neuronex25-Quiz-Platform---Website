@@ -1,0 +1,271 @@
+Cybersecurity MCQ Quiz (with Answers)
+
+---
+
+1. Which of the following best describes a "Zero-Day" vulnerability?
+A) A security flaw found during the first day of a software's release.
+B) A type of malware that activates at midnight.
+C) A vulnerability that has been patched within 24 hours.
+D) A software flaw that is discovered by attackers before the vendor is aware of it.
+Answer: D
+
+---
+
+2. In the context of network security, what is the primary function of a firewall?
+A) To encrypt all incoming and outgoing network traffic.
+B) To monitor and control incoming and outgoing network traffic based on predetermined security rules.
+C) To detect and remove malware from network packets.
+D) To authenticate users before they can access the network.
+Answer: B
+
+---
+
+3. What is a key difference between symmetric and asymmetric cryptography?
+A) Symmetric encryption is older and no longer used in modern systems.
+B) Asymmetric encryption is significantly faster than symmetric encryption for large amounts of data.
+C) Symmetric encryption uses a single key for both encryption and decryption, while asymmetric uses a public and a private key.
+D) Asymmetric encryption is primarily used for hashing, while symmetric encryption is used for data transmission.
+Answer: C
+
+---
+
+4. Which of the following describes a Distributed Denial-of-Service (DDoS) attack?
+A) A single computer sending a flood of requests to a target server to overwhelm it.
+B) An attack that targets a specific individual's computer to steal personal information.
+C) A coordinated attack from multiple compromised devices (a botnet) to overwhelm a target with traffic.
+D) An attack that intercepts and alters communication between two systems.
+Answer: C
+
+---
+
+5. Which of the following is a common technique used in social engineering?
+A) Brute-force attack
+B) Phishing
+C) Port scanning
+D) Man-in-the-middle attack
+Answer: B
+
+---
+
+6. Which type of malware is specifically designed to replicate itself and spread to other computers over a network, often without any human interaction?
+A) Trojan Horse
+B) Worm
+C) Spyware
+D) Ransomware
+Answer: B
+
+---
+
+7. What is the primary principle behind Multi-Factor Authentication (MFA)?
+A) Using a single, very complex password to secure an account.
+B) Requiring the user to provide two or more different types of verification to prove their identity.
+C) Changing your password every 30 days for enhanced security.
+D) Encrypting login credentials before they are sent over the network.
+Answer: B
+
+---
+
+8. What is the main purpose of a Honeypot in a network?
+A) To encrypt sensitive data and protect it from unauthorized access.
+B) To act as a decoy to attract and trap potential attackers, allowing security teams to study their methods.
+C) To store and manage user passwords securely.
+D) To back up critical data in case of a ransomware attack.
+Answer: B
+
+---
+
+9. What is the primary purpose of using a Virtual Private Network (VPN)?
+A) To make your internet connection faster.
+B) To block all advertisements from websites.
+C) To create a secure and encrypted connection over a public network.
+D) To scan your computer for viruses.
+Answer: C
+
+---
+
+10. Which of the following best describes "malware"?
+A) A piece of hardware that is not working correctly.
+B) A general term for any software designed to cause harm to a computer, server, or network.
+C) A weak password that is easy to guess.
+D) An outdated software application that needs to be updated.
+Answer: B
+
+---
+
+11. What is the main difference between a virus and a Trojan horse?
+A) A virus is a type of hardware, while a Trojan is a type of software.
+B) A virus self-replicates and attaches to other programs, while a Trojan disguises itself as legitimate software to trick users into installing it.
+C) A Trojan is designed to steal data, while a virus is designed to crash a computer.
+D) Viruses are only found on Windows computers, while Trojans can infect any operating system.
+Answer: B
+
+---
+
+12. Why is it important to regularly install software updates and security patches?
+A) To get new visual features and icons for the application.
+B) To fix known security vulnerabilities that could be exploited by attackers.
+C) To increase the overall speed and performance of the computer.
+D) To free up storage space on the hard drive.
+Answer: B
+
+---
+
+13. In cybersecurity, what does "CIA" stand for in the context of the CIA Triad?
+A) Central Intelligence Agency
+B) Confidentiality, Integrity, and Availability
+C) Certified Internet Assessor
+D) Control, Information, and Access
+Answer: B
+
+---
+
+14. What is the primary characteristic of a ransomware attack?
+A) It secretly records user keystrokes to steal passwords.
+B) It overwhelms a website with traffic, making it unavailable.
+C) It encrypts a victim's files and demands a payment to restore access.
+D) It tricks users into installing it by pretending to be a legitimate application.
+Answer: C
+
+---
+
+15. What is the role of an Intrusion Detection System (IDS)?
+A) To prevent all unauthorized access to a network by blocking suspicious traffic.
+B) To monitor network or system activities for malicious activities or policy violations and to report them.
+C) To encrypt all data on a hard drive to prevent theft.
+D) To create decoy systems to trap and study attackers.
+Answer: B
+
+---
+
+16. What is a "Man-in-the-Middle" (MitM) attack?
+A) An attack where a cybercriminal physically breaks into a server room to steal data.
+B) A type of malware that remains dormant until a specific date or time.
+C) An attack where the attacker secretly intercepts and relays communication between two parties who believe they are directly communicating with each other.
+D) A social engineering tactic where the attacker pretends to be a manager to get an employee's password.
+Answer: C
+
+---
+
+17. Which of the following describes a brute-force attack?
+A) An attack that tricks a user into clicking a malicious link.
+B) An attempt to guess a password by systematically trying every possible combination of letters, numbers, and symbols.
+C) An attack that exploits a specific software vulnerability.
+D) An attack that involves listening to network traffic to capture unencrypted data.
+Answer: B
+
+---
+
+18. What is the purpose of hashing a password before storing it in a database?
+A) To make the password shorter and save storage space.
+B) To convert the password into an irreversible, fixed-length string to prevent it from being read, even if the database is compromised.
+C) To encrypt the password so that it can be decrypted and viewed by administrators if needed.
+D) To check for spelling errors in the password.
+Answer: B
+
+---
+
+19. What does the term "sandboxing" refer to in cybersecurity?
+A) A physical, isolated computer used for testing malware.
+B) A security mechanism for separating running programs, usually to execute untested or untrusted code without risking harm to the host machine.
+C) A method for encrypting data in a secure container.
+D) A type of firewall that filters traffic based on its content.
+Answer: B
+
+---
+
+20. Which security concept ensures that a user is who they claim to be?
+A) Authorization
+B) Authentication
+C) Accounting
+D) Auditing
+Answer: B
+
+---
+
+21. What is the primary function of a Security Information and Event Management (SIEM) system?
+A) To automatically install security patches on all company computers.
+B) To provide a central place for collecting, analyzing, and generating reports on security-related data from various sources.
+C) To manage and reset user passwords across the entire organization.
+D) To conduct penetration testing and identify network vulnerabilities.
+Answer: B
+
+---
+
+22. What is "spear phishing"?
+A) A phishing attack that is sent to a very large, general audience.
+B) A phishing attempt that uses text messages instead of email.
+C) A highly targeted phishing attack aimed at a specific individual or organization, often using personalized information to appear more legitimate.
+D) A type of phishing that directs users to a fake website that looks identical to a real one.
+Answer: C
+
+---
+
+23. What is the main purpose of "salting" a password before hashing it?
+A) To make the password longer and harder to guess.
+B) To add extra, random data to each password before it is hashed, making it much harder to crack using pre-computed "rainbow tables."
+C) To encrypt the password with an additional key for extra security.
+D) To automatically delete the password from the database after a certain period of time.
+Answer: B
+
+---
+
+24. Which of the following is an example of "tailgating"?
+A) Following an authorized person through a secure door or entry point without providing your own credentials.
+B) Hacking into a car's computer system to control its functions remotely.
+C) Using a very long and complex password that is hard to remember.
+D) An attack that is carried out over a very long period to avoid detection.
+Answer: A
+
+---
+
+25. What is the main goal of a penetration test (pen test)?
+A) To install security software on all company computers.
+B) To simulate a real-world attack on a system, network, or application to identify and fix security vulnerabilities.
+C) To train employees on how to recognize phishing emails.
+D) To back up all critical company data in a secure, off-site location.
+Answer: B
+
+---
+
+26. In the context of Wi-Fi security, which of the following is the most secure encryption protocol?
+A) WEP (Wired Equivalent Privacy)
+B) WPA (Wi-Fi Protected Access)
+C) WPA2 (Wi-Fi Protected Access 2)
+D) WPS (Wi-Fi Protected Setup)
+Answer: C
+
+---
+
+27. What is the purpose of a "CAPTCHA"?
+A) To track user activity on a website for marketing purposes.
+B) To distinguish between human users and automated bots.
+C) To encrypt the data sent between a user and a website.
+D) To scan for viruses in files before they are downloaded.
+Answer: B
+
+---
+
+28. What is a "Botnet"?
+A) A security policy for employees who work remotely.
+B) A network of private computers infected with malicious software and controlled as a group without the owners' knowledge.
+C) A type of antivirus software that specializes in detecting bots.
+D) A secure, encrypted network used for anonymous communication.
+Answer: B
+
+---
+
+29. What does "HTTPS" at the beginning of a URL indicate?
+A) The website is a high-traffic site.
+B) The connection to the website is encrypted, making it more secure than a standard HTTP connection.
+C) The website has been officially approved by the government.
+D) The website is hosted on a high-speed server.
+Answer: B
+
+---
+
+30. What is a "Data Breach"?
+A) The process of backing up data to a secure location.
+B) An incident where information is stolen or taken from a system without the knowledge or authorization of the system's owner.
+C) A software update that fixes security holes.
+D) A physical security measure to protect a data center.
+Answer: B

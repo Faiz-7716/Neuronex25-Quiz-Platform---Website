@@ -1,0 +1,360 @@
+inal Computer Science & Tech Acronyms Quiz
+1. In software development, what does the acronym API stand for?
+
+A) Automated Protocol Integration
+
+B) Application Programming Interface
+
+C) Application Process Interchange
+
+D) Authenticated Program Interaction
+
+Correct Answer: B) Application Programming Interface
+
+2. What does GUI stand for?
+
+A) General Utility Interface
+
+B) Graphical User Interface
+
+C) Global User Integration
+
+D) Gateway User Interaction
+
+Correct Answer: B) Graphical User Interface
+
+3. In the TCP/IP networking model, what does TCP stand for?
+
+A) Transfer Control Protocol
+
+B) Transport Connection Protocol
+
+C) Terminal Communication Protocol
+
+D) Transmission Control Protocol
+
+Correct Answer: D) Transmission Control Protocol
+
+4. In networking, what does DNS stand for?
+
+A) Dynamic Network System
+
+B) Domain Name System
+
+C) Digital Naming Service
+
+D) Data Naming Standard
+
+Correct Answer: B) Domain Name System
+
+5. What is the full, unabbreviated term for the security mechanism known as CAPTCHA?
+
+A) Computerized Authentication Protocol to Challenge Human Applicants
+
+B) Cognitive Assessment Procedure for Tracking Human Analytics
+
+C) Completely Automated Public Turing test to tell Computers and Humans Apart
+
+D) Capture and Process Test for Computer-Human Authentication
+
+Correct Answer: C) Completely Automated Public Turing test to tell Computers and Humans Apart
+
+6. In networking and security, what does VPN stand for?
+
+A) Verified Private Network
+
+B) Virtual Protocol for Networks
+
+C) Volumetric Packet Network
+
+D) Virtual Private Network
+
+Correct Answer: D) Virtual Private Network
+
+7. What does the broader term URI stand for?
+
+A) Universal Record Identifier
+
+B) Uniform Resource Interpreter
+
+C) Uniform Resource Identifier
+
+D) Universal Resource Index
+
+Correct Answer: C) Uniform Resource Identifier
+
+8. In semiconductor technology, what does LSI stand for?
+
+A) Layered Silicon Integration
+
+B) Low Scale Interface
+
+C) Large-Scale Integration
+
+D) Logical System Interconnect
+
+Correct Answer: C) Large-Scale Integration
+
+9. In computer hardware, what does SSD stand for?
+
+A) System Storage Disk
+
+B) Secure State Drive
+
+C) Solid-State Drive
+
+D) Synchronous Storage Device
+
+Correct Answer: C) Solid-State Drive
+
+10. What does the government acronym UIDAI stand for?
+
+A) Universal Indian Digital Authentication Initiative
+
+B) Unified Indian Database for Aadhaar Integration
+
+C) Unique Identification Authority of India
+
+D) Urban and aadhar a national identity
+
+Correct Answer: C) Unique Identification Authority of India
+
+11. What does PDF stand for?
+
+A) Printable Document Format
+
+B) Portable Document Format
+
+C) Packaged Data File
+
+D) Professional Document File
+
+Correct Answer: B) Portable Document Format
+
+12. In programming, what does IDE stand for?
+
+A) Interactive Development Engine
+
+B) Interface Design Environment
+
+C) Integrated Development Environment
+
+D) Internal Debugging Engine
+
+Correct Answer: C) Integrated Development Environment
+
+13. In wireless networking, what is WiFi commonly understood to stand for?
+
+A) Wireless Firewall
+
+B) Wireless File-sharing
+
+C) Wired Fidelity
+
+D) Wireless Fidelity
+
+Correct Answer: D) Wireless Fidelity
+
+14. In the context of security and authentication, what does PIN stand for?
+
+A) Private Information Network
+
+B) Personal Index Number
+
+C) Primary Identification Node
+
+D) Personal Identification Number
+
+Correct Answer: D) Personal Identification Number
+
+15. In the context of Indian financial identification, what does PAN stand for?
+
+A) Personal Account Number
+
+B) Primary All-India Number
+
+C) Personal Authentication Number
+
+D) Permanent Account Number
+
+Correct Answer: D) Permanent Account Number
+
+16. What does AMD stand for?
+
+A) Applied Micro Devices
+
+B) Advanced Machine Development
+
+C) Advanced Micro Devices
+
+D) Automated Media Design
+
+Correct Answer: C) Advanced Micro Devices
+
+17. In web development and data transfer, what does FTP stand for?
+
+A) Folder Transfer Process
+
+B) Fast Transmission Protocol
+
+C) File Transfer Protocol
+
+D) Formatted Text Protocol
+
+Correct Answer: C) File Transfer Protocol
+
+18. What does ERP stand for in business software?
+
+A) Enterprise Reporting Platform
+
+B) Electronic Resource Protocol
+
+C) External Risk Prevention
+
+D) Enterprise Resource Planning
+
+Correct Answer: D) Enterprise Resource Planning
+
+19. In display technology, what does OLED stand for?
+
+A) Optical Light Emitting Display
+
+B) Organic Laser Emitting Diode
+
+C) Optoelectronic Light Emitting Device
+
+D) Organic Light Emitting Diode
+
+Correct Answer: D) Organic Light Emitting Diode
+
+20. In the field of design, what do the acronyms UI and UX stand for?
+
+A) User Interaction and User Engagement
+
+B) Unified Interface and Universal Experience
+
+C) Usability Index and User Exploration
+
+D) User Interface and User Experience
+
+Correct Answer: D) User Interface and User Experience
+
+21. In the context of Indian banking, what does IFSC stand for?
+
+A) Indian Foreign Service Code
+
+B) International Financial Standard Code
+
+C) Indian Financial System Code
+
+D) Indian Fund and Securities Code
+
+Correct Answer: C) Indian Financial System Code
+
+22. In terms of digital storage units, what does YB stand for?
+
+A) Yobibyte
+
+B) Yottabit
+
+C) Yoctobyte
+
+D) Yottabyte
+
+Correct Answer: D) Yottabyte
+
+23. What does the image file format PNG stand for?
+
+A) Photo Network Graphics
+
+B) Pixel-Native Graphics
+
+C) Portable Network Graphics
+
+D) Printable Neutral Graphics
+
+Correct Answer: C) Portable Network Graphics
+
+24. In the context of the Internet of Things, what does IoT stand for?
+
+A) Input/Output Technology
+
+B) Integrated Online Technology
+
+C) Internet of Things
+
+D) Interconnected Object Topology
+
+Correct Answer: C) Internet of Things
+
+25. What does the acronym "CAD" stand for in the context of technology and design?
+
+A) Centralized Application Design
+
+B) Computer-Aided Design
+
+C) Complex Algorithm Development
+
+D) Controlled Automated Drawing
+
+Correct Answer: B) Computer-Aided Design
+
+26. In data capture technology, what does OMR stand for?
+
+A) Optical Mark Reading
+
+B) Opto-Mechanical Reader
+
+C) Optical Mark Reader
+
+D) Optical Mark Recognition
+
+Correct Answer: D) Optical Mark Recognition
+
+27. What does the acronym CLI stand for?
+
+A) Command Line Interface
+
+B) Common Language Infrastructure
+
+C) Complex Language Interpreter
+
+D) Command Language Input
+
+Correct Answer: A) Command Line Interface
+
+28. In software engineering, what does ASCII stand for?
+
+A) American Standard Code for Information Interchange
+
+B) Automated Standard Code for International Integration
+
+C) Advanced System for Character and Integer Interpretation
+
+D) American Standard Computer Interlink Index
+
+Correct Answer: A) American Standard Code for Information Interchange
+
+29. In networking, what does DHCP stand for?
+
+A) Dynamic Host Configuration Protocol
+
+B) Digital Host Communication Protocol
+
+C) Dynamic Host Control Protocol
+
+D) Distributed Host Configuration Protocol
+
+Correct Answer: A) Dynamic Host Configuration Protocol
+
+30. In web infrastructure, what does CDN stand for?
+
+A) Content Delivery Network
+
+B) Complex Domain Name
+
+C) Content Distribution Network
+
+D) Centralized Data Node
+
+Correct Answer: A) Content Delivery Network
