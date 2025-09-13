@@ -91,6 +91,12 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     }
   }, [isOpen, question.id]);
 
+  React.useEffect(() => {
+    // When the team changes for a passed question, reset the time-up state
+    // so the new team gets a fresh timer.
+    setIsTimeUp(false);
+  }, [teamName]);
+
   const handleManualAnswer = (isCorrect: boolean) => {
     if (answerStatus !== 'unanswered') return;
     setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
