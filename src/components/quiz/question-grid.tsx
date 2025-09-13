@@ -43,7 +43,7 @@ const QuestionGrid = ({ questions, onQuestionSelect }: QuestionGridProps) => {
 
   return (
     <motion.div 
-        className="grid grid-cols-10 grid-rows-3 gap-2 md:gap-3 aspect-[10/4] max-w-full"
+        className="grid grid-cols-10 grid-rows-3 gap-2 md:gap-3"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -54,7 +54,7 @@ const QuestionGrid = ({ questions, onQuestionSelect }: QuestionGridProps) => {
                 onClick={() => onQuestionSelect(question)}
                 disabled={question.status !== 'available'}
                 className={cn(
-                    'w-full h-full rounded-lg flex items-center justify-center font-headline text-xl md:text-2xl text-primary-foreground font-bold shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50',
+                    'w-[50px] h-[50px] rounded-lg flex items-center justify-center font-headline text-xl text-primary-foreground font-bold shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50',
                     getStatusColor(question.status),
                     question.status !== 'available' && 'cursor-not-allowed opacity-70'
                 )}
