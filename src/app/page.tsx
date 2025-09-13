@@ -400,7 +400,7 @@ export default function Home() {
                 </AlertDialog>
               </div>
             </div>
-            <aside className="lg:w-1/3 lg:max-w-sm h-full">
+            <aside className="lg:w-1/3 lg:max-w-sm h-full lg:pt-12">
               <Scoreboard teams={teams} />
             </aside>
           </main>
