@@ -150,7 +150,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <Alert variant="default" className="mt-4 bg-green-600 border-green-600 text-white text-center">
           <AlertTitle>Correct!</AlertTitle>
           <AlertDescription>
-            {isTieBreaker ? 'You are safe!' : `Well done, ${teamName}!`}
+            {isTieBreaker ? `${teamName} is SAFE!` : `Well done, ${teamName}!`}
           </AlertDescription>
         </Alert>
       );
@@ -169,7 +169,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
     return (
       <Alert variant="destructive" className="mt-4 text-center">
-        <AlertTitle>{isTieBreaker ? 'Incorrect! You are eliminated.' : 'Incorrect!'}</AlertTitle>
+        <AlertTitle>{isTieBreaker ? `${teamName} is ELIMINATED!` : 'Incorrect!'}</AlertTitle>
         <AlertDescription>
           The correct answer was: <span className="font-bold text-lg">{question.answer}</span>
         </AlertDescription>
@@ -229,7 +229,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <>
             <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
             <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-                {(question.type === 'logo' || question.type === 'code') && (
+                {(question.type === 'logo' || question.type === 'code' || question.type === 'tie-breaker') && (question.options === undefined) && (
                     <Input
                         type="text"
                         placeholder="Your answer..."
@@ -275,5 +275,3 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 };
 
 export default QuestionModal;
-
-    
