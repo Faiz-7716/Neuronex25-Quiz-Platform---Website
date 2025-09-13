@@ -293,8 +293,8 @@ export default function Home() {
           <main className="w-full h-screen p-4 flex flex-col lg:flex-row gap-4">
             <div className="flex-grow flex flex-col gap-4 h-full">
               <div className="text-center">
-                 <div className="flex items-center justify-center gap-4">
-                    <h2 className="text-3xl font-headline text-primary">Round {currentRound}: {roundDetails[currentRound]?.title}</h2>
+                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                    <h2 className="text-3xl font-headline text-primary text-center sm:text-left">Round {currentRound}: {roundDetails[currentRound]?.title}</h2>
                     <Button variant="outline" size="icon" onClick={() => setIsRulesOpen(true)}>
                         <FileText className="h-4 w-4" />
                         <span className="sr-only">View Rules</span>
