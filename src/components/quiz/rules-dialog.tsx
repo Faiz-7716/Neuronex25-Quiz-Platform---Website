@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { FileText } from 'lucide-react';
 import { parseRules } from '@/lib/utils';
 
@@ -15,7 +14,7 @@ const RulesDialog = ({ isOpen, onClose, roundNumber, rules }: RulesDialogProps) 
 
     return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl bg-background/90 backdrop-blur-lg border-primary/30">
+      <DialogContent className="sm:max-w-3xl bg-background/90 backdrop-blur-lg border-primary/30">
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-primary flex items-center gap-2">
             <FileText />
@@ -23,10 +22,9 @@ const RulesDialog = ({ isOpen, onClose, roundNumber, rules }: RulesDialogProps) 
           </DialogTitle>
         </DialogHeader>
         <div className="py-4">
-          <ScrollArea className="h-96 pr-4">
-            <div className="space-y-4 text-foreground">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-foreground">
               {parsedRules.map((section, index) => (
-                <div key={index}>
+                <div key={index} className="break-inside-avoid">
                   <h4 className="font-headline text-lg text-accent mb-2">{section.title}</h4>
                   <ul className="list-disc pl-5 space-y-1 text-base leading-relaxed">
                     {section.points.map((point, pIndex) => (
@@ -36,7 +34,6 @@ const RulesDialog = ({ isOpen, onClose, roundNumber, rules }: RulesDialogProps) 
                 </div>
               ))}
             </div>
-          </ScrollArea>
         </div>
       </DialogContent>
     </Dialog>

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Play } from 'lucide-react';
 import { parseRules } from '@/lib/utils';
@@ -42,7 +41,7 @@ const RoundTransition = ({ roundNumber, roundTitle, rules, onContinue }: RoundTr
         </motion.h1>
 
         <motion.div 
-            className="w-full max-w-3xl"
+            className="w-full max-w-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.0, duration: 0.5 }}
@@ -55,20 +54,18 @@ const RoundTransition = ({ roundNumber, roundTitle, rules, onContinue }: RoundTr
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <ScrollArea className="h-64 pr-4">
-                        <div className="space-y-4 text-foreground">
-                            {parsedRules.map((section, index) => (
-                                <div key={index}>
-                                <h4 className="font-headline text-xl text-accent mb-2">{section.title}</h4>
-                                <ul className="list-disc pl-5 space-y-2 text-base leading-relaxed">
-                                    {section.points.map((point, pIndex) => (
-                                    <li key={pIndex}>{point}</li>
-                                    ))}
-                                </ul>
-                                </div>
-                            ))}
-                        </div>
-                    </ScrollArea>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-foreground">
+                        {parsedRules.map((section, index) => (
+                            <div key={index} className="break-inside-avoid">
+                            <h4 className="font-headline text-xl text-accent mb-2">{section.title}</h4>
+                            <ul className="list-disc pl-5 space-y-2 text-base leading-relaxed">
+                                {section.points.map((point, pIndex) => (
+                                <li key={pIndex}>{point}</li>
+                                ))}
+                            </ul>
+                            </div>
+                        ))}
+                    </div>
                 </CardContent>
             </Card>
         </motion.div>
