@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import type { Team, Question, GameState, TieBreakerState } from '@/lib/types';
+import type { Team, Question, GameState } from '@/lib/types';
 import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions } from '@/lib/data';
 import { AnimatePresence } from 'framer-motion';
 import { FileText, Users, Save, RotateCcw, Swords, Trophy } from 'lucide-react';
@@ -217,7 +217,9 @@ export default function Home() {
         description: `${currentTeam.name} is safe!`,
       });
 
-      if (newSafeTeams.length === tieBreakerState.teamsToAdvance) {
+      const spotsLeftToFill = tieBreakerState.teamsToAdvance - newSafeTeams.length;
+
+      if (spotsLeftToFill <= 0) {
         // All spots filled, end tie-breaker
         const teamsToEliminateIds = newTiedTeams.map(t => t.id);
         setTeams(prev => prev.map(t => teamsToEliminateIds.includes(t.id) ? { ...t, status: 'eliminated' } : t));
@@ -273,17 +275,11 @@ export default function Home() {
       // Manual tie-breaker required
       toast({
           title: `Tie-Breaker Required for Round ${currentRound}!`,
-          description: `A tie has occurred involving ${teamsAtCutoff.length} teams for the final ${spotsLeft} advancement spot(s). Starting tie-breaker round.`,
+          description: `A tie has occurred involving ${teamsAtCutoff.length} teams for the final ${spotsLeft} advancement spot(s). Please use the Manual Tie Breaker page.`,
           duration: 10000,
           variant: "destructive",
       });
-      setGameState('tie-breaker');
-      setTieBreakerState({
-          tiedTeams: teamsAtCutoff,
-          teamsToAdvance: spotsLeft,
-          safeTeams: [],
-          questionIndex: 0
-      })
+      setGameState('roundover');
     } else {
        const teamsToEliminateIds = sortedActiveTeams.slice(teamsAdvancing).map(t => t.id);
         setTeams(prev =>
@@ -293,7 +289,7 @@ export default function Home() {
         );
         setGameState('roundover');
     }
-  }, [currentRound, activeTeams, toast, teams]);
+  }, [currentRound, activeTeams, toast]);
   
   const proceedToNextStage = () => {
     const activeTeamCount = teams.filter(t => t.status === 'active').length;
@@ -334,12 +330,14 @@ export default function Home() {
       case 'intro':
         return <IntroScreen onStart={startQuiz} />;
       case 'transition':
-        const roundTitle = currentRound === 5 ? "Tie Breaker" : roundDetails[currentRound]?.title || '';
+        const roundInfo = roundDetails[currentRound];
+        const roundTitle = roundInfo?.title || `Round ${currentRound}`;
+        const roundRules = roundInfo?.rules || '';
         return (
           <RoundTransition
             roundNumber={currentRound}
             roundTitle={roundTitle}
-            rules={roundDetails[currentRound]?.rules || ''}
+            rules={roundRules}
             onContinue={startRound}
           />
         );
@@ -488,5 +486,3 @@ export default function Home() {
     </div>
   );
 }
-
-    

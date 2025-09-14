@@ -757,16 +757,6 @@ const round4Questions: Question[] = [
 ];
 
 export const manualTieBreakerQuestions: Question[] = [
-    { id: 901, round: 5, type: 'mcq', content: 'What is the decimal equivalent of the binary number 1011?', options: ['9', '10', '11', '12'], answer: '11', status: 'available' },
-    { id: 902, round: 5, type: 'mcq', content: 'What does the acronym "SaaS" stand for?', options: ['Software as a Service', 'System as a Service', 'Security as a Service', 'Software as a System'], answer: 'Software as a Service', status: 'available' },
-    { id: 903, round: 5, type: 'mcq', content: 'In object-oriented programming, what is the term for creating a new class from an existing class?', options: ['Inheritance', 'Polymorphism', 'Encapsulation', 'Abstraction'], answer: 'Inheritance', status: 'available' },
-    { id: 904, round: 5, type: 'mcq', content: 'Which HTTP status code means "Not Found"?', options: ['200', '301', '404', '500'], answer: '404', status: 'available' },
-    { id: 905, round: 5, type: 'mcq', content: 'What is the default port for HTTPS?', options: ['80', '8080', '21', '443'], answer: '443', status: 'available' },
-    { id: 906, round: 5, type: 'mcq', content: 'In CSS, which property is used to change the text color of an element?', options: ['text-color', 'font-color', 'color', 'text-style'], answer: 'color', status: 'available' },
-    { id: 907, round: 5, type: 'mcq', content: 'What data structure uses a Last-In, First-Out (LIFO) method?', options: ['Queue', 'Stack', 'Linked List', 'Tree'], answer: 'Stack', status: 'available' },
-    { id: 908, round: 5, type: 'mcq', content: 'Which company developed the Python programming language?', options: ['Google', 'Microsoft', 'Dropbox', 'Not a company'], answer: 'Not a company', status: 'available' },
-    { id: 909, round: 5, type: 'mcq', content: 'What is the full form of JSON?', options: ['Java Standard Object Notation', 'JavaScript Object Notation', 'Java Source Object Notation', 'JavaScript Oriented Notation'], answer: 'JavaScript Object Notation', status: 'available' },
-    { id: 910, round: 5, type: 'mcq', content: 'Which version control system was created by Linus Torvalds?', options: ['SVN', 'Mercurial', 'Git', 'CVS'], answer: 'Git', status: 'available' },
     { id: 911, round: 1, type: 'mcq', content: 'Which of the following storage types provides the fastest data access speed?', options: ['SSD (Solid State Drive)', 'Virtual Memory', 'Cache Memory', 'RAM'], answer: 'Cache Memory', status: 'available' },
     { id: 912, round: 1, type: 'mcq', content: 'Which of the following is considered a relational database management system (RDBMS)?', options: ['MongoDB', 'Oracle Database', 'Redis', 'Neo4j'], answer: 'Oracle Database', status: 'available' },
     { id: 913, round: 1, type: 'mcq', content: 'Which of the following protocols is primarily used for secure communication between a web browser and a server?', options: ['FTP', 'HTTPS', 'SMTP', 'SSH'], answer: 'HTTPS', status: 'available' },
