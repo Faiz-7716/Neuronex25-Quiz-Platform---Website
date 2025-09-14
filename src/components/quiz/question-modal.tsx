@@ -14,9 +14,10 @@ import { motion } from 'framer-motion';
 type QuestionModalProps = {
   question: Question;
   teamName: string;
+  teamIndex: number;
   isOpen: boolean;
   onClose: () => void;
-  onAnswer: (isCorrect: boolean) => void;
+  onAnswer: (isCorrect: boolean, isPassed?: boolean) => void;
   onPass: () => void;
   roundNumber: number;
   isTieBreaker?: boolean;
@@ -39,14 +40,20 @@ const CodeSnippet = ({ code, language }: { code: string; language: keyof typeof 
   );
 };
 
-const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
+const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
   const [selectedAnswer, setSelectedAnswer] = React.useState('');
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
   const [isTimeUp, setIsTimeUp] = React.useState(false);
   const [isLogoAnswerRevealed, setIsLogoAnswerRevealed] = React.useState(false);
+  const [isPassed, setIsPassed] = React.useState(false);
   
   const timerDuration = isTieBreaker ? 15 : (roundNumber === 4 ? 60 : 30);
+  
+  const handlePass = () => {
+    setIsPassed(true);
+    onPass();
+  }
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -63,14 +70,14 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     if (!isTieBreaker) {
       setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
     }
-    onAnswer(isCorrect);
+    onAnswer(isCorrect, isPassed);
   };
   
   const handleTimeUp = () => {
     if (answerStatus !== 'unanswered') return;
     
     if(isTieBreaker || roundNumber >= 4 || question.type === 'logo') {
-      onAnswer(false);
+      onAnswer(false, isPassed);
     } else {
       setIsTimeUp(true);
     }
@@ -78,7 +85,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
   const handleShowAnswer = () => {
     setAnswerStatus('incorrect');
-    onAnswer(false);
+    onAnswer(false, isPassed);
   };
 
   const handleManualLogoAnswer = (isCorrect: boolean) => {
@@ -87,23 +94,26 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     if (!isTieBreaker) {
         setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
     }
-    onAnswer(isCorrect);
+    onAnswer(isCorrect, isPassed);
   }
 
   React.useEffect(() => {
     if (isOpen) {
+        // Reset state when a new question is opened
         setAnswerStatus('unanswered');
         setSelectedAnswer('');
         setTextAnswer('');
         setIsTimeUp(false);
         setIsLogoAnswerRevealed(false);
+        setIsPassed(false);
     }
   }, [isOpen, question.id]);
 
   React.useEffect(() => {
-    // Reset time up state when team changes for the same question (pass scenario)
-    setIsTimeUp(false);
-  }, [teamName]);
+    // This effect runs when the team changes (due to a pass)
+    // but the question modal stays open.
+    setIsTimeUp(false); // Reset time's up state
+  }, [teamIndex]);
 
   const renderQuestionContent = () => {
     switch (question.type) {
@@ -134,7 +144,8 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
               alt="Brand Logo" 
               width={300} 
               height={200} 
-              className="rounded-lg bg-white p-2 shadow-md" 
+              className="rounded-lg bg-white p-2 shadow-md"
+              unoptimized 
             />
             {isLogoAnswerRevealed && (
                 <motion.div 
@@ -167,7 +178,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <Alert variant="default" className="mt-4 bg-green-600 border-green-600 text-white text-center">
           <AlertTitle>Correct!</AlertTitle>
           <AlertDescription>
-            {`Well done, ${teamName}!`}
+            {`Well done, ${teamName}! You earned ${isPassed ? 5 : 10} points.`}
           </AlertDescription>
         </Alert>
       );
@@ -204,7 +215,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
             Time's Up!
           </motion.h3>
           <div className="flex gap-4">
-            <Button onClick={onPass} className="font-headline">Pass to Next Team</Button>
+            <Button onClick={handlePass} className="font-headline">Pass to Next Team</Button>
             <Button onClick={handleShowAnswer} variant="outline" className="font-headline">Show Answer & Forfeit</Button>
           </div>
         </div>
@@ -222,10 +233,10 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         }
         return (
             <>
-              <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
+              <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
               <div className="flex gap-2">
                 <Button onClick={() => setIsLogoAnswerRevealed(true)} className="font-headline">Show Answer</Button>
-                <Button variant="outline" onClick={onPass} className="font-headline">Pass</Button>
+                {roundNumber < 4 && <Button variant="outline" onClick={handlePass} className="font-headline">Pass</Button>}
               </div>
             </>
         )
@@ -235,7 +246,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
     return (
         <>
-            <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
+            <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
             <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
                 {(question.type !== 'mcq' || !question.options) && (
                     <Input
@@ -248,7 +259,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
                     />
                 )}
                 <Button type="submit" className="font-headline" disabled={(!selectedAnswer && !textAnswer)}>Submit</Button>
-                {showPassButton && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
+                {showPassButton && <Button type="button" variant="outline" className="font-headline" onClick={handlePass}>Pass</Button>}
             </form>
         </>
     )

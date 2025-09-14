@@ -133,18 +133,20 @@ export default function Home() {
       });
       return;
     }
+    setQuestions(prev => prev.map(q => q.id === question.id ? { ...q, status: 'attempted' } : q));
     setActiveQuestion(question);
   };
   
   const handleModalClose = () => {
     if (!activeQuestion) return;
+    
+    const wasAnswered = activeQuestion.status === 'correct' || activeQuestion.status === 'wrong';
 
     if (gameState === 'tie-breaker') {
-      // In tie-breaker, closing the modal means the team failed.
       handleTieBreakerAnswer(false);
     } else {
        // Only advance team if the question was answered (not just passed)
-      if (activeQuestion.status !== 'available') {
+      if (wasAnswered) {
         advanceToNextTeam();
       }
     }
@@ -164,11 +166,11 @@ export default function Home() {
     });
   };
 
-  const handleAnswer = (isCorrect: boolean) => {
+  const handleAnswer = (isCorrect: boolean, isPassed: boolean = false) => {
     if (!activeQuestion) return;
 
     const currentTeam = activeTeams[activeTeamIndex];
-    const points = isCorrect ? 10 : 0;
+    const points = isCorrect ? (isPassed ? 5 : 10) : 0;
    
     setTeams(prevTeams =>
       prevTeams.map(team =>
@@ -192,15 +194,17 @@ export default function Home() {
   const handlePass = () => {
     if (!activeQuestion) return;
     
-    setQuestions(prev => prev.map(q => q.id === activeQuestion.id ? { ...q, status: 'wrong' } : q));
-    
+    const currentTeamName = activeTeams[activeTeamIndex].name;
+    const nextTeamIndex = (activeTeamIndex + 1) % activeTeams.length;
+    const nextTeamName = activeTeams[nextTeamIndex].name;
+
     toast({
         title: 'Passed!',
-        description: `Question passed by ${activeTeams[activeTeamIndex].name}. Moving to next team.`,
+        description: `Question passed from ${currentTeamName} to ${nextTeamName}.`,
     });
     
-    setActiveQuestion(null);
     advanceToNextTeam();
+    // The modal stays open, and the timer will be reset by the key change on the Timer component
   };
 
  const handleTieBreakerAnswer = (isCorrect: boolean) => {
@@ -471,9 +475,10 @@ export default function Home() {
       <AnimatePresence>
         {activeQuestion && teamForModal && (
         <QuestionModal
-          key={activeQuestion.id + activeTeamIndex}
+          key={activeQuestion.id}
           question={activeQuestion}
           teamName={teamForModal.name}
+          teamIndex={activeTeamIndex}
           isOpen={!!activeQuestion}
           onClose={handleModalClose}
           onAnswer={gameState === 'tie-breaker' ? handleTieBreakerAnswer : handleAnswer}
