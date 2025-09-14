@@ -4,7 +4,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import type { Team, Question, TieBreakerState } from '@/lib/types';
-import { initialTeams, manualTieBreakerQuestions, roundDetails } from '@/lib/data';
+import { initialTeams, manualTieBreakerQuestions, roundDetails, allQuestions as allGameQuestions } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -16,6 +16,7 @@ const LOCAL_STORAGE_KEY = 'quizGameState';
 
 export default function TieBreakerPage() {
   const [teams, setTeams] = React.useState<Team[]>(initialTeams);
+  const [questions, setQuestions] = React.useState<Question[]>(allGameQuestions);
   const [tieBreakerState, setTieBreakerState] = React.useState<TieBreakerState>({
     round: null,
     tiedTeams: [],
@@ -31,11 +32,20 @@ export default function TieBreakerPage() {
       if (savedStateJSON) {
         const savedState = JSON.parse(savedStateJSON);
         setTeams(savedState.teams || initialTeams);
+        setQuestions(savedState.questions || allGameQuestions);
       }
     } catch (error) {
       console.error("Failed to load state from local storage", error);
     }
   }, []);
+
+  const getTieBreakerQuestionsForRound = (roundNumber: number) => {
+    if (roundNumber === 1) {
+      return manualTieBreakerQuestions;
+    }
+    // For rounds 2, 3, 4, use unused questions from the main game
+    return questions.filter(q => q.round === roundNumber && q.status === 'available');
+  };
 
   const handleRoundSelect = (roundNumber: number) => {
     const roundInfo = roundDetails[roundNumber];
@@ -54,15 +64,19 @@ export default function TieBreakerPage() {
     const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
     const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
     
-    const tieBreakerQuestionsForRound = manualTieBreakerQuestions.filter(q => q.round === roundNumber || q.round === 5);
-
+    const tieBreakerQuestions = getTieBreakerQuestionsForRound(roundNumber);
 
     if (teamsAboveCutoff.length + teamsAtCutoff.length > roundInfo.teamsAdvancing) {
+        if (tieBreakerQuestions.length === 0) {
+            toast({ title: "No Tie-Breaker Questions", description: `There are no unused questions available for Round ${roundNumber}.`, variant: "destructive" });
+             setTieBreakerState({ round: roundNumber, tiedTeams: teamsAtCutoff, selectedTeams: [], question: null });
+             return;
+        }
         setTieBreakerState({
             round: roundNumber,
             tiedTeams: teamsAtCutoff,
             selectedTeams: [],
-            question: tieBreakerQuestionsForRound[0]
+            question: tieBreakerQuestions[0]
         });
         setShowAnswer(false);
     } else {
@@ -113,7 +127,8 @@ export default function TieBreakerPage() {
   const nextQuestion = () => {
     setTieBreakerState(prev => {
         if (!prev.question || !prev.round) return prev;
-        const tieBreakerQuestionsForRound = manualTieBreakerQuestions.filter(q => q.round === prev.round || q.round === 5);
+        const tieBreakerQuestionsForRound = getTieBreakerQuestionsForRound(prev.round);
+        if(tieBreakerQuestionsForRound.length === 0) return prev;
         const currentIndex = tieBreakerQuestionsForRound.findIndex(q => q.id === prev.question!.id);
         const nextIndex = (currentIndex + 1) % tieBreakerQuestionsForRound.length;
         return { ...prev, question: tieBreakerQuestionsForRound[nextIndex] };
