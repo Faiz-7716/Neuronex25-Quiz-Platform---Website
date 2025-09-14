@@ -22,6 +22,7 @@ export default function TieBreakerPage() {
     selectedTeams: [],
     question: null,
   });
+  const [showAnswer, setShowAnswer] = React.useState(false);
   const { toast } = useToast();
 
   React.useEffect(() => {
@@ -60,6 +61,7 @@ export default function TieBreakerPage() {
             selectedTeams: [],
             question: tieBreakerQuestions[0]
         });
+        setShowAnswer(false);
     } else {
         toast({ title: `No tie detected for Round ${roundNumber}`, description: "All advancement spots are clearly decided." });
         setTieBreakerState({ round: roundNumber, tiedTeams: [], selectedTeams: [], question: null });
@@ -112,6 +114,7 @@ export default function TieBreakerPage() {
         const nextIndex = (currentIndex + 1) % tieBreakerQuestions.length;
         return { ...prev, question: tieBreakerQuestions[nextIndex] };
     })
+    setShowAnswer(false);
   }
 
   return (
@@ -129,7 +132,7 @@ export default function TieBreakerPage() {
                 <CardTitle>1. Select a Round to Check for Ties</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
-                {Object.keys(roundDetails).map(r => Number(r)).map(roundNum => (
+                {Object.keys(roundDetails).map(r => Number(r)).filter(num => num <=4).map(roundNum => (
                     <Button key={roundNum} variant={tieBreakerState.round === roundNum ? "default" : "outline"} onClick={() => handleRoundSelect(roundNum)}>
                         Round {roundNum}: {roundDetails[roundNum].title}
                     </Button>
@@ -186,7 +189,13 @@ export default function TieBreakerPage() {
                                         {tieBreakerState.question.options.map((opt, i) => <span key={i}>{opt}</span>)}
                                     </div>
                                 )}
-                                <p className="text-right text-green-500 font-bold mt-2">Answer: {tieBreakerState.question.answer}</p>
+                                <div className="text-right mt-2">
+                                    {showAnswer ? (
+                                         <p className="text-green-500 font-bold">Answer: {tieBreakerState.question.answer}</p>
+                                    ) : (
+                                        <Button variant="secondary" size="sm" onClick={() => setShowAnswer(true)}>Show Answer</Button>
+                                    )}
+                                </div>
                             </div>
                             <p className="text-center text-muted-foreground mb-4">Click the team that answered correctly first to award them +10 points.</p>
                             <div className="flex flex-wrap justify-center gap-3">
