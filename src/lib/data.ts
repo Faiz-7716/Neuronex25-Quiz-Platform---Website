@@ -756,8 +756,7 @@ const round4Questions: Question[] = [
     }
 ];
 
-// Tie Breaker Questions
-const tieBreakerQuestions: Question[] = [
+export const tieBreakerQuestions: Question[] = [
     { id: 901, round: 5, type: 'mcq', content: 'What is the decimal equivalent of the binary number 1011?', options: ['9', '10', '11', '12'], answer: '11', status: 'available' },
     { id: 902, round: 5, type: 'mcq', content: 'What does the acronym "SaaS" stand for?', options: ['Software as a Service', 'System as a Service', 'Security as a Service', 'Software as a System'], answer: 'Software as a Service', status: 'available' },
     { id: 903, round: 5, type: 'mcq', content: 'In object-oriented programming, what is the term for creating a new class from an existing class?', options: ['Inheritance', 'Polymorphism', 'Encapsulation', 'Abstraction'], answer: 'Inheritance', status: 'available' },
@@ -783,31 +782,17 @@ export const roundDetails: RoundDetails = {
     1: {
         title: 'Tech Titans Challenge',
         teamsAdvancing: 8,
-        teamsEliminated: 2,
-        rules: `Format:\nTeams: 10 teams start, 8 advance.\nQuestions: 30 questions available.\nTimer: 30 seconds per question.\n\nScoring:\nDirect Correct Answer: +10 points\nPassed Correct Answer: +5 points\nWrong/No Answer: 0 points.\n\nElimination:\nThe bottom 2 teams with the lowest scores are eliminated. Ties are resolved with a Sudden Death tie-breaker.`
     },
     2: {
         title: 'Brand Busters Arena',
         teamsAdvancing: 6,
-        teamsEliminated: 2,
-        rules: `Format:\nTeams: 8 teams compete, 6 advance.\nQuestions: 30 logos to identify.\nTimer: 30 seconds per logo.\n\nScoring:\nScores are cumulative.\nDirect Correct: +10, Passed Correct: +5.\n\nElimination:\nThe bottom 2 teams based on combined scores are eliminated. Ties are resolved with a Sudden Death tie-breaker.`
     },
     3: {
         title: 'Acronym Assassins',
         teamsAdvancing: 3,
-        teamsEliminated: 3,
-        rules: `Format:\nTeams: 6 teams compete, 3 advance to the final.\nQuestions: 30 acronyms to solve.\nTimer: 30 seconds per question.\n\nScoring:\nScores are cumulative.\nDirect Correct: +10, Passed Correct: +5.\n\nElimination:\nThe bottom 3 teams based on total scores are eliminated. Ties are resolved with a Sudden Death tie-breaker.`
     },
     4: {
         title: 'Cyber Security',
         teamsAdvancing: 1,
-        teamsEliminated: 2,
-        rules: `Format:\nTeams: 3 finalists compete.\nQuestions: 30 questions on cyber security.\nTimer: 60 seconds per question.\nNo Passing.\n\nScoring:\nCorrect Answer: +10 points\nWrong/No Answer: 0 points\n\nFinal Ranking:\nWinner, Runner-up, and Third Place are decided by total cumulative points from all 4 rounds.`
-    },
-    5: {
-        title: 'Tie Breaker',
-        teamsAdvancing: 0,
-        teamsEliminated: 0,
-        rules: `Format:\nThis is a manual Tie Breaker round.\nUse these questions for rapid-fire or head-to-head challenges.\n\nScoring:\nFollow the scoring rules you establish for the tie-breaker.\n\nElimination:\nManually track and decide which teams advance or are eliminated based on your tie-breaker rules.`
     }
 };

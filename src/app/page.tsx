@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from 'react';
-import type { Team, Question, GameState } from '@/lib/types';
+import Link from 'next/link';
+import type { Team, Question, GameState, TieBreakerState } from '@/lib/types';
 import { initialTeams, allQuestions, roundDetails } from '@/lib/data';
 import { AnimatePresence } from 'framer-motion';
-import { FileText, Users, Save, RotateCcw } from 'lucide-react';
+import { FileText, Users, Save, RotateCcw, Swords } from 'lucide-react';
 
 import IntroScreen from '@/components/quiz/intro-screen';
 import RoundTransition from '@/components/quiz/round-transition';
@@ -39,13 +40,11 @@ export default function Home() {
   const [questions, setQuestions] = React.useState<Question[]>(allQuestions);
   const [activeQuestion, setActiveQuestion] = React.useState<Question | null>(null);
   const [activeTeamIndex, setActiveTeamIndex] = React.useState<number>(0);
-  const [passChain, setPassChain] = React.useState<number[]>([]);
   const [isRulesOpen, setIsRulesOpen] = React.useState(false);
-  
+
   const { toast } = useToast();
   const activeTeams = teams.filter(t => t.status === 'active');
   
-  // Load state from local storage on initial render
   React.useEffect(() => {
     try {
       const savedStateJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -73,7 +72,7 @@ export default function Home() {
     }
   }, [toast]);
 
-  const saveState = () => {
+  const saveState = React.useCallback(() => {
     try {
       const stateToSave = {
         gameState,
@@ -95,21 +94,13 @@ export default function Home() {
         variant: "destructive",
       });
     }
-  };
+  }, [gameState, currentRound, teams, questions, activeTeamIndex, toast]);
 
-  // Auto-save state whenever it changes
   React.useEffect(() => {
     if (gameState !== 'intro') {
-      const stateToSave = {
-        gameState,
-        currentRound,
-        teams,
-        questions,
-        activeTeamIndex,
-      };
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToSave));
+      saveState();
     }
-  }, [gameState, currentRound, teams, questions, activeTeamIndex]);
+  }, [gameState, currentRound, teams, questions, activeTeamIndex, saveState]);
 
   const startQuiz = () => {
     setGameState('transition');
@@ -117,7 +108,6 @@ export default function Home() {
 
   const startRound = () => {
     setGameState('round');
-    setPassChain([]);
   };
 
   const handleSelectQuestion = (question: Question) => {
@@ -130,38 +120,28 @@ export default function Home() {
       return;
     }
     setActiveQuestion(question);
-    setPassChain([activeTeamIndex]);
-  };
-
-  const advanceToNextTeam = () => {
-    setActiveTeamIndex(prev => (prev + 1) % activeTeams.length);
   };
   
   const handleModalClose = () => {
     if (!activeQuestion) return;
-
-    if (activeQuestion.status !== 'available') {
-      const isCorrect = activeQuestion.status === 'correct';
-      const isPassed = passChain.length > 1;
-
-      if (!isPassed || !isCorrect) {
-          if (!isPassed) {
-              advanceToNextTeam();
-          }
-      }
-    }
     
+    // Only advance team if the question was answered (not just passed)
+    if (activeQuestion.status !== 'available') {
+       advanceToNextTeam();
+    }
     setActiveQuestion(null);
-    setPassChain([]);
   }
+  
+  const advanceToNextTeam = () => {
+    setActiveTeamIndex(prev => (prev + 1) % activeTeams.length);
+  };
 
-  const handleAnswer = (isCorrect: boolean, answer: string) => {
+  const handleAnswer = (isCorrect: boolean) => {
     if (!activeQuestion) return;
 
     const currentTeam = activeTeams[activeTeamIndex];
-    const isPassed = passChain.length > 1;
-    const points = isCorrect ? (isPassed ? 5 : 10) : 0;
-
+    const points = isCorrect ? 10 : 0;
+   
     setTeams(prevTeams =>
       prevTeams.map(team =>
         team.id === currentTeam.id
@@ -180,79 +160,67 @@ export default function Home() {
     );
     setActiveQuestion(prev => prev ? { ...prev, status: newStatus } : null);
   };
-
+  
+  // This is now a simple pass, no complex chain logic
   const handlePass = () => {
     if (!activeQuestion) return;
     
-    const nextTeamIndexInChain = (activeTeamIndex + 1) % activeTeams.length;
-
-    if (passChain.includes(nextTeamIndexInChain)) {
-      setQuestions(prev => prev.map(q => q.id === activeQuestion.id ? { ...q, status: 'wrong' } : q));
-      setActiveQuestion(prev => prev ? { ...prev, status: 'wrong' } : null);
-      toast({
-        title: 'Question Passed Out',
-        description: `No team could answer correctly.`,
-        variant: 'destructive'
-      });
-    } else {
-      setActiveTeamIndex(nextTeamIndexInChain);
-      setPassChain(prev => [...prev, nextTeamIndexInChain]);
-      toast({
+    // Mark question as "wrong" to prevent re-selection
+    setQuestions(prev => prev.map(q => q.id === activeQuestion.id ? { ...q, status: 'wrong' } : q));
+    
+    toast({
         title: 'Passed!',
-        description: `Question passed to ${activeTeams[nextTeamIndexInChain].name}.`,
-      });
-    }
+        description: `Question passed by ${activeTeams[activeTeamIndex].name}. Moving to next team.`,
+    });
+    
+    // Close modal and advance to next team
+    setActiveQuestion(null);
+    advanceToNextTeam();
   };
 
   const endRound = React.useCallback(() => {
-    const teamsAdvancing = roundDetails[currentRound]?.teamsAdvancing;
-    if (currentRound > 4 || teamsAdvancing === undefined || teamsAdvancing === 0 || activeTeams.length <= teamsAdvancing) {
-        setGameState('roundover');
-        return;
+    const roundInfo = roundDetails[currentRound];
+    if (!roundInfo || currentRound > 4) {
+      setGameState('roundover');
+      return;
     }
-
-    const sortedActiveTeams = [...activeTeams].sort((a, b) => b.score - a.score);
-    const scoreToBeat = sortedActiveTeams[teamsAdvancing - 1].score;
     
-    const teamsAtCutoffScore = sortedActiveTeams.filter(t => t.score === scoreToBeat);
-    const teamsBelowCutoff = sortedActiveTeams.filter(t => t.score < scoreToBeat);
-    const teamsAboveCutoffCount = sortedActiveTeams.length - teamsAtCutoffScore.length - teamsBelowCutoff.length;
+    const { teamsAdvancing } = roundInfo;
+    const sortedActiveTeams = [...activeTeams].sort((a, b) => b.score - a.score);
 
-    const spotsLeft = teamsAdvancing - teamsAboveCutoffCount;
-
-    if (teamsAtCutoffScore.length > spotsLeft) {
-        toast({
-            title: "Tie-Breaker Required!",
-            description: `${teamsAtCutoffScore.length} teams tied for the final ${spotsLeft} spots. Use the Tie-Breaker round to resolve.`,
-            duration: 7000,
-        });
-        
-        const teamsToEliminate = teamsBelowCutoff.map(t => t.id);
-        if (teamsToEliminate.length > 0) {
-            setTeams(prev => prev.map(t => teamsToEliminate.includes(t.id) ? { ...t, status: 'eliminated' } : t));
-             toast({
-                title: "Automatic Elimination",
-                description: `Teams clearly below cutoff have been eliminated.`,
-            });
-        }
-        
-        setGameState('roundover'); // Proceed to summary, let the host handle the tie
-        return;
-    } else {
-        const teamsToEliminateIds = sortedActiveTeams.slice(teamsAdvancing).map(t => t.id);
-        
-        setTeams(prev =>
-            prev.map(t =>
-                teamsToEliminateIds.includes(t.id) ? { ...t, status: 'eliminated' } : t
-            )
-        );
+    if (activeTeams.length <= teamsAdvancing) {
         setGameState('roundover');
+        return;
     }
+
+    const cutoffScore = sortedActiveTeams[teamsAdvancing - 1].score;
+    const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
+    const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
+
+    if (teamsAboveCutoff.length + teamsAtCutoff.length > teamsAdvancing) {
+        toast({
+            title: `Tie-Breaker Required for Round ${currentRound}!`,
+            description: `A tie has occurred for the final advancement spots. Please navigate to the Tie-Breaker page to resolve it manually.`,
+            duration: 10000,
+            variant: "destructive",
+        });
+        setGameState('roundover');
+        return;
+    }
+
+    const teamsToEliminateIds = sortedActiveTeams.slice(teamsAdvancing).map(t => t.id);
+    
+    setTeams(prev =>
+        prev.map(t =>
+            teamsToEliminateIds.includes(t.id) ? { ...t, status: 'eliminated' } : t
+        )
+    );
+    setGameState('roundover');
   }, [currentRound, activeTeams, toast]);
   
   const proceedToNextStage = () => {
     const activeTeamCount = teams.filter(t => t.status === 'active').length;
-    if (currentRound < Object.keys(roundDetails).length -1 && activeTeamCount > 1) {
+    if (currentRound < 4 && activeTeamCount > 1) {
       setCurrentRound(prev => prev + 1);
       setActiveTeamIndex(0);
       setGameState('transition');
@@ -265,7 +233,6 @@ export default function Home() {
     setCurrentRound(newRound);
     setGameState('transition');
     setActiveTeamIndex(0);
-    setPassChain([]);
   };
 
   const questionsForRound = questions.filter(q => q.round === currentRound);
@@ -280,16 +247,9 @@ export default function Home() {
     }
   }, [gameState, roundEnded, endRound]);
 
-
   const resetGame = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
-    setGameState('intro');
-    setCurrentRound(1);
-    setTeams(initialTeams);
-    setQuestions(allQuestions);
-    setActiveQuestion(null);
-    setActiveTeamIndex(0);
-    setPassChain([]);
+    window.location.reload(); // Easiest way to reset all state
   };
 
   const renderGameState = () => {
@@ -309,12 +269,10 @@ export default function Home() {
         return <RoundSummary roundNumber={currentRound} teams={teams} onContinue={proceedToNextStage} />;
       case 'round':
         const teamForQuestion = activeTeams[activeTeamIndex];
-        const upNextText = currentRound === 5 ? 'Tie-Breaker' : 'Up Next:';
-
         return (
           <main className="w-full h-screen p-4 flex flex-col lg:flex-row gap-4">
             <div className="flex-grow flex flex-col gap-4 h-full">
-              <div className="text-center">
+              <div className="text-center lg:pt-12">
                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
                     <h2 className="text-3xl font-headline text-primary text-center sm:text-left">Round {currentRound}: {roundDetails[currentRound]?.title}</h2>
                     <Button variant="outline" size="icon" onClick={() => setIsRulesOpen(true)}>
@@ -322,7 +280,7 @@ export default function Home() {
                         <span className="sr-only">View Rules</span>
                     </Button>
                  </div>
-                 <p className="text-xl text-muted-foreground mt-2">{upNextText} <span className="font-bold text-accent">{teamForQuestion?.name || 'N/A'}</span></p>
+                 <p className="text-xl text-muted-foreground mt-2">Up Next: <span className="font-bold text-accent">{teamForQuestion?.name || 'N/A'}</span></p>
               </div>
 
               <div className="flex-grow flex items-center justify-center">
@@ -388,6 +346,12 @@ export default function Home() {
             <Scoreboard teams={teams} />
           </SheetContent>
         </Sheet>
+        <Link href="/tie-breaker">
+          <Button variant="destructive" className="bg-card/70 backdrop-blur-sm">
+            <Swords className="mr-2 h-4 w-4" />
+            Tie Breaker
+          </Button>
+        </Link>
         <RoundSelector 
           currentRound={currentRound}
           onRoundChange={handleRoundChange}

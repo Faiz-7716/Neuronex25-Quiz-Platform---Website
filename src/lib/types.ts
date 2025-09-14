@@ -18,15 +18,21 @@ export type Question = {
   status: QuestionStatus;
 };
 
-export type GameState = 'intro' | 'transition' | 'round' | 'roundover' | 'gameover';
+export type GameState = 'intro' | 'transition' | 'round' | 'roundover' | 'gameover' | 'tie-breaker';
 
 export type RoundDetail = {
   title: string;
   teamsAdvancing: number;
-  teamsEliminated: number;
-  rules: string;
+  rules?: string;
 };
 
 export type RoundDetails = {
   [key: number]: RoundDetail;
 };
+
+export type TieBreakerState = {
+  round: number | null;
+  tiedTeams: Team[];
+  selectedTeams: Team[];
+  question: Question | null;
+}

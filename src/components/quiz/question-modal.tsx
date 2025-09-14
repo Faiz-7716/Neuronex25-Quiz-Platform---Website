@@ -16,10 +16,9 @@ type QuestionModalProps = {
   teamName: string;
   isOpen: boolean;
   onClose: () => void;
-  onAnswer: (isCorrect: boolean, answer: string) => void;
+  onAnswer: (isCorrect: boolean) => void;
   onPass: () => void;
   roundNumber: number;
-  isTieBreaker?: boolean;
 };
 
 type AnswerStatus = 'unanswered' | 'correct' | 'incorrect';
@@ -39,38 +38,35 @@ const CodeSnippet = ({ code, language }: { code: string; language: keyof typeof 
   );
 };
 
-const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
+const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber }: QuestionModalProps) => {
   const [selectedAnswer, setSelectedAnswer] = React.useState('');
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
   const [isTimeUp, setIsTimeUp] = React.useState(false);
   
-  const timerDuration = roundNumber === 5 ? 15 : roundNumber === 4 ? 60 : 30;
+  const timerDuration = roundNumber === 4 ? 60 : 30;
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
     if (answerStatus !== 'unanswered') return;
 
     let isCorrect = false;
-    let answer = '';
 
     if (question.type === 'mcq') {
       isCorrect = selectedAnswer === question.answer;
-      answer = selectedAnswer;
     } else { // logo or code
       isCorrect = textAnswer.trim().toLowerCase() === question.answer.toLowerCase();
-      answer = textAnswer;
     }
     setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
-    onAnswer(isCorrect, answer);
+    onAnswer(isCorrect);
   };
   
   const handleTimeUp = () => {
     if (answerStatus !== 'unanswered') return;
     
-    if(isTieBreaker || roundNumber >= 4) {
+    if(roundNumber >= 4) {
       setAnswerStatus('incorrect');
-      onAnswer(false, "");
+      onAnswer(false);
     } else {
       setIsTimeUp(true);
     }
@@ -78,7 +74,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
   const handleShowAnswer = () => {
     setAnswerStatus('incorrect');
-    onAnswer(false, '');
+    onAnswer(false);
   };
 
   React.useEffect(() => {
@@ -91,8 +87,6 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   }, [isOpen, question.id]);
 
   React.useEffect(() => {
-    // When the team changes for a passed question, reset the time-up state
-    // so the new team gets a fresh timer.
     setIsTimeUp(false);
   }, [teamName]);
 
@@ -141,7 +135,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <Alert variant="default" className="mt-4 bg-green-600 border-green-600 text-white text-center">
           <AlertTitle>Correct!</AlertTitle>
           <AlertDescription>
-            {isTieBreaker ? `${teamName} is SAFE!` : `Well done, ${teamName}!`}
+            {`Well done, ${teamName}!`}
           </AlertDescription>
         </Alert>
       );
@@ -149,7 +143,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     
     return (
       <Alert variant="destructive" className="mt-4 text-center">
-        <AlertTitle>{isTieBreaker ? 'Incorrect!' : 'Incorrect!'}</AlertTitle>
+        <AlertTitle>Incorrect!</AlertTitle>
         <AlertDescription>
           The correct answer was: <span className="font-bold text-lg">{question.answer}</span>
         </AlertDescription>
@@ -178,20 +172,20 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
             Time's Up!
           </motion.h3>
           <div className="flex gap-4">
-            <Button onClick={onPass} className="font-headline">Pass</Button>
-            <Button onClick={handleShowAnswer} variant="outline" className="font-headline">Show Answer</Button>
+            <Button onClick={onPass} className="font-headline">Pass to Next Team</Button>
+            <Button onClick={handleShowAnswer} variant="outline" className="font-headline">Show Answer & Forfeit</Button>
           </div>
         </div>
       );
     }
     
-    const showPassButton = !isTieBreaker && roundNumber < 4;
+    const showPassButton = roundNumber < 4;
 
     return (
         <>
             <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
             <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-                {(question.type === 'logo' || question.type === 'code' || question.type === 'mcq') && (question.options === undefined) && (
+                {(question.type === 'logo' || question.type === 'code' || (question.type === 'mcq' && !question.options)) && (
                     <Input
                         type="text"
                         placeholder="Your answer..."
@@ -203,16 +197,12 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
                 )}
                 <Button type="submit" className="font-headline" disabled={(!selectedAnswer && !textAnswer)}>Submit</Button>
                 {showPassButton && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
-                 {isTieBreaker && <Button type="button" variant="outline" className="font-headline" onClick={onPass}>Pass</Button>}
             </form>
         </>
     )
   }
   
-  const title = roundNumber === 5
-    ? `Tie-Breaker Question for ${teamName}`
-    : `Question for ${teamName}`;
-
+  const title = `Question for ${teamName}`;
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -220,7 +210,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-primary">{title}</DialogTitle>
           <DialogDescription className="text-lg">
-            {question.content}
+            {question.type !== 'mcq' && question.content}
           </DialogDescription>
         </DialogHeader>
         
