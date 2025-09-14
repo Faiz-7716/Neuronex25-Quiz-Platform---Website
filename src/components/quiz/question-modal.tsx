@@ -44,6 +44,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
   const [isTimeUp, setIsTimeUp] = React.useState(false);
+  const [isLogoAnswerRevealed, setIsLogoAnswerRevealed] = React.useState(false);
   
   const timerDuration = isTieBreaker ? 15 : (roundNumber === 4 ? 60 : 30);
 
@@ -55,7 +56,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
     if (question.type === 'mcq' && question.options) {
       isCorrect = selectedAnswer === question.answer;
-    } else { // logo, code, or tie-breaker text
+    } else { // code or tie-breaker text
       isCorrect = textAnswer.trim().toLowerCase() === question.answer.toLowerCase();
     }
     
@@ -68,7 +69,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const handleTimeUp = () => {
     if (answerStatus !== 'unanswered') return;
     
-    if(isTieBreaker || roundNumber >= 4) {
+    if(isTieBreaker || roundNumber >= 4 || question.type === 'logo') {
       onAnswer(false);
     } else {
       setIsTimeUp(true);
@@ -80,12 +81,22 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     onAnswer(false);
   };
 
+  const handleManualLogoAnswer = (isCorrect: boolean) => {
+    if (answerStatus !== 'unanswered') return;
+
+    if (!isTieBreaker) {
+        setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
+    }
+    onAnswer(isCorrect);
+  }
+
   React.useEffect(() => {
     if (isOpen) {
         setAnswerStatus('unanswered');
         setSelectedAnswer('');
         setTextAnswer('');
         setIsTimeUp(false);
+        setIsLogoAnswerRevealed(false);
     }
   }, [isOpen, question.id]);
 
@@ -116,7 +127,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         )
       case 'logo':
         return (
-          <div className="my-6 flex justify-center">
+          <div className="my-6 flex flex-col items-center gap-4">
             <Image 
               data-ai-hint="logo company"
               src={question.content} 
@@ -125,6 +136,16 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
               height={200} 
               className="rounded-lg bg-white p-2 shadow-md" 
             />
+            {isLogoAnswerRevealed && (
+                <motion.div 
+                    initial={{ opacity: 0, y:10 }}
+                    animate={{ opacity: 1, y:0 }}
+                    className="text-center"
+                >
+                    <p className="text-muted-foreground">Correct Answer:</p>
+                    <p className="font-bold text-2xl text-green-500">{question.answer}</p>
+                </motion.div>
+            )}
           </div>
         );
       case 'code':
@@ -188,6 +209,26 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
           </div>
         </div>
       );
+    }
+
+    if (question.type === 'logo') {
+        if (isLogoAnswerRevealed) {
+            return(
+                <div className="w-full flex justify-center gap-4">
+                    <Button onClick={() => handleManualLogoAnswer(true)} variant="default" className="bg-green-600 hover:bg-green-700 font-headline">Correct</Button>
+                    <Button onClick={() => handleManualLogoAnswer(false)} variant="destructive" className="font-headline">Wrong</Button>
+                </div>
+            )
+        }
+        return (
+            <>
+              <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
+              <div className="flex gap-2">
+                <Button onClick={() => setIsLogoAnswerRevealed(true)} className="font-headline">Show Answer</Button>
+                <Button variant="outline" onClick={onPass} className="font-headline">Pass</Button>
+              </div>
+            </>
+        )
     }
     
     const showPassButton = roundNumber < 4 && !isTieBreaker;
