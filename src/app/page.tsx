@@ -3,9 +3,9 @@
 import * as React from 'react';
 import Link from 'next/link';
 import type { Team, Question, GameState, TieBreakerState } from '@/lib/types';
-import { initialTeams, allQuestions, roundDetails } from '@/lib/data';
+import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions } from '@/lib/data';
 import { AnimatePresence } from 'framer-motion';
-import { FileText, Users, Save, RotateCcw, Swords } from 'lucide-react';
+import { FileText, Users, Save, RotateCcw, Swords, Trophy } from 'lucide-react';
 
 import IntroScreen from '@/components/quiz/intro-screen';
 import RoundTransition from '@/components/quiz/round-transition';
@@ -41,6 +41,15 @@ export default function Home() {
   const [activeQuestion, setActiveQuestion] = React.useState<Question | null>(null);
   const [activeTeamIndex, setActiveTeamIndex] = React.useState<number>(0);
   const [isRulesOpen, setIsRulesOpen] = React.useState(false);
+
+  // Tie-breaker state
+  const [tieBreakerState, setTieBreakerState] = React.useState<{
+    tiedTeams: Team[];
+    teamsToAdvance: number;
+    safeTeams: Team[];
+    questionIndex: number;
+  } | null>(null);
+
 
   const { toast } = useToast();
   const activeTeams = teams.filter(t => t.status === 'active');
@@ -97,7 +106,7 @@ export default function Home() {
   }, [gameState, currentRound, teams, questions, activeTeamIndex, toast]);
 
   React.useEffect(() => {
-    if (gameState !== 'intro') {
+    if (gameState !== 'intro' && gameState !== 'tie-breaker') {
       saveState();
     }
   }, [gameState, currentRound, teams, questions, activeTeamIndex, saveState]);
@@ -124,16 +133,32 @@ export default function Home() {
   
   const handleModalClose = () => {
     if (!activeQuestion) return;
-    
-    // Only advance team if the question was answered (not just passed)
-    if (activeQuestion.status !== 'available') {
-       advanceToNextTeam();
+
+    if (gameState === 'tie-breaker') {
+      // In tie-breaker, closing the modal means the team failed.
+      handleTieBreakerAnswer(false);
+    } else {
+       // Only advance team if the question was answered (not just passed)
+      if (activeQuestion.status !== 'available') {
+        advanceToNextTeam();
+      }
     }
     setActiveQuestion(null);
   }
   
   const advanceToNextTeam = () => {
-    setActiveTeamIndex(prev => (prev + 1) % activeTeams.length);
+    setActiveTeamIndex(prev => {
+      const nextIndex = (prev + 1) % activeTeams.length;
+      if (gameState === 'tie-breaker' && tieBreakerState) {
+        // In tie-breaker, we cycle through tied teams
+        const tiedTeamIds = tieBreakerState.tiedTeams.map(t => t.id);
+        const activeTiedTeams = activeTeams.filter(t => tiedTeamIds.includes(t.id));
+        const currentTiedTeamIndex = activeTiedTeams.findIndex(t => t.id === activeTeams[prev].id);
+        const nextTiedTeam = activeTiedTeams[(currentTiedTeamIndex + 1) % activeTiedTeams.length];
+        return activeTeams.findIndex(t => t.id === nextTiedTeam.id);
+      }
+      return nextIndex;
+    });
   };
 
   const handleAnswer = (isCorrect: boolean) => {
@@ -161,11 +186,9 @@ export default function Home() {
     setActiveQuestion(prev => prev ? { ...prev, status: newStatus } : null);
   };
   
-  // This is now a simple pass, no complex chain logic
   const handlePass = () => {
     if (!activeQuestion) return;
     
-    // Mark question as "wrong" to prevent re-selection
     setQuestions(prev => prev.map(q => q.id === activeQuestion.id ? { ...q, status: 'wrong' } : q));
     
     toast({
@@ -173,9 +196,68 @@ export default function Home() {
         description: `Question passed by ${activeTeams[activeTeamIndex].name}. Moving to next team.`,
     });
     
-    // Close modal and advance to next team
     setActiveQuestion(null);
     advanceToNextTeam();
+  };
+
+  const handleTieBreakerAnswer = (isCorrect: boolean) => {
+    if (!tieBreakerState || !activeQuestion) return;
+
+    const currentTeam = activeTeams[activeTeamIndex];
+
+    if (isCorrect) {
+      const newSafeTeams = [...tieBreakerState.safeTeams, currentTeam];
+      const spotsLeft = tieBreakerState.teamsToAdvance - newSafeTeams.length;
+      toast({
+        title: "Correct!",
+        description: `${currentTeam.name} is safe! ${spotsLeft} spot(s) remaining.`,
+      });
+
+      if (spotsLeft > 0) {
+        // Still spots left, continue tie-breaker
+        setTieBreakerState({
+          ...tieBreakerState,
+          safeTeams: newSafeTeams,
+          questionIndex: (tieBreakerState.questionIndex + 1) % tieBreakerQuestions.length,
+        });
+        advanceToNextTeam();
+      } else {
+        // All spots filled, end tie-breaker
+        const safeTeamIds = newSafeTeams.map(t => t.id);
+        const teamsToEliminateIds = tieBreakerState.tiedTeams
+          .filter(t => !safeTeamIds.includes(t.id))
+          .map(t => t.id);
+
+        setTeams(prev => prev.map(t => teamsToEliminateIds.includes(t.id) ? { ...t, status: 'eliminated' } : t));
+        setGameState('roundover');
+        setTieBreakerState(null);
+      }
+    } else {
+      // Incorrect answer, team is eliminated
+      toast({
+        title: "Incorrect!",
+        description: `${currentTeam.name} has been eliminated.`,
+        variant: "destructive",
+      });
+      setTeams(prev => prev.map(t => t.id === currentTeam.id ? { ...t, status: 'eliminated' } : t));
+      
+      const remainingTied = tieBreakerState.tiedTeams.filter(t => t.id !== currentTeam.id);
+      
+      if (remainingTied.length === tieBreakerState.teamsToAdvance) {
+        // Enough teams eliminated, remaining are safe.
+        setGameState('roundover');
+        setTieBreakerState(null);
+      } else {
+        // Continue with next team
+        setTieBreakerState({
+          ...tieBreakerState,
+          tiedTeams: remainingTied,
+          questionIndex: (tieBreakerState.questionIndex + 1) % tieBreakerQuestions.length,
+        });
+        advanceToNextTeam();
+      }
+    }
+     setActiveQuestion(null);
   };
 
   const endRound = React.useCallback(() => {
@@ -193,29 +275,29 @@ export default function Home() {
         return;
     }
 
-    const cutoffScore = sortedActiveTeams[teamsAdvancing - 1].score;
-    const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
+    const cutoffScore = sortedActiveTeams[teamsAdvancing].score;
     const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
+    const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
+    const spotsLeft = teamsAdvancing - teamsAboveCutoff.length;
 
-    if (teamsAboveCutoff.length + teamsAtCutoff.length > teamsAdvancing) {
-        toast({
-            title: `Tie-Breaker Required for Round ${currentRound}!`,
-            description: `A tie has occurred for the final advancement spots. Please navigate to the Tie-Breaker page to resolve it manually.`,
-            duration: 10000,
-            variant: "destructive",
-        });
+    if (teamsAtCutoff.length > spotsLeft) {
+      // Manual tie-breaker required
+      toast({
+          title: `Tie-Breaker Required for Round ${currentRound}!`,
+          description: `A tie has occurred for the final ${spotsLeft} advancement spot(s). Please navigate to the Tie-Breaker page to resolve it manually.`,
+          duration: 10000,
+          variant: "destructive",
+      });
+      setGameState('roundover');
+    } else {
+       const teamsToEliminateIds = sortedActiveTeams.slice(teamsAdvancing).map(t => t.id);
+        setTeams(prev =>
+            prev.map(t =>
+                teamsToEliminateIds.includes(t.id) ? { ...t, status: 'eliminated' } : t
+            )
+        );
         setGameState('roundover');
-        return;
     }
-
-    const teamsToEliminateIds = sortedActiveTeams.slice(teamsAdvancing).map(t => t.id);
-    
-    setTeams(prev =>
-        prev.map(t =>
-            teamsToEliminateIds.includes(t.id) ? { ...t, status: 'eliminated' } : t
-        )
-    );
-    setGameState('roundover');
   }, [currentRound, activeTeams, toast]);
   
   const proceedToNextStage = () => {
@@ -257,10 +339,11 @@ export default function Home() {
       case 'intro':
         return <IntroScreen onStart={startQuiz} />;
       case 'transition':
+        const roundTitle = currentRound === 5 ? "Tie Breaker" : roundDetails[currentRound]?.title || '';
         return (
           <RoundTransition
             roundNumber={currentRound}
-            roundTitle={roundDetails[currentRound]?.title || ''}
+            roundTitle={roundTitle}
             rules={roundDetails[currentRound]?.rules || ''}
             onContinue={startRound}
           />
@@ -268,7 +351,12 @@ export default function Home() {
       case 'roundover':
         return <RoundSummary roundNumber={currentRound} teams={teams} onContinue={proceedToNextStage} />;
       case 'round':
+      case 'tie-breaker':
         const teamForQuestion = activeTeams[activeTeamIndex];
+        let questionsToShow = questionsForRound;
+        if(gameState === 'tie-breaker' && tieBreakerState) {
+          questionsToShow = [tieBreakerQuestions[tieBreakerState.questionIndex]];
+        }
         return (
           <main className="w-full h-screen p-4 flex flex-col lg:flex-row gap-4">
             <div className="flex-grow flex flex-col gap-4 h-full">
@@ -285,14 +373,17 @@ export default function Home() {
 
               <div className="flex-grow flex items-center justify-center">
                 <QuestionGrid
-                  questions={questionsForRound}
+                  questions={questionsToShow}
                   onQuestionSelect={handleSelectQuestion}
                 />
               </div>
 
-              <div className="flex justify-center items-center gap-4">
+              <div className="flex justify-center items-center flex-wrap gap-4">
                 <Button onClick={saveState} variant="outline" className="bg-card/70 backdrop-blur-sm">
                   <Save className="mr-2" /> Save Progress
+                </Button>
+                <Button onClick={endRound} variant="secondary">
+                  <Trophy className="mr-2" /> End Round
                 </Button>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -315,7 +406,7 @@ export default function Home() {
                 </AlertDialog>
               </div>
             </div>
-            <aside className="lg:w-1/3 lg:max-w-sm h-full lg:pt-12">
+            <aside className="lg:w-1/3 lg:max-w-sm h-full pt-4 lg:pt-12">
               <Scoreboard teams={teams} />
             </aside>
           </main>
@@ -347,7 +438,7 @@ export default function Home() {
           </SheetContent>
         </Sheet>
         <Link href="/tie-breaker">
-          <Button variant="destructive" className="bg-card/70 backdrop-blur-sm">
+          <Button variant="outline" className="bg-card/70 backdrop-blur-sm border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white">
             <Swords className="mr-2 h-4 w-4" />
             Tie Breaker
           </Button>
@@ -355,7 +446,7 @@ export default function Home() {
         <RoundSelector 
           currentRound={currentRound}
           onRoundChange={handleRoundChange}
-          isDisabled={!!activeQuestion || gameState === 'intro'}
+          isDisabled={!!activeQuestion || gameState === 'intro' || gameState === 'tie-breaker'}
         />
       </div>
       <AnimatePresence mode="wait">
@@ -372,14 +463,15 @@ export default function Home() {
       <AnimatePresence>
         {activeQuestion && (
         <QuestionModal
-          key={activeQuestion.id}
+          key={activeQuestion.id + activeTeamIndex}
           question={activeQuestion}
           teamName={teamForModal?.name || "Team"}
           isOpen={!!activeQuestion}
           onClose={handleModalClose}
-          onAnswer={handleAnswer}
+          onAnswer={gameState === 'tie-breaker' ? handleTieBreakerAnswer : handleAnswer}
           onPass={handlePass}
           roundNumber={currentRound}
+          isTieBreaker={gameState === 'tie-breaker'}
         />
         )}
       </AnimatePresence>

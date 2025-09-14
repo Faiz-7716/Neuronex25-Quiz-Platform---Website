@@ -19,6 +19,7 @@ type QuestionModalProps = {
   onAnswer: (isCorrect: boolean) => void;
   onPass: () => void;
   roundNumber: number;
+  isTieBreaker?: boolean;
 };
 
 type AnswerStatus = 'unanswered' | 'correct' | 'incorrect';
@@ -38,13 +39,13 @@ const CodeSnippet = ({ code, language }: { code: string; language: keyof typeof 
   );
 };
 
-const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber }: QuestionModalProps) => {
+const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
   const [selectedAnswer, setSelectedAnswer] = React.useState('');
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
   const [isTimeUp, setIsTimeUp] = React.useState(false);
   
-  const timerDuration = roundNumber === 4 ? 60 : 30;
+  const timerDuration = isTieBreaker ? 15 : (roundNumber === 4 ? 60 : 30);
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -52,20 +53,22 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
     let isCorrect = false;
 
-    if (question.type === 'mcq') {
+    if (question.type === 'mcq' && question.options) {
       isCorrect = selectedAnswer === question.answer;
-    } else { // logo or code
+    } else { // logo, code, or tie-breaker text
       isCorrect = textAnswer.trim().toLowerCase() === question.answer.toLowerCase();
     }
-    setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
+    
+    if (!isTieBreaker) {
+      setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
+    }
     onAnswer(isCorrect);
   };
   
   const handleTimeUp = () => {
     if (answerStatus !== 'unanswered') return;
     
-    if(roundNumber >= 4) {
-      setAnswerStatus('incorrect');
+    if(isTieBreaker || roundNumber >= 4) {
       onAnswer(false);
     } else {
       setIsTimeUp(true);
@@ -93,16 +96,23 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   const renderQuestionContent = () => {
     switch (question.type) {
       case 'mcq':
+        if (question.options) {
+          return (
+            <RadioGroup value={selectedAnswer} onValueChange={setSelectedAnswer} className="space-y-4 my-6" disabled={answerStatus !== 'unanswered'}>
+              {question.options.map((option, index) => (
+                <div key={index} className="flex items-center space-x-3">
+                  <RadioGroupItem value={option} id={`option-${index}`} />
+                  <Label htmlFor={`option-${index}`} className="text-lg text-foreground cursor-pointer">{option}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+          );
+        }
         return (
-          <RadioGroup value={selectedAnswer} onValueChange={setSelectedAnswer} className="space-y-4 my-6" disabled={answerStatus !== 'unanswered'}>
-            {question.options?.map((option, index) => (
-              <div key={index} className="flex items-center space-x-3">
-                <RadioGroupItem value={option} id={`option-${index}`} />
-                <Label htmlFor={`option-${index}`} className="text-lg text-foreground cursor-pointer">{option}</Label>
-              </div>
-            ))}
-          </RadioGroup>
-        );
+          <div className="my-6 text-xl md:text-2xl font-semibold leading-relaxed">
+            {question.content}
+          </div>
+        )
       case 'logo':
         return (
           <div className="my-6 flex justify-center">
@@ -128,7 +138,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   };
 
   const renderAnswerResult = () => {
-    if (answerStatus === 'unanswered') return null;
+    if (answerStatus === 'unanswered' || isTieBreaker) return null;
 
     if (answerStatus === 'correct') {
       return (
@@ -152,7 +162,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   }
   
   const renderFooterContent = () => {
-    if (answerStatus !== 'unanswered') {
+    if (answerStatus !== 'unanswered' && !isTieBreaker) {
         return (
              <div className="w-full text-center">
                 <Button onClick={onClose} className="font-headline">Close</Button>
@@ -179,13 +189,13 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
       );
     }
     
-    const showPassButton = roundNumber < 4;
+    const showPassButton = roundNumber < 4 && !isTieBreaker;
 
     return (
         <>
             <Timer key={question.id + teamName} duration={timerDuration} onTimeUp={handleTimeUp} />
             <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-                {(question.type === 'logo' || question.type === 'code' || (question.type === 'mcq' && !question.options)) && (
+                {(question.type !== 'mcq' || !question.options) && (
                     <Input
                         type="text"
                         placeholder="Your answer..."
@@ -202,7 +212,10 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     )
   }
   
-  const title = `Question for ${teamName}`;
+  const title = isTieBreaker ? `Tie-Breaker for ${teamName}` :`Question for ${teamName}`;
+  const description = isTieBreaker 
+    ? "First to answer correctly wins!" 
+    : (question.type === 'mcq' && question.options ? question.content : 'Identify the following:');
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -210,7 +223,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-primary">{title}</DialogTitle>
           <DialogDescription className="text-lg">
-            {question.type !== 'mcq' && question.content}
+            {description}
           </DialogDescription>
         </DialogHeader>
         
