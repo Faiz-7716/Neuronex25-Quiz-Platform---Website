@@ -782,17 +782,34 @@ export const roundDetails: RoundDetails = {
     1: {
         title: 'Tech Titans Challenge',
         teamsAdvancing: 8,
+        rules: `Format: Standard multiple-choice questions on computer and IT fundamentals.
+Scoring: +10 points for a correct answer.
+Timer: 30 seconds per question.
+Elimination: 10 teams start, the 8 with the highest scores advance.`
     },
     2: {
         title: 'Brand Busters Arena',
         teamsAdvancing: 6,
+        rules: `Format: Logo identification. Teams must type the correct brand name.
+Scoring: +10 points for a correct answer.
+Timer: 30 seconds per logo.
+Elimination: 8 teams compete, the 6 with the highest cumulative scores advance.`
     },
     3: {
         title: 'Acronym Assassins',
         teamsAdvancing: 3,
+        rules: `Format: Multiple-choice questions based on tech and computer science acronyms.
+Scoring: +10 points for a correct answer.
+Timer: 30 seconds per question.
+Elimination: 6 teams compete, the 3 with the highest cumulative scores advance.`
     },
     4: {
         title: 'Cyber Security',
         teamsAdvancing: 1,
+        rules: `Format: The final showdown with multiple-choice questions on cybersecurity.
+Scoring: +10 points for a correct answer.
+Timer: 60 seconds per question.
+No Passing: Passing is disabled in the final round.
+Winner: The team with the highest cumulative score at the end is the champion!`
     }
 };
