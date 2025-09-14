@@ -278,7 +278,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
       <DialogContent className="sm:max-w-3xl bg-background/95 backdrop-blur-lg border-primary/20 shadow-xl rounded-2xl">
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-primary">{title}</DialogTitle>
-          <DialogDescription className="text-xl font-medium">
+          <DialogDescription className="text-3xl font-bold text-foreground">
             {description}
           </DialogDescription>
         </DialogHeader>
@@ -297,3 +297,5 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
 };
 
 export default QuestionModal;
+
+    
