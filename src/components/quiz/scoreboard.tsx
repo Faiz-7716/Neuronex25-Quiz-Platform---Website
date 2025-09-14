@@ -12,7 +12,7 @@ const Scoreboard = ({ teams }: ScoreboardProps) => {
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
 
   return (
-    <Card className="bg-transparent backdrop-blur-sm border-none shadow-none h-full flex flex-col">
+    <Card className="bg-transparent border-none shadow-none h-full flex flex-col">
       <CardHeader>
         <CardTitle className="font-headline text-3xl text-primary flex items-center gap-2">
             <Trophy className="w-7 h-7" />
@@ -31,10 +31,10 @@ const Scoreboard = ({ teams }: ScoreboardProps) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
-                    className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
+                    className={`flex items-center justify-between p-3 rounded-xl transition-colors ${
                     team.status === 'eliminated'
-                        ? 'bg-destructive/20'
-                        : 'bg-secondary'
+                        ? 'bg-destructive/10'
+                        : 'bg-card shadow-subtle border'
                     }`}
                 >
                     <div className="flex items-center gap-3">

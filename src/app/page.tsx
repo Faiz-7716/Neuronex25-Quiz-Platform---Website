@@ -368,7 +368,7 @@ export default function Home() {
             <div className="flex-grow flex flex-col gap-4 h-full">
               <div className="text-center lg:pt-12">
                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                    <h2 className="text-3xl font-headline text-primary text-center sm:text-left">{titleText}</h2>
+                    <h2 className="text-3xl font-headline text-primary font-bold text-center sm:text-left">{titleText}</h2>
                     <Button variant="outline" size="icon" onClick={() => setIsRulesOpen(true)}>
                         <FileText className="h-4 w-4" />
                         <span className="sr-only">View Rules</span>
@@ -385,7 +385,7 @@ export default function Home() {
               </div>
 
               <div className="flex justify-center items-center flex-wrap gap-4">
-                <Button onClick={() => saveState(true)} variant="outline" className="bg-card/70 backdrop-blur-sm">
+                <Button onClick={() => saveState(true)} variant="outline">
                   <Save className="mr-2" /> Save Progress
                 </Button>
                 <Button onClick={endRound} variant="secondary">
@@ -437,12 +437,12 @@ export default function Home() {
       <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="bg-card/70 backdrop-blur-sm">
+            <Button variant="outline" size="icon">
               <Users className="h-4 w-4" />
               <span className="sr-only">View Leaderboard</span>
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[400px] sm:w-[540px] bg-background/90 backdrop-blur-lg border-primary/30">
+          <SheetContent className="w-[400px] sm:w-[540px] bg-background/90 backdrop-blur-lg">
             <SheetHeader>
               <SheetTitle className="text-2xl font-headline text-primary">Live Scoreboard</SheetTitle>
             </SheetHeader>
@@ -450,7 +450,7 @@ export default function Home() {
           </SheetContent>
         </Sheet>
         <Link href="/tie-breaker">
-          <Button variant="outline" className="bg-card/70 backdrop-blur-sm border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white">
+          <Button variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white">
             <Swords className="mr-2 h-4 w-4" />
             Tie Breaker
           </Button>

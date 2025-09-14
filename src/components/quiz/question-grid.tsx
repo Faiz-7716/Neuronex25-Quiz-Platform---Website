@@ -10,11 +10,11 @@ type QuestionGridProps = {
 const getStatusColor = (status: QuestionStatus) => {
   switch (status) {
     case 'available':
-      return 'bg-primary/80 hover:bg-primary';
+      return 'bg-secondary hover:bg-accent/20 border-border';
     case 'correct':
-      return 'bg-green-600';
+      return 'bg-success/80 border-success';
     case 'wrong':
-      return 'bg-destructive/80';
+      return 'bg-destructive/80 border-destructive';
     default:
       return 'bg-muted/50';
   }
@@ -54,8 +54,9 @@ const QuestionGrid = ({ questions, onQuestionSelect }: QuestionGridProps) => {
                 onClick={() => onQuestionSelect(question)}
                 disabled={question.status !== 'available'}
                 className={cn(
-                    'w-[70px] h-[70px] rounded-lg flex items-center justify-center font-headline text-3xl text-primary-foreground font-bold shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50',
+                    'w-[70px] h-[70px] rounded-2xl border-2 flex items-center justify-center font-headline text-3xl font-bold shadow-sm transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50',
                     getStatusColor(question.status),
+                    question.status === 'available' ? 'text-foreground/80' : 'text-primary-foreground',
                     question.status !== 'available' && 'cursor-not-allowed opacity-70'
                 )}
                 aria-label={`Question ${index + 1}, Status: ${question.status}`}

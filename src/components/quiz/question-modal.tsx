@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Icons } from '@/components/icons';
 import { motion } from 'framer-motion';
+import { CheckCircle2, XCircle } from 'lucide-react';
 
 type QuestionModalProps = {
   question: Question;
@@ -154,7 +155,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
                     className="text-center"
                 >
                     <p className="text-muted-foreground">Correct Answer:</p>
-                    <p className="font-bold text-2xl text-green-500">{question.answer}</p>
+                    <p className="font-bold text-2xl" style={{color: 'hsl(var(--success))'}}>{question.answer}</p>
                 </motion.div>
             )}
           </div>
@@ -175,9 +176,10 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
 
     if (answerStatus === 'correct') {
       return (
-        <Alert variant="default" className="mt-4 bg-green-600 border-green-600 text-white text-center">
-          <AlertTitle>Correct!</AlertTitle>
-          <AlertDescription>
+        <Alert variant="default" className="mt-4 bg-success/10 border-success/50 text-center">
+          <CheckCircle2 className="h-5 w-5" style={{color: 'hsl(var(--success))'}} />
+          <AlertTitle className="text-success">Correct!</AlertTitle>
+          <AlertDescription className="text-success/80">
             {`Well done, ${teamName}! You earned ${isPassed ? 5 : 10} points.`}
           </AlertDescription>
         </Alert>
@@ -186,6 +188,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
     
     return (
       <Alert variant="destructive" className="mt-4 text-center">
+        <XCircle className="h-5 w-5" />
         <AlertTitle>Incorrect!</AlertTitle>
         <AlertDescription>
           The correct answer was: <span className="font-bold text-lg">{question.answer}</span>
@@ -222,46 +225,46 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
       );
     }
 
-    if (question.type === 'logo') {
+    if (question.type === 'logo' && roundNumber === 2) {
         if (isLogoAnswerRevealed) {
             return(
                 <div className="w-full flex justify-center gap-4">
-                    <Button onClick={() => handleManualLogoAnswer(true)} variant="default" className="bg-green-600 hover:bg-green-700 font-headline">Correct</Button>
+                    <Button onClick={() => handleManualLogoAnswer(true)} variant="default" className="bg-success hover:bg-success/90 font-headline">Correct</Button>
                     <Button onClick={() => handleManualLogoAnswer(false)} variant="destructive" className="font-headline">Wrong</Button>
                 </div>
             )
         }
         return (
-            <>
+            <div className="w-full flex justify-between items-center">
               <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
               <div className="flex gap-2">
                 <Button onClick={() => setIsLogoAnswerRevealed(true)} className="font-headline">Show Answer</Button>
                 {roundNumber < 4 && <Button variant="outline" onClick={handlePass} className="font-headline">Pass</Button>}
               </div>
-            </>
+            </div>
         )
     }
     
     const showPassButton = roundNumber < 4 && !isTieBreaker;
 
     return (
-        <>
-            <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
-            <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-                {(question.type !== 'mcq' || !question.options) && (
-                    <Input
-                        type="text"
-                        placeholder="Your answer..."
-                        value={textAnswer}
-                        onChange={(e) => setTextAnswer(e.target.value)}
-                        className="w-full"
-                        autoFocus
-                    />
-                )}
-                <Button type="submit" className="font-headline" disabled={(!selectedAnswer && !textAnswer)}>Submit</Button>
-                {showPassButton && <Button type="button" variant="outline" className="font-headline" onClick={handlePass}>Pass</Button>}
-            </form>
-        </>
+      <div className="w-full flex justify-between items-center">
+        <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
+        <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
+            {(question.type !== 'mcq' || !question.options) && (
+                <Input
+                    type="text"
+                    placeholder="Your answer..."
+                    value={textAnswer}
+                    onChange={(e) => setTextAnswer(e.target.value)}
+                    className="w-full"
+                    autoFocus
+                />
+            )}
+            <Button type="submit" className="font-headline" disabled={(!selectedAnswer && !textAnswer)}>Submit</Button>
+            {showPassButton && <Button type="button" variant="outline" className="font-headline" onClick={handlePass}>Pass</Button>}
+        </form>
+      </div>
     )
   }
   
@@ -272,7 +275,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-3xl bg-background/90 backdrop-blur-lg border-primary/30">
+      <DialogContent className="sm:max-w-3xl bg-background/95 backdrop-blur-lg border-primary/20 shadow-xl rounded-2xl">
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-primary">{title}</DialogTitle>
           <DialogDescription className="text-lg">
@@ -285,7 +288,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
             {renderAnswerResult()}
         </div>
 
-        <DialogFooter className="flex flex-col sm:flex-row items-center justify-between w-full">
+        <DialogFooter className="flex-col sm:flex-row items-center justify-between w-full">
            {renderFooterContent()}
         </DialogFooter>
       </DialogContent>

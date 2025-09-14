@@ -16,9 +16,9 @@ const podiumIcons = [
 ];
 
 const podiumColors = [
-  'border-yellow-400 shadow-yellow-400/30',
-  'border-gray-400 shadow-gray-400/30',
-  'border-orange-400 shadow-orange-400/30',
+  'border-yellow-400 bg-yellow-400/10',
+  'border-gray-400 bg-gray-400/10',
+  'border-orange-400 bg-orange-400/10',
 ];
 
 const FinalLeaderboard = ({ teams, onReset }: FinalLeaderboardProps) => {
@@ -44,7 +44,7 @@ const FinalLeaderboard = ({ teams, onReset }: FinalLeaderboardProps) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 * (index + 1) }}
           >
-            <Card className={`bg-card/70 backdrop-blur-sm border-2 shadow-lg ${podiumColors[index]}`}>
+            <Card className={`border-2 ${podiumColors[index]}`}>
               <CardHeader className="items-center">
                 {podiumIcons[index]}
                 <CardTitle className="font-headline text-3xl mt-2">{team.name}</CardTitle>
@@ -63,14 +63,18 @@ const FinalLeaderboard = ({ teams, onReset }: FinalLeaderboardProps) => {
       {otherTeams.length > 0 && (
          <div className="w-full max-w-2xl mb-12">
             <h3 className="text-2xl font-headline text-muted-foreground mb-4">Other Participants</h3>
-            <ul className="space-y-2">
-                {otherTeams.map((team, index) => (
-                    <li key={team.id} className="flex justify-between items-center p-3 bg-secondary rounded-lg">
-                        <span className="font-headline text-lg">#{index + 4} {team.name}</span>
-                        <span className="font-mono text-lg font-bold">{team.score} pts</span>
-                    </li>
-                ))}
-            </ul>
+            <Card>
+              <CardContent className="p-4">
+                <ul className="space-y-2">
+                    {otherTeams.map((team, index) => (
+                        <li key={team.id} className="flex justify-between items-center p-3 bg-secondary/30 rounded-lg">
+                            <span className="font-headline text-lg">#{index + 4} {team.name}</span>
+                            <span className="font-mono text-lg font-bold">{team.score} pts</span>
+                        </li>
+                    ))}
+                </ul>
+              </CardContent>
+            </Card>
          </div>
       )}
 

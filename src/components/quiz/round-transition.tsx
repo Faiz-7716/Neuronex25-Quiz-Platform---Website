@@ -24,7 +24,7 @@ const RoundTransition = ({ roundNumber, roundTitle, rules, onContinue }: RoundTr
       transition={{ duration: 0.7, ease: 'easeInOut' }}
     >
         <motion.h2
-            className="text-3xl md:text-5xl font-headline text-muted-foreground mb-4"
+            className="text-3xl md:text-5xl font-headline text-foreground/60 mb-4"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -46,7 +46,7 @@ const RoundTransition = ({ roundNumber, roundTitle, rules, onContinue }: RoundTr
             animate={{ opacity: 1 }}
             transition={{ delay: 1.0, duration: 0.5 }}
         >
-            <Card className="bg-card/50 text-left">
+            <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2 font-headline text-2xl text-primary">
                         <FileText />
@@ -54,7 +54,7 @@ const RoundTransition = ({ roundNumber, roundTitle, rules, onContinue }: RoundTr
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-foreground">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-foreground/90">
                         {parsedRules.map((section, index) => (
                             <div key={index} className="break-inside-avoid">
                             <h4 className="font-headline text-xl text-accent mb-2">{section.title}</h4>

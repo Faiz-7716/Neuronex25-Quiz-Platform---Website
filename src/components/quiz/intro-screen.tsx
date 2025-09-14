@@ -15,7 +15,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-gradient-radial p-8 rounded-lg">
+      <div className="p-8 rounded-lg">
         <motion.div 
             className="flex justify-center items-center gap-8"
             initial={{ y: -50, opacity: 0 }}
@@ -24,17 +24,17 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
         >
             <Image src="/event_logo/logo.jpg" alt="Event Logo 1" width={150} height={150} unoptimized />
             <motion.h1 
-                className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-4"
+                className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-primary mb-4"
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, type: 'spring' }}
             >
               MUC TECHNO TECH QUIZ
             </motion.h1>
-            <Image src="/event_logo/logo2.jpg" alt="Department Logo" width={150} height={150} unoptimized />
+            <Image src="/event_logo/logo.jpg" alt="Department Logo" width={150} height={150} unoptimized />
         </motion.div>
         <motion.p 
-            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-foreground/70 mb-12 max-w-2xl mx-auto"
             initial={{ y: -30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -49,7 +49,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
           <Button
             size="lg"
             onClick={onStart}
-            className="font-headline text-lg px-12 py-8 rounded-full shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/50 hover:scale-105"
+            className="font-headline text-lg px-12 py-8 rounded-full bg-primary-gradient text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/50 hover:scale-105"
           >
             Start Quiz
           </Button>
