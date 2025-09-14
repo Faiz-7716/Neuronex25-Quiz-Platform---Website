@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
@@ -9,6 +10,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -26,7 +28,8 @@ const nextConfig: NextConfig = {
   },
   devServer: {
     allowedDevOrigins: ["*.cloudworkstations.dev"],
-  }
+  },
+  output: 'export',
 };
 
 export default nextConfig;

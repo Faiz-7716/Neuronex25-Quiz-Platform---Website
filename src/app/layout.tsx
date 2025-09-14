@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'QuizVerse Showdown',
+  title: 'MUC TECHNO TECH QUIZ',
   description: 'An interactive quiz competition for the sharpest minds in tech.',
 };
 

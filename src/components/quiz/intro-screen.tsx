@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 type IntroScreenProps = {
@@ -15,13 +16,22 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
       transition={{ duration: 0.5 }}
     >
       <div className="bg-gradient-radial p-8 rounded-lg">
+        <motion.div 
+            className="flex justify-center items-center gap-8 mb-8"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1, type: 'spring' }}
+        >
+            <Image src="/event_logo/logo1.png" alt="Event Logo 1" width={150} height={150} />
+            <Image src="/event_logo/logo2.png" alt="Department Logo" width={150} height={150} />
+        </motion.div>
         <motion.h1 
             className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-4"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, type: 'spring' }}
         >
-          QuizVerse Showdown
+          MUC TECHNO TECH QUIZ
         </motion.h1>
         <motion.p 
             className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
