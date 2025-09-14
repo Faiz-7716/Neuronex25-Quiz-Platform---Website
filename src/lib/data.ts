@@ -811,9 +811,9 @@ Elimination:
     },
     3: {
         title: 'Acronym Assassins',
-        teamsAdvancing: 3,
+        teamsAdvancing: 4,
         rules: `Format:
-- Teams: 6 teams compete, 3 advance.
+- Teams: 6 teams compete, 4 advance.
 - Questions: Tech & CS acronyms.
 - Timer: 30 seconds per question.
 
@@ -823,15 +823,15 @@ Scoring:
 - Wrong/No Answer: 0 points.
 
 Elimination:
-- The bottom 3 teams with the lowest cumulative scores are eliminated. Ties are resolved with a Sudden Death tie-breaker.`
+- The bottom 2 teams with the lowest cumulative scores are eliminated. Ties are resolved with a Sudden Death tie-breaker.`
     },
     4: {
         title: 'Cyber Security',
         teamsAdvancing: 1,
         rules: `Format:
-- Teams: The 3 finalists compete.
+- Teams: The 4 finalists compete.
 - Questions: Cybersecurity concepts.
-- Timer: 60 seconds per question.
+- Timer: 45 seconds per question.
 
 Scoring:
 - Direct Correct Answer: +10 points

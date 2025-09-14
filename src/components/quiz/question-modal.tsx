@@ -49,7 +49,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
   const [isLogoAnswerRevealed, setIsLogoAnswerRevealed] = React.useState(false);
   const [isPassed, setIsPassed] = React.useState(false);
   
-  const timerDuration = isTieBreaker ? 15 : (roundNumber === 4 ? 60 : 30);
+  const timerDuration = isTieBreaker ? 15 : (roundNumber === 4 ? 45 : 30);
   
   const handlePass = () => {
     setIsPassed(true);
