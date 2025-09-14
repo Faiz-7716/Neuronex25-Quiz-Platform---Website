@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Team, Question, TieBreakerState } from '@/lib/types';
 import { initialTeams, manualTieBreakerQuestions, roundDetails, allQuestions as allGameQuestions } from '@/lib/data';
 import { Button } from '@/components/ui/button';
@@ -140,6 +141,38 @@ export default function TieBreakerPage() {
     setShowAnswer(false);
   }
 
+  const renderQuestionDisplay = () => {
+    if (!tieBreakerState.question) return null;
+
+    const { question } = tieBreakerState;
+
+    if (question.type === 'logo') {
+      return (
+        <div className="flex justify-center mb-4">
+          <Image
+            data-ai-hint="logo company"
+            src={question.content}
+            alt="Brand Logo for tie-breaker"
+            width={300}
+            height={200}
+            className="rounded-lg bg-white p-2 shadow-md"
+          />
+        </div>
+      );
+    }
+    
+    return (
+      <div className="p-4 border rounded-lg bg-background mb-4">
+        <p className="text-lg font-semibold">{question.content}</p>
+        {question.options && (
+          <div className="grid grid-cols-2 gap-2 mt-2 text-sm text-muted-foreground">
+            {question.options.map((opt, i) => <span key={i}>{opt}</span>)}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 sm:p-8">
       <div className="w-full max-w-5xl">
@@ -215,20 +248,13 @@ export default function TieBreakerPage() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="p-4 border rounded-lg bg-background mb-4">
-                                        <p className="text-lg font-semibold">{tieBreakerState.question.content}</p>
-                                        {tieBreakerState.question.options && (
-                                            <div className="grid grid-cols-2 gap-2 mt-2 text-sm text-muted-foreground">
-                                                {tieBreakerState.question.options.map((opt, i) => <span key={i}>{opt}</span>)}
-                                            </div>
+                                    {renderQuestionDisplay()}
+                                    <div className="text-center mb-4">
+                                        {showAnswer ? (
+                                            <p className="text-green-500 font-bold text-lg">Answer: {tieBreakerState.question.answer}</p>
+                                        ) : (
+                                            <Button variant="secondary" onClick={() => setShowAnswer(true)}>Show Answer</Button>
                                         )}
-                                        <div className="text-right mt-2">
-                                            {showAnswer ? (
-                                                <p className="text-green-500 font-bold">Answer: {tieBreakerState.question.answer}</p>
-                                            ) : (
-                                                <Button variant="secondary" size="sm" onClick={() => setShowAnswer(true)}>Show Answer</Button>
-                                            )}
-                                        </div>
                                     </div>
                                     <p className="text-center text-muted-foreground mb-4">Click the team that answered correctly first to award them +10 points.</p>
                                     <div className="flex flex-wrap justify-center gap-3">
@@ -250,5 +276,3 @@ export default function TieBreakerPage() {
     </div>
   );
 }
-
-    
