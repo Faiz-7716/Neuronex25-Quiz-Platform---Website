@@ -10,7 +10,7 @@ export function parseRules(rules: string) {
   return sections.map(section => {
     const lines = section.split('\n');
     const title = lines[0].replace(':', '');
-    const points = lines.slice(1).filter(line => line.trim() !== '');
+    const points = lines.slice(1).map(line => line.replace('-', '').trim());
     return { title, points };
   });
 }
