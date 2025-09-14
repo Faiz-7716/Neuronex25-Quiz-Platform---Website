@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, RefreshCw, Trophy } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Trophy, FileQuestion } from 'lucide-react';
 
 const LOCAL_STORAGE_KEY = 'quizGameState';
 
@@ -24,6 +24,7 @@ export default function TieBreakerPage() {
     question: null,
   });
   const [showAnswer, setShowAnswer] = React.useState(false);
+  const [showQuestionCard, setShowQuestionCard] = React.useState(false);
   const { toast } = useToast();
 
   React.useEffect(() => {
@@ -50,6 +51,9 @@ export default function TieBreakerPage() {
   const handleRoundSelect = (roundNumber: number) => {
     const roundInfo = roundDetails[roundNumber];
     if (!roundInfo) return;
+    
+    setShowAnswer(false);
+    setShowQuestionCard(false);
 
     const activeTeams = teams.filter(t => t.status === 'active');
     const sortedActiveTeams = [...activeTeams].sort((a, b) => b.score - a.score);
@@ -78,7 +82,6 @@ export default function TieBreakerPage() {
             selectedTeams: [],
             question: tieBreakerQuestions[0]
         });
-        setShowAnswer(false);
     } else {
         toast({ title: `No tie detected for Round ${roundNumber}`, description: "All advancement spots are clearly decided." });
         setTieBreakerState({ round: roundNumber, tiedTeams: [], selectedTeams: [], question: null });
@@ -86,6 +89,7 @@ export default function TieBreakerPage() {
   };
 
   const handleTeamSelection = (teamId: number) => {
+    setShowQuestionCard(false); // Hide question card when team selection changes
     setTieBreakerState(prev => {
         const isSelected = prev.selectedTeams.some(t => t.id === teamId);
         const team = prev.tiedTeams.find(t => t.id === teamId);
@@ -190,43 +194,55 @@ export default function TieBreakerPage() {
                 </Card>
 
                 {tieBreakerState.selectedTeams.length > 0 && tieBreakerState.question && (
-                     <Card>
-                        <CardHeader>
-                            <CardTitle className="flex justify-between items-center">
-                                <span>3. Ask Question & Award Points</span>
-                                <Button variant="outline" size="sm" onClick={nextQuestion}>
-                                    <RefreshCw className="mr-2 h-4 w-4"/>
-                                    Next Question
+                     <>
+                        {!showQuestionCard && (
+                            <div className="text-center mb-8">
+                                <Button size="lg" onClick={() => setShowQuestionCard(true)}>
+                                    <FileQuestion className="mr-2 h-5 w-5" />
+                                    Show Question
                                 </Button>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="p-4 border rounded-lg bg-background mb-4">
-                                <p className="text-lg font-semibold">{tieBreakerState.question.content}</p>
-                                {tieBreakerState.question.options && (
-                                    <div className="grid grid-cols-2 gap-2 mt-2 text-sm text-muted-foreground">
-                                        {tieBreakerState.question.options.map((opt, i) => <span key={i}>{opt}</span>)}
+                            </div>
+                        )}
+                        {showQuestionCard && (
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="flex justify-between items-center">
+                                        <span>3. Ask Question & Award Points</span>
+                                        <Button variant="outline" size="sm" onClick={nextQuestion}>
+                                            <RefreshCw className="mr-2 h-4 w-4"/>
+                                            Next Question
+                                        </Button>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="p-4 border rounded-lg bg-background mb-4">
+                                        <p className="text-lg font-semibold">{tieBreakerState.question.content}</p>
+                                        {tieBreakerState.question.options && (
+                                            <div className="grid grid-cols-2 gap-2 mt-2 text-sm text-muted-foreground">
+                                                {tieBreakerState.question.options.map((opt, i) => <span key={i}>{opt}</span>)}
+                                            </div>
+                                        )}
+                                        <div className="text-right mt-2">
+                                            {showAnswer ? (
+                                                <p className="text-green-500 font-bold">Answer: {tieBreakerState.question.answer}</p>
+                                            ) : (
+                                                <Button variant="secondary" size="sm" onClick={() => setShowAnswer(true)}>Show Answer</Button>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
-                                <div className="text-right mt-2">
-                                    {showAnswer ? (
-                                         <p className="text-green-500 font-bold">Answer: {tieBreakerState.question.answer}</p>
-                                    ) : (
-                                        <Button variant="secondary" size="sm" onClick={() => setShowAnswer(true)}>Show Answer</Button>
-                                    )}
-                                </div>
-                            </div>
-                            <p className="text-center text-muted-foreground mb-4">Click the team that answered correctly first to award them +10 points.</p>
-                            <div className="flex flex-wrap justify-center gap-3">
-                                {tieBreakerState.selectedTeams.map(team => (
-                                    <Button key={team.id} size="lg" onClick={() => handleAwardPoints(team.id)}>
-                                        <Trophy className="mr-2 h-4 w-4" />
-                                        Award to {team.name}
-                                    </Button>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
+                                    <p className="text-center text-muted-foreground mb-4">Click the team that answered correctly first to award them +10 points.</p>
+                                    <div className="flex flex-wrap justify-center gap-3">
+                                        {tieBreakerState.selectedTeams.map(team => (
+                                            <Button key={team.id} size="lg" onClick={() => handleAwardPoints(team.id)} disabled={!showAnswer}>
+                                                <Trophy className="mr-2 h-4 w-4" />
+                                                Award to {team.name}
+                                            </Button>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        )}
+                     </>
                 )}
             </>
         )}
@@ -234,3 +250,5 @@ export default function TieBreakerPage() {
     </div>
   );
 }
+
+    
