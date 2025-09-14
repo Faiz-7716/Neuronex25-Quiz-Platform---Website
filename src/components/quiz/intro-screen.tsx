@@ -22,7 +22,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring' }}
         >
-            <Image src="/event_logo/logo1.png" alt="Event Logo 1" width={150} height={150} unoptimized />
+            <Image src="/event_logo/logo.png" alt="Event Logo 1" width={150} height={150} unoptimized />
             <motion.h1 
                 className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-4"
                 initial={{ y: -50, opacity: 0 }}
@@ -31,7 +31,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
             >
               MUC TECHNO TECH QUIZ
             </motion.h1>
-            <Image src="/event_logo/logo2.png" alt="Department Logo" width={150} height={150} unoptimized />
+            <Image src="/event_logo/logo.png" alt="Department Logo" width={150} height={150} unoptimized />
         </motion.div>
         <motion.p 
             className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
