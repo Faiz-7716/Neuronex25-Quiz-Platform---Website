@@ -4,7 +4,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import type { Team, Question, TieBreakerState } from '@/lib/types';
-import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions } from '@/lib/data';
+import { initialTeams, manualTieBreakerQuestions, roundDetails } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -53,13 +53,16 @@ export default function TieBreakerPage() {
     const cutoffScore = sortedActiveTeams[roundInfo.teamsAdvancing - 1].score;
     const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
     const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
+    
+    const tieBreakerQuestionsForRound = manualTieBreakerQuestions.filter(q => q.round === roundNumber || q.round === 5);
+
 
     if (teamsAboveCutoff.length + teamsAtCutoff.length > roundInfo.teamsAdvancing) {
         setTieBreakerState({
             round: roundNumber,
             tiedTeams: teamsAtCutoff,
             selectedTeams: [],
-            question: tieBreakerQuestions[0]
+            question: tieBreakerQuestionsForRound[0]
         });
         setShowAnswer(false);
     } else {
@@ -109,10 +112,11 @@ export default function TieBreakerPage() {
   
   const nextQuestion = () => {
     setTieBreakerState(prev => {
-        if (!prev.question) return prev;
-        const currentIndex = tieBreakerQuestions.findIndex(q => q.id === prev.question!.id);
-        const nextIndex = (currentIndex + 1) % tieBreakerQuestions.length;
-        return { ...prev, question: tieBreakerQuestions[nextIndex] };
+        if (!prev.question || !prev.round) return prev;
+        const tieBreakerQuestionsForRound = manualTieBreakerQuestions.filter(q => q.round === prev.round || q.round === 5);
+        const currentIndex = tieBreakerQuestionsForRound.findIndex(q => q.id === prev.question!.id);
+        const nextIndex = (currentIndex + 1) % tieBreakerQuestionsForRound.length;
+        return { ...prev, question: tieBreakerQuestionsForRound[nextIndex] };
     })
     setShowAnswer(false);
   }

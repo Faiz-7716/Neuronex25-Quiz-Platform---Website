@@ -756,7 +756,7 @@ const round4Questions: Question[] = [
     }
 ];
 
-export const tieBreakerQuestions: Question[] = [
+export const manualTieBreakerQuestions: Question[] = [
     { id: 901, round: 5, type: 'mcq', content: 'What is the decimal equivalent of the binary number 1011?', options: ['9', '10', '11', '12'], answer: '11', status: 'available' },
     { id: 902, round: 5, type: 'mcq', content: 'What does the acronym "SaaS" stand for?', options: ['Software as a Service', 'System as a Service', 'Security as a Service', 'Software as a System'], answer: 'Software as a Service', status: 'available' },
     { id: 903, round: 5, type: 'mcq', content: 'In object-oriented programming, what is the term for creating a new class from an existing class?', options: ['Inheritance', 'Polymorphism', 'Encapsulation', 'Abstraction'], answer: 'Inheritance', status: 'available' },
@@ -766,16 +766,24 @@ export const tieBreakerQuestions: Question[] = [
     { id: 907, round: 5, type: 'mcq', content: 'What data structure uses a Last-In, First-Out (LIFO) method?', options: ['Queue', 'Stack', 'Linked List', 'Tree'], answer: 'Stack', status: 'available' },
     { id: 908, round: 5, type: 'mcq', content: 'Which company developed the Python programming language?', options: ['Google', 'Microsoft', 'Dropbox', 'Not a company'], answer: 'Not a company', status: 'available' },
     { id: 909, round: 5, type: 'mcq', content: 'What is the full form of JSON?', options: ['Java Standard Object Notation', 'JavaScript Object Notation', 'Java Source Object Notation', 'JavaScript Oriented Notation'], answer: 'JavaScript Object Notation', status: 'available' },
-    { id: 910, round: 5, type: 'mcq', content: 'Which version control system was created by Linus Torvalds?', options: ['SVN', 'Mercurial', 'Git', 'CVS'], answer: 'Git', status: 'available' }
+    { id: 910, round: 5, type: 'mcq', content: 'Which version control system was created by Linus Torvalds?', options: ['SVN', 'Mercurial', 'Git', 'CVS'], answer: 'Git', status: 'available' },
+    { id: 911, round: 1, type: 'mcq', content: 'Which of the following storage types provides the fastest data access speed?', options: ['SSD (Solid State Drive)', 'Virtual Memory', 'Cache Memory', 'RAM'], answer: 'Cache Memory', status: 'available' },
+    { id: 912, round: 1, type: 'mcq', content: 'Which of the following is considered a relational database management system (RDBMS)?', options: ['MongoDB', 'Oracle Database', 'Redis', 'Neo4j'], answer: 'Oracle Database', status: 'available' },
+    { id: 913, round: 1, type: 'mcq', content: 'Which of the following protocols is primarily used for secure communication between a web browser and a server?', options: ['FTP', 'HTTPS', 'SMTP', 'SSH'], answer: 'HTTPS', status: 'available' },
+    { id: 914, round: 1, type: 'mcq', content: 'Which of the following is NOT an example of system software?', options: ['Compiler', 'Operating System', 'Device Driver', 'MS PowerPoint'], answer: 'MS PowerPoint', status: 'available' },
+    { id: 915, round: 1, type: 'mcq', content: 'Which of the following types of malware spreads without needing to attach itself to an existing program?', options: ['Trojan Horse', 'Worm', 'C) Virus', 'Spyware'], answer: 'Worm', status: 'available' },
+    { id: 916, round: 1, type: 'mcq', content: 'Which of the following file systems is most commonly used in Windows operating systems for handling large files and modern drives?', options: ['FAT32', 'exFAT', 'NTFS', 'EXT4'], answer: 'NTFS', status: 'available' },
+    { id: 917, round: 1, type: 'mcq', content: 'Which of the following cloud service models provides users with the ability to deploy and run their own applications without managing the underlying hardware?', options: ['IaaS (Infrastructure as a Service)', 'SaaS (Software as a Service)', 'PaaS (Platform as a Service)', 'DaaS (Data as a Service)'], answer: 'PaaS (Platform as a Service)', status: 'available' },
+    { id: 918, round: 1, type: 'mcq', content: 'Which of the following best describes the function of DNS (Domain Name System)?', options: ['Encrypting website traffic for security', 'Translating domain names into IP addresses', 'Blocking unauthorized network traffic', 'Distributing internet bandwidth equally'], answer: 'Translating domain names into IP addresses', status: 'available' },
+    { id: 919, round: 1, type: 'mcq', content: 'Which of the following memory types is both volatile and directly accessible by the CPU for processing?', options: ['ROM', 'Cache', 'RAM', 'Flash Memory'], answer: 'RAM', status: 'available' },
+    { id: 920, round: 1, type: 'mcq', content: 'Which of the following best explains the difference between open-source and proprietary software?', options: ['Open-source software is always free, while proprietary software is always paid.', 'Open-source software has publicly available source code, while proprietary software does not.', 'Open-source software cannot be used in businesses, while proprietary software can.', 'Open-source software works only on Linux, while proprietary software works on all platforms.'], answer: 'Open-source software has publicly available source code, while proprietary software does not.', status: 'available' }
 ];
-
 
 export const allQuestions: Question[] = [
   ...round1Questions,
   ...round2Questions,
   ...round3Questions,
   ...round4Questions,
-  ...tieBreakerQuestions,
 ];
 
 export const roundDetails: RoundDetails = {
@@ -843,3 +851,17 @@ Winner:
 - The team with the highest total score is crowned the champion. Ties for first place are resolved manually.`
     }
 };
+
+// This is legacy and will be removed
+export const tieBreakerQuestions: Question[] = [
+    { id: 901, round: 5, type: 'mcq', content: 'What is the decimal equivalent of the binary number 1011?', options: ['9', '10', '11', '12'], answer: '11', status: 'available' },
+    { id: 902, round: 5, type: 'mcq', content: 'What does the acronym "SaaS" stand for?', options: ['Software as a Service', 'System as a Service', 'Security as a Service', 'Software as a System'], answer: 'Software as a Service', status: 'available' },
+    { id: 903, round: 5, type: 'mcq', content: 'In object-oriented programming, what is the term for creating a new class from an existing class?', options: ['Inheritance', 'Polymorphism', 'Encapsulation', 'Abstraction'], answer: 'Inheritance', status: 'available' },
+    { id: 904, round: 5, type: 'mcq', content: 'Which HTTP status code means "Not Found"?', options: ['200', '301', '404', '500'], answer: '404', status: 'available' },
+    { id: 905, round: 5, type: 'mcq', content: 'What is the default port for HTTPS?', options: ['80', '8080', '21', '443'], answer: '443', status: 'available' },
+    { id: 906, round: 5, type: 'mcq', content: 'In CSS, which property is used to change the text color of an element?', options: ['text-color', 'font-color', 'color', 'text-style'], answer: 'color', status: 'available' },
+    { id: 907, round: 5, type: 'mcq', content: 'What data structure uses a Last-In, First-Out (LIFO) method?', options: ['Queue', 'Stack', 'Linked List', 'Tree'], answer: 'Stack', status: 'available' },
+    { id: 908, round: 5, type: 'mcq', content: 'Which company developed the Python programming language?', options: ['Google', 'Microsoft', 'Dropbox', 'Not a company'], answer: 'Not a company', status: 'available' },
+    { id: 909, round: 5, type: 'mcq', content: 'What is the full form of JSON?', options: ['Java Standard Object Notation', 'JavaScript Object Notation', 'Java Source Object Notation', 'JavaScript Oriented Notation'], answer: 'JavaScript Object Notation', status: 'available' },
+    { id: 910, round: 5, type: 'mcq', content: 'Which version control system was created by Linus Torvalds?', options: ['SVN', 'Mercurial', 'Git', 'CVS'], answer: 'Git', status: 'available' }
+];
