@@ -6,6 +6,9 @@ import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
   title: 'MUC TECHNO TECH QUIZ',
   description: 'An interactive quiz competition for the sharpest minds in tech.',
+  icons: {
+    icon: '/event_logo/logo.jpg',
+  },
 };
 
 export default function RootLayout({
