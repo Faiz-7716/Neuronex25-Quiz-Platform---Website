@@ -90,6 +90,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   }, [isOpen, question.id]);
 
   React.useEffect(() => {
+    // Reset time up state when team changes for the same question (pass scenario)
     setIsTimeUp(false);
   }, [teamName]);
 
