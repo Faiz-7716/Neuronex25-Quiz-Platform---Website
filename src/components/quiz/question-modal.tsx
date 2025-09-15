@@ -15,7 +15,6 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 type QuestionModalProps = {
   question: Question;
   teamName: string;
-  teamIndex: number;
   isOpen: boolean;
   onClose: () => void;
   onAnswer: (isCorrect: boolean, isPassed?: boolean) => void;
@@ -41,7 +40,7 @@ const CodeSnippet = ({ code, language }: { code: string; language: keyof typeof 
   );
 };
 
-const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
+const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, roundNumber, isTieBreaker = false }: QuestionModalProps) => {
   const [selectedAnswer, setSelectedAnswer] = React.useState('');
   const [textAnswer, setTextAnswer] = React.useState('');
   const [answerStatus, setAnswerStatus] = React.useState<AnswerStatus>('unanswered');
@@ -114,7 +113,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
     // This effect runs when the team changes (due to a pass)
     // but the question modal stays open.
     setIsTimeUp(false); // Reset time's up state
-  }, [teamIndex]);
+  }, [teamName]); // Use teamName as dependency
 
   const renderQuestionContent = () => {
     switch (question.type) {
@@ -236,7 +235,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
         }
         return (
             <div className="w-full flex justify-between items-center">
-              <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
+              <Timer key={`${question.id}-${teamName}`} duration={timerDuration} onTimeUp={handleTimeUp} />
               <div className="flex gap-2">
                 <Button onClick={() => setIsLogoAnswerRevealed(true)} className="font-headline">Show Answer</Button>
                 {roundNumber < 4 && <Button variant="outline" onClick={handlePass} className="font-headline">Pass</Button>}
@@ -249,7 +248,7 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
 
     return (
       <div className="w-full flex justify-between items-center">
-        <Timer key={question.id + teamIndex} duration={timerDuration} onTimeUp={handleTimeUp} />
+        <Timer key={`${question.id}-${teamName}`} duration={timerDuration} onTimeUp={handleTimeUp} />
         <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
             {(question.type !== 'mcq' || !question.options) && (
                 <Input
@@ -297,5 +296,3 @@ const QuestionModal = ({ question, teamName, teamIndex, isOpen, onClose, onAnswe
 };
 
 export default QuestionModal;
-
-    

@@ -122,6 +122,11 @@ export default function Home() {
 
   const startRound = () => {
     setGameState('round');
+    // Ensure activeTeamIndex is valid for the current set of active teams
+    const currentActiveTeams = teams.filter(t => t.status === 'active');
+    if (activeTeamIndex >= currentActiveTeams.length) {
+      setActiveTeamIndex(0);
+    }
   };
 
   const handleSelectQuestion = (question: Question) => {
@@ -152,24 +157,41 @@ export default function Home() {
     }
     setActiveQuestion(null);
   }
+
+  const handleTeamUpdate = (updatedTeam: Team) => {
+    setTeams(prev => prev.map(t => t.id === updatedTeam.id ? updatedTeam : t));
+    toast({
+        title: "Team Updated",
+        description: `${updatedTeam.name} has been updated.`,
+    })
+  };
   
   const advanceToNextTeam = () => {
     setActiveTeamIndex(prev => {
-      const activeTiedTeams = tieBreakerState ? teams.filter(t => t.status === 'active' && tieBreakerState.tiedTeams.some(tt => tt.id === t.id)) : activeTeams;
-      const currentTeamInSublist = activeTiedTeams.findIndex(t => t.id === activeTeams[prev].id);
+        const currentActiveTeams = teams.filter(t => t.status === 'active');
+        if (currentActiveTeams.length === 0) return 0;
+        
+        const currentTeamId = activeTeams[prev]?.id;
+        const currentTeamIndexInActiveList = currentActiveTeams.findIndex(t => t.id === currentTeamId);
 
-      if (gameState === 'tie-breaker' && tieBreakerState && currentTeamInSublist !== -1) {
-          const nextTiedTeam = activeTiedTeams[(currentTeamInSublist + 1) % activeTiedTeams.length];
-          return teams.findIndex(t => t.id === nextTiedTeam.id);
-      }
-      return (prev + 1) % activeTeams.length;
+        if (currentTeamIndexInActiveList === -1) {
+            return 0; // Default to the first active team if current is not found
+        }
+        
+        const nextIndex = (currentTeamIndexInActiveList + 1) % currentActiveTeams.length;
+        const nextTeamId = currentActiveTeams[nextIndex].id;
+        
+        // Find the original index of the next team
+        return teams.findIndex(t => t.id === nextTeamId);
     });
   };
 
   const handleAnswer = (isCorrect: boolean, isPassed: boolean = false) => {
     if (!activeQuestion) return;
+    
+    const currentTeam = teams[activeTeamIndex];
+    if (!currentTeam || currentTeam.status !== 'active') return;
 
-    const currentTeam = activeTeams[activeTeamIndex];
     const points = isCorrect ? (isPassed ? 5 : 10) : 0;
    
     setTeams(prevTeams =>
@@ -194,23 +216,31 @@ export default function Home() {
   const handlePass = () => {
     if (!activeQuestion) return;
     
-    const currentTeamName = activeTeams[activeTeamIndex].name;
-    const nextTeamIndex = (activeTeamIndex + 1) % activeTeams.length;
-    const nextTeamName = activeTeams[nextTeamIndex].name;
+    const currentTeamName = teams[activeTeamIndex].name;
+    
+    // Find the next active team
+    const currentActiveTeams = teams.filter(t => t.status === 'active');
+    const currentTeamIndexInActiveList = currentActiveTeams.findIndex(t => t.id === teams[activeTeamIndex].id);
+    const nextActiveTeamIndex = (currentTeamIndexInActiveList + 1) % currentActiveTeams.length;
+    const nextTeam = currentActiveTeams[nextActiveTeamIndex];
+    const nextTeamName = nextTeam.name;
+
+    // Find the original index of the next team in the main `teams` array
+    const nextTeamOriginalIndex = teams.findIndex(t => t.id === nextTeam.id);
 
     toast({
         title: 'Passed!',
         description: `Question passed from ${currentTeamName} to ${nextTeamName}.`,
     });
     
-    advanceToNextTeam();
+    setActiveTeamIndex(nextTeamOriginalIndex);
     // The modal stays open, and the timer will be reset by the key change on the Timer component
   };
 
  const handleTieBreakerAnswer = (isCorrect: boolean) => {
     if (!tieBreakerState || !activeQuestion) return;
 
-    const currentTeam = activeTeams[activeTeamIndex];
+    const currentTeam = teams[activeTeamIndex];
 
     if (isCorrect) {
       const newSafeTeams = [...tieBreakerState.safeTeams, currentTeam];
@@ -262,10 +292,11 @@ export default function Home() {
       return;
     }
     
+    const currentActiveTeams = teams.filter(t => t.status === 'active');
     const { teamsAdvancing } = roundInfo;
-    const sortedActiveTeams = [...activeTeams].sort((a, b) => b.score - a.score);
+    const sortedActiveTeams = [...currentActiveTeams].sort((a, b) => b.score - a.score);
 
-    if (activeTeams.length <= teamsAdvancing) {
+    if (sortedActiveTeams.length <= teamsAdvancing) {
         setGameState('roundover');
         return;
     }
@@ -293,7 +324,7 @@ export default function Home() {
         );
         setGameState('roundover');
     }
-  }, [currentRound, activeTeams, toast]);
+  }, [currentRound, teams, toast]);
   
   const proceedToNextStage = () => {
     const activeTeamCount = teams.filter(t => t.status === 'active').length;
@@ -349,7 +380,7 @@ export default function Home() {
         return <RoundSummary roundNumber={currentRound} teams={teams} onContinue={proceedToNextStage} />;
       case 'round':
       case 'tie-breaker':
-        let teamForQuestion = activeTeams[activeTeamIndex];
+        let teamForQuestion = teams[activeTeamIndex];
         let questionsToShow = questionsForRound;
         
         let titleText = `Round ${currentRound}: ${roundDetails[currentRound]?.title}`;
@@ -360,7 +391,7 @@ export default function Home() {
           titleText = "Sudden Death Tie-Breaker!";
           const spotsLeft = tieBreakerState.teamsToAdvance - tieBreakerState.safeTeams.length;
           subText = `Tied Teams Competing: ${tieBreakerState.tiedTeams.map(t => t.name).join(', ')} | Spots Left: ${spotsLeft}`;
-          teamForQuestion = activeTeams[activeTeamIndex];
+          teamForQuestion = teams[activeTeamIndex];
         }
 
         return (
@@ -413,7 +444,7 @@ export default function Home() {
               </div>
             </div>
             <aside className="lg:w-1/3 lg:max-w-sm h-full pt-4 lg:pt-12">
-              <Scoreboard teams={teams} />
+              <Scoreboard teams={teams} onTeamUpdate={handleTeamUpdate} />
             </aside>
           </main>
         );
@@ -424,7 +455,7 @@ export default function Home() {
     }
   };
   
-  let teamForModal = activeTeams[activeTeamIndex];
+  let teamForModal = teams[activeTeamIndex];
   if (gameState === 'tie-breaker' && tieBreakerState) {
     const tiedTeamIds = tieBreakerState.tiedTeams.map(t => t.id);
     const activeTiedTeams = teams.filter(t => tiedTeamIds.includes(t.id));
@@ -446,7 +477,7 @@ export default function Home() {
             <SheetHeader>
               <SheetTitle className="text-2xl font-headline text-primary">Live Scoreboard</SheetTitle>
             </SheetHeader>
-            <Scoreboard teams={teams} />
+            <Scoreboard teams={teams} onTeamUpdate={handleTeamUpdate} />
           </SheetContent>
         </Sheet>
         <Link href="/tie-breaker">
@@ -475,10 +506,9 @@ export default function Home() {
       <AnimatePresence>
         {activeQuestion && teamForModal && (
         <QuestionModal
-          key={activeQuestion.id}
+          key={`${activeQuestion.id}-${teamForModal.id}`}
           question={activeQuestion}
           teamName={teamForModal.name}
-          teamIndex={activeTeamIndex}
           isOpen={!!activeQuestion}
           onClose={handleModalClose}
           onAnswer={gameState === 'tie-breaker' ? handleTieBreakerAnswer : handleAnswer}
