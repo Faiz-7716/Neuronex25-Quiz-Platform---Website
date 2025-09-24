@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { roundDetails } from '@/lib/data';
-import { ChevronsRight, Users, Trophy, HelpCircle, CheckCircle, XCircle } from 'lucide-react';
+import { ChevronsRight, Users, Trophy, HelpCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 type QuizOverviewProps = {
   onContinue: () => void;
@@ -11,25 +11,29 @@ type QuizOverviewProps = {
 const roundInfo = [
     {
         round: 1,
-        questions: '2 per team (MCQ)',
+        format: 'MCQ',
+        time: '30s',
         points: '+10 / +5 (Passed)',
         pass: true,
     },
     {
         round: 2,
-        questions: '2 per team (Logo)',
+        format: 'Logo Identification',
+        time: '30s',
         points: '+10 / +5 (Passed)',
         pass: true,
     },
     {
         round: 3,
-        questions: '2 per team (Acronyms)',
+        format: 'Acronyms (MCQ)',
+        time: '30s',
         points: '+10 / +5 (Passed)',
         pass: true,
     },
     {
         round: 4,
-        questions: '2 per team (Cybersecurity)',
+        format: 'Cybersecurity (MCQ)',
+        time: '45s',
         points: '+10',
         pass: false,
     }
@@ -85,7 +89,11 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
                     <div className="text-left text-sm space-y-3 text-foreground/80">
                         <div className="flex items-start gap-3">
                             <HelpCircle className="w-5 h-5 mt-0.5 text-accent flex-shrink-0" />
-                            <span><span className="font-semibold">Format:</span> {extraInfo?.questions}</span>
+                            <span><span className="font-semibold">Format:</span> {extraInfo?.format}</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <Clock className="w-5 h-5 mt-0.5 text-accent flex-shrink-0" />
+                            <span><span className="font-semibold">Time:</span> {extraInfo?.time} per question</span>
                         </div>
                         <div className="flex items-start gap-3">
                             <Trophy className="w-5 h-5 mt-0.5 text-accent flex-shrink-0" />
