@@ -1,12 +1,39 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { roundDetails } from '@/lib/data';
-import { ChevronsRight, Users, Trophy } from 'lucide-react';
+import { ChevronsRight, Users, Trophy, HelpCircle, CheckCircle, XCircle } from 'lucide-react';
 
 type QuizOverviewProps = {
   onContinue: () => void;
 };
+
+const roundInfo = [
+    {
+        round: 1,
+        questions: '2 per team (MCQ)',
+        points: '+10 / +5 (Passed)',
+        pass: true,
+    },
+    {
+        round: 2,
+        questions: '2 per team (Logo)',
+        points: '+10 / +5 (Passed)',
+        pass: true,
+    },
+    {
+        round: 3,
+        questions: '2 per team (Acronyms)',
+        points: '+10 / +5 (Passed)',
+        pass: true,
+    },
+    {
+        round: 4,
+        questions: '2 per team (Cybersecurity)',
+        points: '+10',
+        pass: false,
+    }
+]
 
 const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
   const rounds = Object.entries(roundDetails);
@@ -36,10 +63,11 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
         Here's a look at the journey to crown the tech champion.
       </motion.p>
       
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {rounds.map(([roundNum, details], index) => {
           const isFinalRound = index === rounds.length - 1;
           const teamsEntering = index === 0 ? 10 : roundDetails[Number(roundNum) - 1]?.teamsAdvancing || 0;
+          const extraInfo = roundInfo.find(r => r.round === Number(roundNum));
 
           return (
             <motion.div
@@ -49,28 +77,49 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
               transition={{ delay: 0.6 + index * 0.2, duration: 0.5 }}
             >
               <Card className="h-full flex flex-col text-center">
-                <CardHeader>
+                <CardHeader className="pb-4">
                   <p className="font-headline text-sm text-primary font-semibold">ROUND {roundNum}</p>
                   <CardTitle className="font-headline text-2xl">{details.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow flex flex-col items-center justify-center gap-4">
-                  <div className="flex items-center gap-2 text-lg">
-                    <Users className="text-accent" />
-                    <span><strong className="font-bold">{teamsEntering}</strong> Teams Compete</span>
-                  </div>
-                  <ChevronsRight className="text-muted-foreground my-2" />
-                  <div className="flex items-center gap-2 text-lg">
-                    {isFinalRound ? (
-                      <>
-                        <Trophy className="text-yellow-400" />
-                        <span><strong className="font-bold">1</strong> Winner</span>
-                      </>
-                    ) : (
-                      <>
-                        <Users className="text-success" />
-                        <span><strong className="font-bold">{details.teamsAdvancing}</strong> Teams Advance</span>
-                      </>
-                    )}
+                <CardContent className="flex-grow flex flex-col justify-between gap-4">
+                    <div className="text-left text-sm space-y-3 text-foreground/80">
+                        <div className="flex items-start gap-3">
+                            <HelpCircle className="w-5 h-5 mt-0.5 text-accent flex-shrink-0" />
+                            <span><span className="font-semibold">Format:</span> {extraInfo?.questions}</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <Trophy className="w-5 h-5 mt-0.5 text-accent flex-shrink-0" />
+                            <span><span className="font-semibold">Points:</span> {extraInfo?.points}</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            {extraInfo?.pass ? (
+                                <CheckCircle className="w-5 h-5 mt-0.5 text-success flex-shrink-0" />
+                            ) : (
+                                <XCircle className="w-5 h-5 mt-0.5 text-destructive flex-shrink-0" />
+                            )}
+                            <span>Passing is {extraInfo?.pass ? <span className="font-semibold text-success">enabled</span> : <span className="font-semibold text-destructive">disabled</span>}</span>
+                        </div>
+                    </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-center gap-2 text-base">
+                        <Users className="text-muted-foreground" />
+                        <span><strong className="font-bold">{teamsEntering}</strong> Teams Compete</span>
+                    </div>
+                    <ChevronsRight className="text-muted-foreground mx-auto" />
+                    <div className="flex items-center justify-center gap-2 text-base">
+                        {isFinalRound ? (
+                        <>
+                            <Trophy className="text-yellow-400" />
+                            <span><strong className="font-bold">Top 3</strong> Winners</span>
+                        </>
+                        ) : (
+                        <>
+                            <Users className="text-success" />
+                            <span><strong className="font-bold">{details.teamsAdvancing}</strong> Teams Advance</span>
+                        </>
+                        )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
