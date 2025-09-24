@@ -509,27 +509,30 @@ export default function Home() {
 
   return (
     <div className="bg-background min-h-screen text-foreground relative">
-      <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+      <div className="absolute top-4 left-4 z-50 flex items-center gap-2">
         <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Users className="h-4 w-4" />
-              <span className="sr-only">View Leaderboard</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent className="w-[400px] sm:w-[540px] bg-background/90 backdrop-blur-lg">
-            <SheetHeader>
-              <SheetTitle className="text-2xl font-headline text-primary">Live Scoreboard</SheetTitle>
-            </SheetHeader>
-            <Scoreboard teams={teams} onTeamUpdate={handleTeamUpdate} />
-          </SheetContent>
+            <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                <Users className="h-4 w-4" />
+                <span className="sr-only">View Leaderboard</span>
+                </Button>
+            </SheetTrigger>
+            <SheetContent className="w-[400px] sm:w-[540px] bg-background/90 backdrop-blur-lg">
+                <SheetHeader>
+                <SheetTitle className="text-2xl font-headline text-primary">Live Scoreboard</SheetTitle>
+                </SheetHeader>
+                <Scoreboard teams={teams} onTeamUpdate={handleTeamUpdate} />
+            </SheetContent>
         </Sheet>
         <Link href="/overview">
-          <Button variant="outline" className="border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white">
-            <BookOpen className="mr-2 h-4 w-4" />
-            Rules Overview
-          </Button>
+            <Button variant="outline" className="border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white">
+                <BookOpen className="mr-2 h-4 w-4" />
+                Rules Overview
+            </Button>
         </Link>
+      </div>
+
+      <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
         <Link href="/tie-breaker">
           <Button variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white">
             <Swords className="mr-2 h-4 w-4" />
@@ -571,3 +574,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
