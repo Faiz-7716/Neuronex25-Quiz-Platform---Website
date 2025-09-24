@@ -74,11 +74,15 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
   };
   
   const handleTimeUp = () => {
+    // Prevent multiple submissions if component re-renders
     if (answerStatus !== 'unanswered') return;
-    
+
     if(isTieBreaker || roundNumber >= 4 || question.type === 'logo') {
+      // Mark as incorrect for these rounds directly on time up
+      setAnswerStatus('incorrect');
       onAnswer(false, isPassed);
     } else {
+      // For other rounds, show Pass/Forfeit options
       setIsTimeUp(true);
     }
   };
