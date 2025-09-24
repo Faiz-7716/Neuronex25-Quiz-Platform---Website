@@ -18,7 +18,7 @@ export type Question = {
   status: QuestionStatus;
 };
 
-export type GameState = 'intro' | 'transition' | 'round' | 'roundover' | 'gameover' | 'tie-breaker';
+export type GameState = 'intro' | 'overview' | 'transition' | 'round' | 'roundover' | 'gameover' | 'tie-breaker';
 
 export type RoundDetail = {
   title: string;

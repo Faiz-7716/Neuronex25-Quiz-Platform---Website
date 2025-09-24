@@ -38,6 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import QuizOverview from '@/components/quiz/quiz-overview';
 
 
 const LOCAL_STORAGE_KEY = 'quizGameState';
@@ -125,8 +126,12 @@ export default function Home() {
   }, [gameState, currentRound, teams, questions, activeTeamIndex, saveState]);
 
   const startQuiz = () => {
-    setGameState('transition');
+    setGameState('overview');
   };
+
+  const startTransition = () => {
+    setGameState('transition');
+  }
 
   const startRound = () => {
     setGameState('round');
@@ -385,6 +390,8 @@ export default function Home() {
     switch (gameState) {
       case 'intro':
         return <IntroScreen onStart={startQuiz} />;
+      case 'overview':
+        return <QuizOverview onContinue={startTransition} />;
       case 'transition':
         const roundInfo = roundDetails[currentRound];
         const roundTitle = roundInfo?.title || `Round ${currentRound}`;
