@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import Image from 'next/image';
 import type { Question } from '@/lib/types';
@@ -77,7 +78,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
     // Prevent multiple submissions if component re-renders
     if (answerStatus !== 'unanswered') return;
 
-    if(isTieBreaker || roundNumber >= 4 || question.type === 'logo') {
+    if(isTieBreaker || roundNumber >= 4) {
       // Mark as incorrect for these rounds directly on time up
       setAnswerStatus('incorrect');
       onAnswer(false, isPassed);
@@ -135,7 +136,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
           );
         }
         return (
-          <div className="my-6 text-xl md:text-2xl font-semibold leading-relaxed">
+          <div className="my-6 text-3xl font-bold text-foreground leading-relaxed">
             {question.content}
           </div>
         )
