@@ -1,0 +1,146 @@
+
+# MUC TECHNO TECH QUIZ - Anchor's Script
+
+---
+
+## 1. Welcome & Opening (Pre-Quiz)
+
+**(Start with energetic music, then fade as you begin speaking)**
+
+**Anchor:** "A very warm welcome to all the brilliant minds, our esteemed faculty, and all the tech enthusiasts gathered here today! I am [Your Name], and it is my absolute pleasure to be your host for an event that promises to be a thrilling battle of wits, knowledge, and speed - the MUC TECHNO TECH QUIZ!"
+
+**Anchor:** "We are here to witness a clash of titans, where the sharpest minds in technology will compete for the coveted title of Tech Champions. The energy is electric, and the competition is fierce. So, get ready for an afternoon filled with challenging questions, nail-biting moments, and a celebration of all things tech!"
+
+---
+
+## 2. Introduction of the Quiz Structure
+
+**Anchor:** "Before we dive in, let's take a quick look at the journey our teams will embark on today. This quiz is divided into four challenging rounds, each designed to test a different aspect of their tech knowledge."
+
+**(Refer to the "Quiz Overview" screen on the main display)**
+
+**Anchor:** "**Round 1 is the 'Tech Titans Challenge.'** Here, we'll test fundamental knowledge of computers and IT. Out of our 10 starting teams, only 8 will advance."
+
+**Anchor:** "**Next, we'll move to Round 2, the 'Brand Busters Arena.'** This is a visual round where teams will have to identify famous tech brand logos. The competition heats up as only 6 teams will make it through."
+
+**Anchor:** "**Round 3 is the 'Acronym Assassins.'** In the world of tech, we love our acronyms! Let's see who can decode them. From this round, we will find our top 4 finalists."
+
+**Anchor:** "**And finally, our top 4 teams will battle it out in Round 4, the 'Cyber Security' finale.** This is where the champions will be forged. This final, high-stakes round will determine our Top 3 winners!"
+
+**Anchor:** "The rules are simple: points for correct answers, and in the first three rounds, teams will have the option to pass a question. Now, are you all ready? Let's meet the teams who will be battling it out today!"
+
+**(Introduce each team one by one, e.g., "Give it up for Team A! ... And let's hear it for Team B! ... etc.")**
+
+---
+
+## 3. Round 1: Tech Titans Challenge
+
+**Anchor:** "Alright teams, the time has come! Let's begin Round 1: The Tech Titans Challenge."
+
+**(Bring up the Round 1 Rules screen)**
+
+**Anchor:** "Here are the rules for this round. You'll have 30 seconds for each question. A correct answer gets you 10 points. If a team passes, the next team has a chance to answer for 5 points. The bottom two teams at the end of this round will be eliminated. Good luck to all of you!"
+
+**Anchor:** "Let's bring up the question grid. The first question goes to [Team Name]. Team, please pick a question number."
+
+**(Begin the round, following the on-screen prompts for each question)**
+
+**--- (After all questions are answered or the grid is cleared) ---**
+
+**Anchor:** "And that brings us to the end of a fantastic first round! All teams have played brilliantly. Let's have a huge round of applause for their efforts!"
+
+**Anchor:** "Now, it's time for the results. Let's take a look at the leaderboard to see who is advancing to the next round and whose journey unfortunately ends here."
+
+**(Display the Round Summary screen. Announce the eliminated teams and congratulate the advancing teams.)**
+
+---
+
+## 4. Round 2: Brand Busters Arena
+
+**Anchor:** "Congratulations to our advancing teams! The competition is getting tougher. Welcome to Round 2: The Brand Busters Arena!"
+
+**(Bring up the Round 2 Rules screen)**
+
+**Anchor:** "In this round, you'll be shown a logo and you'll have 30 seconds to identify the brand. The scoring remains the same: +10 for a direct answer, +5 for a passed answer. The bottom two teams on the overall leaderboard will be eliminated. Let's see who has the keenest eye!"
+
+**Anchor:** "Let's start with [Team Name]. Are you ready? Here is your first logo."
+
+**(Begin the round)**
+
+**--- (After the round ends) ---**
+
+**Anchor:** "What a round! Some of those were tricky, but you all did great. It's time to check the scores and see who will be joining us for Round 3."
+
+**(Display the Round Summary. Announce eliminations and congratulate the advancing teams.)**
+
+---
+
+## 5. Round 3: Acronym Assassins
+
+**Anchor:** "We are down to our top 6 teams! The stakes are higher than ever. Welcome to Round 3: The Acronym Assassins! This round separates the contenders from the champions."
+
+**(Bring up the Round 3 Rules screen)**
+
+**Anchor:** "The rules are familiar: 30 seconds on the clock, +10 for a correct answer, +5 for a passed answer. But this is a crucial round - only the top 4 teams will advance to the grand finale! Let's get started."
+
+**Anchor:** "First up is [Team Name]. Please select your question."
+
+**(Begin the round)**
+
+**--- (After the round ends) ---**
+
+**Anchor:** "And that's a wrap on Round 3! A massive round of applause for all our teams! You've shown incredible knowledge. Now, for the moment of truth. Let's see which four teams have made it to the final."
+
+**(Display the Round Summary. Announce the two eliminated teams and give a huge congratulations to the four finalists.)**
+
+---
+
+## 6. Round 4: The Grand Finale - Cyber Security
+
+**Anchor:** "Ladies and gentlemen, this is it! The final round. We have our top 4 teams, who have battled their way here. Welcome to the Grand Finale: The Cyber Security Round!"
+
+**(Bring up the Round 4 Rules screen)**
+
+**Anchor:** "This is the final hurdle. You will have 45 seconds for each question. A correct answer is worth 10 points. **There is NO passing in this round.** Your final cumulative score will determine our winners. May the best team win!"
+
+**Anchor:** "Finalists, take a deep breath. The championship is on the line. First question goes to [Team Name]."
+
+**(Begin the final round)**
+
+**--- (After the final question) ---**
+
+**Anchor:** "And with that last question, the MUC TECHNO TECH QUIZ has come to an end! Let's have a massive, massive round of applause for our four incredible finalists! You were all outstanding."
+
+---
+
+## 7. Tie-Breaker (If needed)
+
+**(This section is for manual use if a tie occurs for advancement or for the final winner)**
+
+**Anchor (Option 1 - Tie for Advancement):** "It seems we have a tie for the final advancement spot! To break this tie, we will go to a sudden-death round. The first team to answer a question correctly will advance. The question will be shown to both teams, and the first to buzz in gets to answer."
+
+**Anchor (Option 2 - Tie for Winner):** "Unbelievable! We have a tie for the [1st/2nd/3rd] place! This means we need one more question to decide our winner. This will be a rapid-fire buzzer round. The first team to answer correctly will claim the spot!"
+
+**(Use the "Tie Breaker" page and conduct the tie-breaker as per the rules you've set)**
+
+---
+
+## 8. Winner Announcement & Closing
+
+**Anchor:** "The moment we've all been waiting for has arrived. The scores have been calculated, and it's time to crown our champions."
+
+**(Bring up the Final Leaderboard screen)**
+
+**Anchor:** "In Third Place, with an incredible performance, give it up for... **[Team Name in 3rd Place]**! Congratulations!"
+
+**Anchor:** "Now, for our runner-up. Taking the Second Place spot is... **[Team Name in 2nd Place]**! A fantastic effort!"
+
+**Anchor:** "And now, ladies and gentlemen, the moment of truth. The winners of the MUC TECHNO TECH QUIZ 2024, with an outstanding score and a brilliant display of knowledge, are... **[WINNING TEAM NAME]**! Congratulations! You are our Tech Champions!"
+
+**(Lead the applause. Invite dignitaries to present the awards/certificates.)**
+
+**Anchor:** "What an incredible journey it has been. A huge thank you to all our participating teams for their spirit and intellect. Thank you to our wonderful audience for your enthusiasm, and a special thanks to the Department of [Your Department Name] and everyone behind the scenes who made this event a grand success."
+
+**Anchor:** "This is [Your Name], signing off. Stay curious, keep learning, and see you next time. Have a great day!"
+
+**(Energetic music fades in)**
