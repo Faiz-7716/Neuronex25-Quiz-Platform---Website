@@ -287,9 +287,15 @@ export default function Home() {
 
   const endRound = React.useCallback(() => {
     const roundInfo = roundDetails[currentRound];
-    if (!roundInfo || currentRound > 4) {
-      setGameState('roundover');
-      return;
+    if (!roundInfo) {
+        setGameState('roundover');
+        return;
+    }
+
+    // Special handling for the final round - no eliminations
+    if (currentRound === 4) {
+        setGameState('roundover');
+        return;
     }
     
     const currentActiveTeams = teams.filter(t => t.status === 'active');
@@ -521,3 +527,5 @@ export default function Home() {
     </div>
   );
 }
+
+    

@@ -59,19 +59,32 @@ export default function TieBreakerPage() {
     const activeTeams = teams.filter(t => t.status === 'active');
     const sortedActiveTeams = [...activeTeams].sort((a, b) => b.score - a.score);
     
-    if (activeTeams.length <= roundInfo.teamsAdvancing) {
-        toast({ title: `No tie detected for Round ${roundNumber}`, description: "Not enough teams for an elimination tie." });
-        setTieBreakerState({ round: roundNumber, tiedTeams: [], selectedTeams: [], question: null });
-        return;
+    let teamsAtCutoff: Team[] = [];
+
+    if (roundNumber === 4) {
+      // Final round tie logic: Check for a tie for 1st place
+      if (sortedActiveTeams.length > 1 && sortedActiveTeams[0].score === sortedActiveTeams[1].score) {
+        const topScore = sortedActiveTeams[0].score;
+        teamsAtCutoff = sortedActiveTeams.filter(t => t.score === topScore);
+      }
+    } else {
+      // Elimination round tie logic
+      const { teamsAdvancing } = roundInfo;
+      if (activeTeams.length <= teamsAdvancing) {
+          toast({ title: `No tie detected for Round ${roundNumber}`, description: "Not enough teams for an elimination tie." });
+          setTieBreakerState({ round: roundNumber, tiedTeams: [], selectedTeams: [], question: null });
+          return;
+      }
+      const cutoffScore = sortedActiveTeams[teamsAdvancing - 1].score;
+      const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
+      if (teamsAboveCutoff.length < teamsAdvancing) {
+        teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
+      }
     }
 
-    const cutoffScore = sortedActiveTeams[roundInfo.teamsAdvancing - 1].score;
-    const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
-    const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
-    
     const tieBreakerQuestions = getTieBreakerQuestionsForRound(roundNumber);
-
-    if (teamsAboveCutoff.length + teamsAtCutoff.length > roundInfo.teamsAdvancing) {
+    
+    if (teamsAtCutoff.length > 1) {
         if (tieBreakerQuestions.length === 0) {
             toast({ title: "No Tie-Breaker Questions", description: `There are no unused questions available for Round ${roundNumber}.`, variant: "destructive" });
              setTieBreakerState({ round: roundNumber, tiedTeams: teamsAtCutoff, selectedTeams: [], question: null });
@@ -202,7 +215,7 @@ export default function TieBreakerPage() {
                     <CardHeader>
                         <CardTitle>2. Select Teams for Rapid Fire</CardTitle>
                         {tieBreakerState.tiedTeams.length > 0 ? (
-                             <p className="text-muted-foreground pt-1">{tieBreakerState.tiedTeams.length} teams are tied for elimination spots.</p>
+                             <p className="text-muted-foreground pt-1">{tieBreakerState.tiedTeams.length} teams are tied.</p>
                         ) : (
                             <p className="text-muted-foreground pt-1">No teams are currently tied for this round.</p>
                         )}
@@ -276,3 +289,5 @@ export default function TieBreakerPage() {
     </div>
   );
 }
+
+    
