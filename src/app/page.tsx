@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { Team, Question, GameState } from '@/lib/types';
 import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions } from '@/lib/data';
 import { AnimatePresence } from 'framer-motion';
-import { FileText, Users, Save, RotateCcw, Swords, Trophy } from 'lucide-react';
+import { FileText, Users, Save, RotateCcw, Swords, Trophy, ChevronDown } from 'lucide-react';
 
 import IntroScreen from '@/components/quiz/intro-screen';
 import RoundTransition from '@/components/quiz/round-transition';
@@ -31,6 +31,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 const LOCAL_STORAGE_KEY = 'quizGameState';
 
@@ -171,7 +179,7 @@ export default function Home() {
         const currentActiveTeams = teams.filter(t => t.status === 'active');
         if (currentActiveTeams.length === 0) return 0;
         
-        const currentTeamId = activeTeams[prev]?.id;
+        const currentTeamId = teams[prev]?.id;
         const currentTeamIndexInActiveList = currentActiveTeams.findIndex(t => t.id === currentTeamId);
 
         if (currentTeamIndexInActiveList === -1) {
@@ -349,6 +357,13 @@ export default function Home() {
     setActiveTeamIndex(0);
   };
 
+  const handleActiveTeamChange = (teamId: string) => {
+    const newIndex = teams.findIndex(t => t.id === parseInt(teamId, 10));
+    if (newIndex !== -1) {
+      setActiveTeamIndex(newIndex);
+    }
+  };
+
   const questionsForRound = questions.filter(q => q.round === currentRound);
   const roundEnded = questionsForRound.every(q => q.status !== 'available');
 
@@ -390,13 +405,11 @@ export default function Home() {
         let questionsToShow = questionsForRound;
         
         let titleText = `Round ${currentRound}: ${roundDetails[currentRound]?.title}`;
-        let subText = `Up Next: <span class="font-bold text-accent">${teamForQuestion?.name || 'N/A'}</span>`;
         
         if(gameState === 'tie-breaker' && tieBreakerState) {
           questionsToShow = [tieBreakerQuestions[tieBreakerState.questionIndex]];
           titleText = "Sudden Death Tie-Breaker!";
           const spotsLeft = tieBreakerState.teamsToAdvance - tieBreakerState.safeTeams.length;
-          subText = `Tied Teams Competing: ${tieBreakerState.tiedTeams.map(t => t.name).join(', ')} | Spots Left: ${spotsLeft}`;
           teamForQuestion = teams[activeTeamIndex];
         }
 
@@ -411,7 +424,25 @@ export default function Home() {
                         <span className="sr-only">View Rules</span>
                     </Button>
                  </div>
-                 <p className="text-xl text-muted-foreground mt-2" dangerouslySetInnerHTML={{ __html: subText }} />
+                 <div className="mt-2 flex items-center justify-center gap-2">
+                    <span className="text-xl text-muted-foreground">Up Next:</span>
+                     <Select
+                        value={String(teams[activeTeamIndex]?.id)}
+                        onValueChange={handleActiveTeamChange}
+                        disabled={activeTeams.length === 0}
+                      >
+                        <SelectTrigger className="w-[250px] bg-card/70 backdrop-blur-sm font-headline text-lg text-accent font-bold border-accent">
+                          <SelectValue placeholder="Select team..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {activeTeams.map(team => (
+                            <SelectItem key={team.id} value={String(team.id)}>
+                              {team.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                 </div>
               </div>
 
               <div className="flex-grow flex items-center justify-center">

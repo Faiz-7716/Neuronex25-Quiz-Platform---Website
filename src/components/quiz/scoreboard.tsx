@@ -2,7 +2,7 @@ import type { Team } from '@/lib/types';
 import * as React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Trophy, Edit } from 'lucide-react';
+import { Trophy, Edit, Plus, Minus } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
@@ -15,16 +15,19 @@ type ScoreboardProps = {
   onTeamUpdate: (team: Team) => void;
 };
 
-const TeamEditor = ({ team, onTeamUpdate }: { team: Team, onTeamUpdate: (team: Team) => void }) => {
+const TeamEditor = ({ team, onTeamUpdate, closePopover }: { team: Team, onTeamUpdate: (team: Team) => void, closePopover: () => void }) => {
     const [name, setName] = React.useState(team.name);
+    const [score, setScore] = React.useState(team.score);
     const [isActive, setIsActive] = React.useState(team.status === 'active');
     
     const handleSave = () => {
         onTeamUpdate({
             ...team,
             name,
+            score,
             status: isActive ? 'active' : 'eliminated',
         });
+        closePopover();
     };
 
     return (
@@ -32,19 +35,27 @@ const TeamEditor = ({ team, onTeamUpdate }: { team: Team, onTeamUpdate: (team: T
             <div className="space-y-2">
                 <h4 className="font-medium leading-none">Edit Team</h4>
                 <p className="text-sm text-muted-foreground">
-                    Rename team or change their status.
+                    Manually adjust team details.
                 </p>
             </div>
-            <div className="grid gap-2">
+            <div className="grid gap-4">
                 <div className="grid grid-cols-3 items-center gap-4">
                     <Label htmlFor="name">Name</Label>
                     <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-2 h-8" />
+                </div>
+                 <div className="grid grid-cols-3 items-center gap-4">
+                    <Label htmlFor="score">Score</Label>
+                    <div className="col-span-2 flex items-center gap-2">
+                         <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setScore(s => s - 1)}><Minus className="h-4 w-4" /></Button>
+                         <Input id="score" type="number" value={score} onChange={(e) => setScore(Number(e.target.value))} className="h-8 w-16 text-center" />
+                         <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setScore(s => s + 1)}><Plus className="h-4 w-4" /></Button>
+                    </div>
                 </div>
                 <div className="grid grid-cols-3 items-center gap-4">
                     <Label htmlFor="status">Active</Label>
                     <Switch id="status" checked={isActive} onCheckedChange={setIsActive} />
                 </div>
-                <Button onClick={handleSave} size="sm">Save</Button>
+                <Button onClick={handleSave} size="sm">Save Changes</Button>
             </div>
         </div>
     )
@@ -52,6 +63,7 @@ const TeamEditor = ({ team, onTeamUpdate }: { team: Team, onTeamUpdate: (team: T
 
 const Scoreboard = ({ teams, onTeamUpdate }: ScoreboardProps) => {
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
+  const [openPopoverId, setOpenPopoverId] = React.useState<number | null>(null);
 
   return (
     <Card className="bg-transparent border-none shadow-none h-full flex flex-col">
@@ -92,14 +104,14 @@ const Scoreboard = ({ teams, onTeamUpdate }: ScoreboardProps) => {
                     >
                         {team.name}
                     </p>
-                    <Popover>
+                    <Popover open={openPopoverId === team.id} onOpenChange={(isOpen) => setOpenPopoverId(isOpen ? team.id : null)}>
                         <PopoverTrigger asChild>
                             <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-accent-foreground">
                                 <Edit className="w-4 h-4"/>
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-80">
-                           <TeamEditor team={team} onTeamUpdate={onTeamUpdate} />
+                           <TeamEditor team={team} onTeamUpdate={onTeamUpdate} closePopover={() => setOpenPopoverId(null)} />
                         </PopoverContent>
                     </Popover>
                     </div>
