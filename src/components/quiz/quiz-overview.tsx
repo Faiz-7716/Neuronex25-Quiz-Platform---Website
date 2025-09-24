@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -59,7 +60,7 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
         Quiz Structure
       </motion.h1>
       <motion.p
-        className="text-lg text-muted-foreground mb-12 text-center max-w-2xl"
+        className="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto"
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
@@ -67,7 +68,7 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
         Here's a look at the journey to crown the tech champion.
       </motion.p>
       
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {rounds.map(([roundNum, details], index) => {
           const isFinalRound = index === rounds.length - 1;
           const teamsEntering = index === 0 ? 10 : roundDetails[Number(roundNum) - 1]?.teamsAdvancing || 0;
@@ -148,3 +149,5 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
     </motion.div>
   );
 };
+
+export default QuizOverview;
