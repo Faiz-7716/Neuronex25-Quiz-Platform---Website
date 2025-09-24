@@ -148,5 +148,3 @@ const QuizOverview = ({ onContinue }: QuizOverviewProps) => {
     </motion.div>
   );
 };
-
-export default QuizOverview;

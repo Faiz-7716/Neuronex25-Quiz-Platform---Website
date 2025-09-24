@@ -6,10 +6,9 @@ import Link from 'next/link';
 import type { Team, Question, GameState } from '@/lib/types';
 import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions } from '@/lib/data';
 import { AnimatePresence } from 'framer-motion';
-import { FileText, Users, Save, RotateCcw, Swords, Trophy, ChevronDown } from 'lucide-react';
+import { FileText, Users, Save, RotateCcw, Swords, Trophy, ChevronDown, BookOpen } from 'lucide-react';
 
 import IntroScreen from '@/components/quiz/intro-screen';
-import QuizOverview from '@/components/quiz/quiz-overview';
 import RoundTransition from '@/components/quiz/round-transition';
 import RoundSummary from '@/components/quiz/round-summary';
 import Scoreboard from '@/components/quiz/scoreboard';
@@ -126,10 +125,6 @@ export default function Home() {
   }, [gameState, currentRound, teams, questions, activeTeamIndex, saveState]);
 
   const startQuiz = () => {
-    setGameState('overview');
-  };
-
-  const startFirstRound = () => {
     setGameState('transition');
   };
 
@@ -390,8 +385,6 @@ export default function Home() {
     switch (gameState) {
       case 'intro':
         return <IntroScreen onStart={startQuiz} />;
-      case 'overview':
-        return <QuizOverview onContinue={startFirstRound} />;
       case 'transition':
         const roundInfo = roundDetails[currentRound];
         const roundTitle = roundInfo?.title || `Round ${currentRound}`;
@@ -524,6 +517,12 @@ export default function Home() {
             <Scoreboard teams={teams} onTeamUpdate={handleTeamUpdate} />
           </SheetContent>
         </Sheet>
+        <Link href="/overview">
+          <Button variant="outline" className="border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white">
+            <BookOpen className="mr-2 h-4 w-4" />
+            Rules Overview
+          </Button>
+        </Link>
         <Link href="/tie-breaker">
           <Button variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white">
             <Swords className="mr-2 h-4 w-4" />
@@ -565,5 +564,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
