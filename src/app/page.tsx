@@ -301,7 +301,7 @@ export default function Home() {
         return;
     }
 
-    const cutoffScore = sortedActiveTeams[teamsAdvancing -1].score;
+    const cutoffScore = sortedActiveTeams[teamsAdvancing - 1].score;
     const teamsAboveCutoff = sortedActiveTeams.filter(t => t.score > cutoffScore);
     const teamsAtCutoff = sortedActiveTeams.filter(t => t.score === cutoffScore);
     const spotsLeft = teamsAdvancing - teamsAboveCutoff.length;
