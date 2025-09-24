@@ -827,7 +827,7 @@ Elimination:
     },
     4: {
         title: 'Cyber Security',
-        teamsAdvancing: 1,
+        teamsAdvancing: 3,
         rules: `Format:
 - Teams: The 4 finalists compete.
 - Questions: Cybersecurity concepts.
@@ -838,7 +838,7 @@ Scoring:
 - No Passing: Passing is disabled.
 
 Winner:
-- The team with the highest total score is crowned the champion. Ties for first place are resolved manually.`
+- The Top 3 teams will be decided based on their final cumulative scores. Ties are resolved manually.`
     }
 };
 
