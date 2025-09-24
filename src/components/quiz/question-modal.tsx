@@ -229,7 +229,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
       );
     }
 
-    if (question.type === 'logo' && roundNumber === 2) {
+    if (question.type === 'logo') {
         if (isLogoAnswerRevealed) {
             return(
                 <div className="w-full flex justify-center gap-4">
@@ -240,7 +240,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
         }
         return (
             <div className="w-full flex justify-between items-center">
-              <Timer key={`${question.id}-${teamName}`} duration={timerDuration} onTimeUp={handleTimeUp} />
+              <Timer key={`${question.id}-${teamName}`} duration={timerDuration} onTimeUp={handleTimeUp} roundNumber={roundNumber} />
               <div className="flex gap-2">
                 <Button onClick={() => setIsLogoAnswerRevealed(true)} className="font-headline">Show Answer</Button>
                 {roundNumber < 4 && <Button variant="outline" onClick={handlePass} className="font-headline">Pass</Button>}
@@ -253,7 +253,7 @@ const QuestionModal = ({ question, teamName, isOpen, onClose, onAnswer, onPass, 
 
     return (
       <div className="w-full flex justify-between items-center">
-        <Timer key={`${question.id}-${teamName}`} duration={timerDuration} onTimeUp={handleTimeUp} />
+        <Timer key={`${question.id}-${teamName}`} duration={timerDuration} onTimeUp={handleTimeUp} roundNumber={roundNumber} />
         <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
             {(question.type !== 'mcq' || !question.options) && (
                 <Input

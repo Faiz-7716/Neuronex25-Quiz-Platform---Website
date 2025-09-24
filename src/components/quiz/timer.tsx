@@ -1,12 +1,14 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 type TimerProps = {
   duration: number;
   onTimeUp: () => void;
+  roundNumber: number;
 };
 
-const Timer = ({ duration, onTimeUp }: TimerProps) => {
+const Timer = ({ duration, onTimeUp, roundNumber }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(duration);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -21,9 +23,9 @@ const Timer = ({ duration, onTimeUp }: TimerProps) => {
   useEffect(() => {
     setTimeLeft(duration);
     
-    // Play audio when timer starts
+    // Play audio when timer starts, unless it's round 4
     const audio = audioRef.current;
-    if (audio) {
+    if (audio && roundNumber !== 4) {
       audio.currentTime = 0;
       audio.play().catch(error => console.error("Audio play failed:", error));
     }
@@ -34,7 +36,7 @@ const Timer = ({ duration, onTimeUp }: TimerProps) => {
         audio.pause();
       }
     };
-  }, [duration]);
+  }, [duration, roundNumber]);
   
   useEffect(() => {
     if (timeLeft <= 0) {
