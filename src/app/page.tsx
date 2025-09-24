@@ -9,6 +9,7 @@ import { AnimatePresence } from 'framer-motion';
 import { FileText, Users, Save, RotateCcw, Swords, Trophy, ChevronDown } from 'lucide-react';
 
 import IntroScreen from '@/components/quiz/intro-screen';
+import QuizOverview from '@/components/quiz/quiz-overview';
 import RoundTransition from '@/components/quiz/round-transition';
 import RoundSummary from '@/components/quiz/round-summary';
 import Scoreboard from '@/components/quiz/scoreboard';
@@ -125,6 +126,10 @@ export default function Home() {
   }, [gameState, currentRound, teams, questions, activeTeamIndex, saveState]);
 
   const startQuiz = () => {
+    setGameState('overview');
+  };
+
+  const startFirstRound = () => {
     setGameState('transition');
   };
 
@@ -385,6 +390,8 @@ export default function Home() {
     switch (gameState) {
       case 'intro':
         return <IntroScreen onStart={startQuiz} />;
+      case 'overview':
+        return <QuizOverview onContinue={startFirstRound} />;
       case 'transition':
         const roundInfo = roundDetails[currentRound];
         const roundTitle = roundInfo?.title || `Round ${currentRound}`;
