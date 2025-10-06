@@ -1,209 +1,209 @@
-1. In medical imaging, what type of AI model is commonly used for tasks like identifying tumors in MRI or CT scans?
-A) Recurrent Neural Networks (RNNs)
-B) Convolutional Neural Networks (CNNs)
-C) Generative Adversarial Networks (GANs)
-D) Reinforcement Learning
-Answer: B
+1. Which of the following best describes “Telemedicine”?
+A) A method of delivering healthcare services remotely using digital communication technologies.
+B) A robotic system used for performing automated surgeries.
+C) A database used to store medical research papers.
+D) A wearable device that tracks fitness activity.
+Answer: A method of delivering healthcare services remotely using digital communication technologies.
 
-2. What does the term "in silico" mean in the context of drug discovery?
-A) Conducting experiments in a living organism.
-B) Conducting experiments using computer simulations.
-C) Conducting experiments in a test tube.
-D) A clinical trial with human subjects.
-Answer: B
+2. Which AI technique is commonly used to predict the structure and function of proteins in microbiology?
+A) Regression Analysis
+B) Deep Learning
+C) Data Encryption
+D) Cloud Computing
+Answer: Deep Learning
 
-3. Which of the following is a major challenge for using AI in healthcare?
-A) Lack of data.
-B) Ensuring patient privacy and data security (adherence to HIPAA).
-C) The slowness of computer processors.
-D) AI models being too simple.
-Answer: B
+3. How is Artificial Intelligence (AI) used in microbiology research?
+A) To grow bacteria faster in laboratory incubators.
+B) To automate genome sequencing and identify microbial species from genetic data.
+C) To clean laboratory glassware automatically.
+D) To manually record data in lab notebooks.
+Answer: To automate genome sequencing and identify microbial species from genetic data.
 
-4. What is the primary goal of using AI in personalized medicine?
-A) To create one-size-fits-all treatments.
-B) To reduce the cost of all medications.
-C) To tailor medical treatment to the individual characteristics of each patient.
-D) To replace doctors with AI.
-Answer: C
+4. How does AI assist in detecting antibiotic resistance in bacteria?
+A) By comparing microbial genomes to known resistance genes using machine learning models.
+B) By changing the bacteria’s DNA to make it sensitive again.
+C) By deleting harmful genes from microbial databases.
+D) By heating bacterial samples in the lab.
+Answer: By comparing microbial genomes to known resistance genes using machine learning models.
 
-5. Natural Language Processing (NLP) in healthcare is most commonly used for:
-A) Controlling surgical robots.
-B) Analyzing genetic sequences.
-C) Extracting information from electronic health records (EHRs).
-D) Generating medical images.
-Answer: C
+5. Which computer-based technology helps identify bacteria and viruses by analyzing their genetic sequences?
+A) Image processing
+B) Bioinformatics
+C) Data compression
+D) Cloud storage
+Answer: Bioinformatics
 
-6. What is "precision medicine"?
-A) A field of medicine that uses general treatments for all patients.
-B) An approach that customizes healthcare, with decisions and treatments tailored to each patient.
-C) A type of surgery performed by robots.
-D) The use of AI to predict the weather.
-Answer: B
+6. Which AI system by DeepMind achieved breakthroughs in protein folding predictions?
+A) Watson
+B) AlphaFold
+C) ChatGPT
+D) BioMind
+Answer: AlphaFold
 
-7. What is a significant ethical concern regarding AI in healthcare?
-A) The potential for AI to be too accurate.
-B) The risk of algorithmic bias leading to health disparities.
-C) The high cost of electricity to run AI models.
-D) The difficulty of updating AI software.
-Answer: B
+7. Which of the following tools is commonly used for DNA sequence alignment in computational biology?
+A) BLAST
+B) Photoshop
+C) SQL
+D) GitHub
+Answer: BLAST
 
-8. Which of these is an example of a wearable device that collects health data for AI analysis?
-A) A desktop computer.
-B) A Fitbit or Apple Watch.
-C) An MRI machine.
-D) A hospital bed.
-Answer: B
+8. What is the main purpose of using Machine Learning in drug discovery?
+A) To manually test drugs on animals
+B) To predict the effectiveness of new drug compounds using data patterns
+C) To produce vaccines in large quantities
+D) To label chemicals for shipment
+Answer: To predict the effectiveness of new drug compounds using data patterns
 
-9. In genomics, what can AI help to identify?
-A) The location of the nearest hospital.
-B) The price of a new drug.
-C) Patterns in DNA that may be linked to diseases.
-D) The number of patients in a clinic.
-Answer: C
+9. In microbiological image analysis, which AI technique helps classify bacteria based on shape?
+A) Neural Networks
+B) Cloud Storage
+C) Firewalls
+D) QR Codes
+Answer: Neural Networks
 
-10. What is a "digital twin" in the context of healthcare?
-A) A robot that looks like a patient.
-B) A virtual model of a patient used for simulations and treatment planning.
-C) A patient's online social media profile.
-D) A backup of a patient's electronic health record.
-Answer: B
+10. Which field combines computer science, statistics, and biology to analyze biological data?
+A) Robotics
+B) Bioinformatics
+C) Data Engineering
+D) Biotechnology
+Answer: Bioinformatics
 
-11. Which AI technique is particularly useful for predicting disease outbreaks?
-A) Image recognition.
-B) Time-series analysis and forecasting.
-C) Natural Language Generation (NLG).
-D) Simple rule-based systems.
-Answer: B
+11. Which AI approach helps predict microbial interactions in the human gut microbiome?
+A) Deep Learning
+B) Linear Regression
+C) Image Rendering
+D) Blockchain
+Answer: Deep Learning
 
-12. What does HIPAA stand for?
-A) Health Information Portability and Accountability Act.
-B) Healthcare Information and Patient Privacy Act.
-C) Health Insurance Portability and Accountability Act.
-D) Healthy Individual and Patient Action Act.
-Answer: C
+12. Which type of data is primarily analyzed in metagenomics?
+A) Protein crystal images
+B) Genetic sequences from environmental samples
+C) Hospital billing records
+D) Microscopic photographs only
+Answer: Genetic sequences from environmental samples
 
-13. How can AI assist surgeons in the operating room?
-A) By ordering lunch for the surgical team.
-B) By providing real-time guidance and enhancing precision in robotic surgery.
-C) By communicating with the patient's family during surgery.
-D) By automatically billing the patient.
-Answer: B
+13. Which AI tool is used for rapid detection of pathogens in blood samples?
+A) AlphaFold
+B) Convolutional Neural Networks (CNN)
+C) Excel
+D) SPSS
+Answer: Convolutional Neural Networks (CNN)
 
-14. What is the purpose of "explainable AI" (XAI) in medical diagnosis?
-A) To make AI models more complex.
-B) To allow clinicians to understand how an AI model reached its conclusion.
-C) To hide the decision-making process of the AI.
-D) To speed up the AI's processing time.
-Answer: B
+14. Which technology helps simulate the spread of infectious diseases?
+A) Epidemiological modeling
+B) Cloud storage
+C) Blockchain
+D) Web scraping
+Answer: Epidemiological modeling
 
-15. What type of AI is used in "virtual health assistants" or chatbots that answer patient questions?
-A) Computer Vision.
-B) Reinforcement Learning.
-C) Natural Language Processing (NLP).
-D) Unsupervised Learning.
-Answer: C
+15. What is the role of AI in vaccine development?
+A) Growing viruses manually
+B) Predicting protein targets for vaccine design
+C) Automating vaccine injections
+D) Storing patient vaccination data only
+Answer: Predicting protein targets for vaccine design
 
-16. What is a major benefit of using AI for drug discovery?
-A) It makes the process more expensive.
-B) It can significantly speed up the process of identifying promising drug candidates.
-C) It guarantees that every drug will be successful.
-D) It eliminates the need for human scientists.
-Answer: B
+16. Which type of AI algorithm is often used to classify bacterial colonies based on images?
+A) Decision Trees
+B) Convolutional Neural Networks (CNN)
+C) Linear Regression
+D) Genetic Algorithms
+Answer: Convolutional Neural Networks (CNN)
 
-17. Which of the following is a risk of over-relying on AI for medical diagnosis?
-A) The AI will always be correct.
-B) A potential for misdiagnosis if the AI model is flawed or biased.
-C) Doctors will have too much free time.
-D) The cost of healthcare will decrease too quickly.
-Answer: B
+17. Which database is widely used to store DNA and RNA sequences?
+A) GenBank
+B) GitHub
+C) LinkedIn
+D) PubMed
+Answer: GenBank
 
-18. What is "federated learning" in AI for healthcare?
-A) Training a single AI model in a central location.
-B) A method to train AI models across multiple decentralized devices or servers holding local data samples, without exchanging the data itself.
-C) A type of learning exclusive to government hospitals.
-D) A competition between different AI models.
-Answer: B
+18. Which AI-based method helps detect novel viruses in genomic datasets?
+A) Sequence alignment and anomaly detection
+B) Manual PCR testing
+C) Spreadsheet analysis
+D) Cloud storage
+Answer: Sequence alignment and anomaly detection
 
-19. How can AI help in managing chronic diseases like diabetes?
-A) By providing a permanent cure.
-B) By creating new types of sugar.
-C) By analyzing patient data to predict blood sugar levels and recommend lifestyle changes.
-D) By ordering insulin without a prescription.
-Answer: C
+19. Which technology allows high-throughput analysis of microbial communities?
+A) Next-Generation Sequencing (NGS)
+B) Incubators
+C) Microscopes only
+D) Cloud email services
+Answer: Next-Generation Sequencing (NGS)
 
-20. What is a key role of AI in analyzing medical literature?
-A) To translate all papers into a single language.
-B) To quickly scan and synthesize information from thousands of research papers.
-C) To automatically reject papers with poor grammar.
-D) To generate fake research papers.
-Answer: B
+20. How does AI contribute to antimicrobial drug design?
+A) Automating lab sterilization
+B) Predicting molecules that inhibit microbial growth
+C) Growing bacteria faster
+D) Replacing laboratory technicians
+Answer: Predicting molecules that inhibit microbial growth
 
-21. What is the "black box" problem in AI?
-A) A situation where it is difficult to understand how an AI model makes its decisions.
-B) A physical box that contains the AI's computer chip.
-C) A problem that only occurs in the dark.
-D) A term for a perfectly understood AI model.
-Answer: A
+21. Which software tool is used to visualize protein structures predicted by AI?
+A) PyMOL
+B) Microsoft Word
+C) PowerPoint
+D) Photoshop
+Answer: PyMOL
 
-22. In mental health, how can AI-powered tools be used?
-A) To replace human therapists entirely.
-B) To analyze speech patterns and text messages for signs of depression or anxiety.
-C) To prescribe medication without a doctor's approval.
-D) To create stressful environments for exposure therapy.
-Answer: B
+22. Which AI method is used to classify microbes based on genetic sequence data?
+A) Clustering algorithms
+B) Image editing
+C) SQL queries
+D) Cloud storage
+Answer: Clustering algorithms
 
-23. What type of data is primarily used to train an AI model for medical image analysis?
-A) Text from medical textbooks.
-B) A large dataset of labeled images (e.g., X-rays with and without fractures).
-C) Audio recordings of doctors' notes.
-D) Hospital financial records.
-Answer: B
+23. Which technology allows real-time monitoring of microbial growth in labs?
+A) IoT sensors
+B) Cloud storage
+C) VPN
+D) Manual logbooks
+Answer: IoT sensors
 
-24. Which of these tasks is an example of "predictive analytics" in healthcare?
-A) Storing a patient's address.
-B) Displaying an X-ray image.
-C) Identifying patients at high risk of developing a certain disease in the future.
-D) Scheduling a doctor's appointment.
-Answer: C
+24. Which AI application helps predict microbial resistance to multiple antibiotics simultaneously?
+A) Regression analysis
+B) Multi-output Machine Learning models
+C) Image editing software
+D) Blockchain
+Answer: Multi-output Machine Learning models
 
-25. What is the role of the FDA (Food and Drug Administration) in AI for healthcare?
-A) It has no role.
-B) It regulates AI-based medical devices and software to ensure they are safe and effective.
-C) It provides funding for all AI research.
-D) It designs and builds its own AI models.
-Answer: B
+25. What is the purpose of using image processing in microbiology?
+A) To classify colonies, detect pathogens, and quantify growth
+B) To encrypt lab data
+C) To store patient records
+D) To run simulations
+Answer: To classify colonies, detect pathogens, and quantify growth
 
-26. How can AI improve the efficiency of clinical trials?
-A) By eliminating the need for participants.
-B) By helping to identify and recruit suitable candidates more quickly.
-C) By making the trial medication more potent.
-D) By guaranteeing a positive outcome for every trial.
-Answer: B
+26. Which AI platform predicts protein-protein interactions in microbial systems?
+A) TensorFlow
+B) Excel
+C) Notepad
+D) PowerPoint
+Answer: TensorFlow
 
-27. What is an "Adversarial Attack" against a medical AI model?
-A) A positive review from a rival hospital.
-B) A power outage in the data center.
-C) A technique to intentionally fool an AI model by providing it with deceptive input.
-D) A disagreement between two doctors.
-Answer: C
+27. Which technology helps integrate microbiology lab data from multiple sources?
+A) Cloud computing
+B) Blockchain only
+C) QR Codes
+D) Email
+Answer: Cloud computing
 
-28. Which of the following is a key advantage of using robotic process automation (RPA) in healthcare administration?
-A) It makes tasks more complicated.
-B) It automates repetitive, rule-based tasks like billing and appointment scheduling.
-C) It provides emotional support to patients.
-D) It requires more staff to operate.
-Answer: B
+28. Which AI-based approach helps identify unknown pathogens in metagenomic samples?
+A) Anomaly detection and sequence comparison
+B) Spreadsheet analysis
+C) PCR without computational tools
+D) Manual observation only
+Answer: Anomaly detection and sequence comparison
 
-29. Why is data quality so important for healthcare AI?
-A) It is not important.
-B) High-quality data is needed for the AI to be able to make a diagnosis.
-C) Inaccurate or biased data can lead to flawed and dangerous AI predictions.
-D) The AI will refuse to work with low-quality data.
-Answer: C
+29. Which technology automates laboratory tasks like pipetting and sample handling in microbiology?
+A) Robotics
+B) Neural Networks only
+C) Cloud storage
+D) Manual logging
+Answer: Robotics
 
-30. What is "ambient clinical intelligence"?
-A) A system that uses sensors and AI to listen to and document doctor-patient conversations automatically.
-B) A type of mood lighting used in hospital rooms.
-C) An AI that can predict the weather around a hospital.
-D) A system that cleans the hospital air.
-Answer: A
+30. How does AI assist in pandemic preparedness using microbiology data?
+A) By predicting outbreak patterns and vaccine targets
+B) By manually labeling samples
+C) By cleaning laboratories automatically
+D) By producing antibiotics in bulk
+Answer: By predicting outbreak patterns and vaccine targets
