@@ -10,7 +10,7 @@ type IntroScreenProps = {
 const IntroScreen = ({ onStart }: IntroScreenProps) => {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center min-h-screen text-center p-4"
+      className="flex flex-col items-center justify-center min-h-screen text-center p-4 bg-grid"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -18,21 +18,19 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
     >
       <div className="p-8 rounded-lg">
         <motion.div 
-            className="flex justify-center items-center gap-8"
+            className="flex justify-center items-center gap-8 mb-8"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring' }}
         >
-            <Image src="/event_logo/logo.jpeg" alt="Event Logo 1" width={100} height={100} />
             <motion.h1 
-                className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-primary mb-4"
+                className="text-6xl md:text-8xl lg:text-9xl font-headline font-bold text-chrome"
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, type: 'spring' }}
             >
-              Neuronex' 25 Mind Crasher
+              Neuronex'25
             </motion.h1>
-            <Image src="/event_logo/logo2.jpg" alt="Department Logo" width={100} height={100} />
         </motion.div>
         <motion.p 
             className="text-lg md:text-xl text-foreground/70 mb-12 max-w-2xl mx-auto"
@@ -50,7 +48,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
           <Button
             size="lg"
             onClick={onStart}
-            className="font-headline text-lg px-12 py-8 rounded-full bg-primary-gradient text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/50 hover:scale-105"
+            className="font-headline text-lg px-12 py-8 rounded-full bg-primary-gradient text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 border-2 border-sky-300/50"
           >
             Start Quiz
           </Button>
