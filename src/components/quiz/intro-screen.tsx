@@ -18,11 +18,18 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
     >
       <div className="p-8 rounded-lg">
         <motion.div 
-            className="flex justify-center items-center gap-8 mb-8"
+            className="flex flex-col justify-center items-center gap-4 mb-8"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring' }}
         >
+            <Image
+                src="/event_logo/logo.jpeg"
+                alt="Neuronex'25 Logo"
+                width={120}
+                height={120}
+                className="rounded-full shadow-lg"
+            />
             <motion.h1 
                 className="text-6xl md:text-8xl lg:text-9xl font-headline font-bold text-chrome"
                 initial={{ y: -50, opacity: 0 }}
