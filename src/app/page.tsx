@@ -548,7 +548,7 @@ export default function Home() {
                 <Scoreboard teams={teams} onTeamUpdate={handleTeamUpdate} />
             </SheetContent>
         </Sheet>
-        <Link href="/overview">
+        <Link href={`/overview?topic=${round4Topic}`}>
             <Button variant="outline" className="border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white">
                 <BookOpen className="mr-2 h-4 w-4" />
                 Rules Overview
@@ -612,5 +612,7 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     

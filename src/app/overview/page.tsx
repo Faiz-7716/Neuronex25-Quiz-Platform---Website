@@ -2,13 +2,19 @@
 "use client";
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { roundDetails } from '@/lib/data';
+import { roundDetails, round4Topics } from '@/lib/data';
 import { ArrowLeft, ChevronsRight, Users, Trophy, HelpCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
+import type { Round4Topic } from '@/lib/types';
 
-const roundInfo = [
+export default function OverviewPage() {
+  const searchParams = useSearchParams();
+  const topic = (searchParams.get('topic') as Round4Topic) || 'cybersecurity';
+  
+  const roundInfo = [
     {
         round: 1,
         format: 'MCQ',
@@ -32,14 +38,13 @@ const roundInfo = [
     },
     {
         round: 4,
-        format: 'Cybersecurity (MCQ)',
+        format: `${round4Topics[topic].title} (MCQ)`,
         time: '45s',
         points: '+10',
         pass: false,
     }
-]
+  ];
 
-export default function OverviewPage() {
   const rounds = Object.entries(roundDetails);
 
   return (
@@ -71,6 +76,11 @@ export default function OverviewPage() {
             const isFinalRound = index === rounds.length - 1;
             const teamsEntering = index === 0 ? 10 : roundDetails[Number(roundNum) - 1]?.teamsAdvancing || 0;
             const extraInfo = roundInfo.find(r => r.round === Number(roundNum));
+            
+            let finalRoundTitle = details.title;
+            if (Number(roundNum) === 4) {
+                finalRoundTitle = round4Topics[topic].title;
+            }
 
             return (
                 <motion.div
@@ -82,7 +92,7 @@ export default function OverviewPage() {
                 <Card className="h-full flex flex-col text-center">
                     <CardHeader className="pb-4">
                     <p className="font-headline text-sm text-primary font-semibold">ROUND {roundNum}</p>
-                    <CardTitle className="font-headline text-2xl">{details.title}</CardTitle>
+                    <CardTitle className="font-headline text-2xl">{finalRoundTitle}</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-grow flex flex-col justify-between gap-4">
                         <div className="text-left text-sm space-y-3 text-foreground/80">
@@ -151,3 +161,5 @@ export default function OverviewPage() {
     </div>
   );
 };
+
+    
