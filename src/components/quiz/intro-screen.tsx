@@ -40,7 +40,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
                 Neuronex'25
               </motion.h1>
               <Image
-                  src="/event_logo/logo2.jpeg"
+                  src="/event_logo/logo2.jpg"
                   alt="Department Logo"
                   width={120}
                   height={120}
