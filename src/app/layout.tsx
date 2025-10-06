@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'MUC TECHNO TECH QUIZ',
+  title: "Neuronex' 25 Mind Crasher",
   description: 'An interactive quiz competition for the sharpest minds in tech.',
   icons: {
     icon: '/event_logo/logo.jpg',

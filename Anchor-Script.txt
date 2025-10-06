@@ -1,5 +1,5 @@
 
-# MUC TECHNO TECH QUIZ - Anchor's Script
+# Neuronex' 25 Mind Crasher - Anchor's Script
 
 ---
 
@@ -7,7 +7,7 @@
 
 **(Start with energetic music, then fade as you begin speaking)**
 
-**Anchor:** "A very warm welcome to all the brilliant minds, our esteemed faculty, and all the tech enthusiasts gathered here today! I am [Your Name], and it is my absolute pleasure to be your host for an event that promises to be a thrilling battle of wits, knowledge, and speed - the MUC TECHNO TECH QUIZ!"
+**Anchor:** "A very warm welcome to all the brilliant minds, our esteemed faculty, and all the tech enthusiasts gathered here today! I am [Your Name], and it is my absolute pleasure to be your host for an event that promises to be a thrilling battle of wits, knowledge, and speed - Neuronex' 25 Mind Crasher!"
 
 **Anchor:** "We are here to witness a clash of titans, where the sharpest minds in technology will compete for the coveted title of Tech Champions. The energy is electric, and the competition is fierce. So, get ready for an afternoon filled with challenging questions, nail-biting moments, and a celebration of all things tech!"
 
@@ -109,7 +109,7 @@
 
 **--- (After the final question) ---**
 
-**Anchor:** "And with that last question, the MUC TECHNO TECH QUIZ has come to an end! Let's have a massive, massive round of applause for our four incredible finalists! You were all outstanding."
+**Anchor:** "And with that last question, Neuronex' 25 Mind Crasher has come to an end! Let's have a massive, massive round of applause for our four incredible finalists! You were all outstanding."
 
 ---
 
@@ -135,7 +135,7 @@
 
 **Anchor:** "Now, for our runner-up. Taking the Second Place spot is... **[Team Name in 2nd Place]**! A fantastic effort!"
 
-**Anchor:** "And now, ladies and gentlemen, the moment of truth. The winners of the MUC TECHNO TECH QUIZ 2024, with an outstanding score and a brilliant display of knowledge, are... **[WINNING TEAM NAME]**! Congratulations! You are our Tech Champions!"
+**Anchor:** "And now, ladies and gentlemen, the moment of truth. The winners of Neuronex' 25 Mind Crasher, with an outstanding score and a brilliant display of knowledge, are... **[WINNING TEAM NAME]**! Congratulations! You are our Tech Champions!"
 
 **(Lead the applause. Invite dignitaries to present the awards/certificates.)**
 

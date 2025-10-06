@@ -29,7 +29,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, type: 'spring' }}
             >
-              MUC TECHNO TECH QUIZ
+              Neuronex' 25 Mind Crasher
             </motion.h1>
             <Image src="/event_logo/logo2.jpg" alt="Department Logo" width={150} height={150} unoptimized />
         </motion.div>
