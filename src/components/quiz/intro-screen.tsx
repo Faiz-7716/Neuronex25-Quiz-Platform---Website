@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -31,7 +32,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
             >
               Neuronex' 25 Mind Crasher
             </motion.h1>
-            <Image src="/event_logo/logo2.jpg" alt="Department Logo" width={150} height={150} unoptimized />
+            <Image src="/event_logo/logo2.jpeg" alt="Department Logo" width={150} height={150} unoptimized />
         </motion.div>
         <motion.p 
             className="text-lg md:text-xl text-foreground/70 mb-12 max-w-2xl mx-auto"
