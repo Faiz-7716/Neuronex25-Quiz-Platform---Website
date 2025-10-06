@@ -19,6 +19,7 @@ export type Question = {
 };
 
 export type GameState = 'intro' | 'overview' | 'transition' | 'round' | 'roundover' | 'gameover' | 'tie-breaker';
+export type Round4Topic = 'cybersecurity' | 'healthcare';
 
 export type RoundDetail = {
   title: string;

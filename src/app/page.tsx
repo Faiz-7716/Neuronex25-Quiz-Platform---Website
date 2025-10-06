@@ -3,10 +3,10 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import type { Team, Question, GameState } from '@/lib/types';
-import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions } from '@/lib/data';
+import type { Team, Question, GameState, Round4Topic } from '@/lib/types';
+import { initialTeams, allQuestions, roundDetails, tieBreakerQuestions, round4Topics } from '@/lib/data';
 import { AnimatePresence } from 'framer-motion';
-import { FileText, Users, Save, RotateCcw, Swords, Trophy, ChevronDown, BookOpen } from 'lucide-react';
+import { FileText, Users, Save, RotateCcw, Swords, Trophy, ChevronDown, BookOpen, Settings } from 'lucide-react';
 
 import IntroScreen from '@/components/quiz/intro-screen';
 import RoundTransition from '@/components/quiz/round-transition';
@@ -51,6 +51,7 @@ export default function Home() {
   const [activeQuestion, setActiveQuestion] = React.useState<Question | null>(null);
   const [activeTeamIndex, setActiveTeamIndex] = React.useState<number>(0);
   const [isRulesOpen, setIsRulesOpen] = React.useState(false);
+  const [round4Topic, setRound4Topic] = React.useState<Round4Topic>('cybersecurity');
 
   // Tie-breaker state
   const [tieBreakerState, setTieBreakerState] = React.useState<{
@@ -75,6 +76,7 @@ export default function Home() {
           setTeams(savedState.teams || initialTeams);
           setQuestions(savedState.questions || allQuestions);
           setActiveTeamIndex(savedState.activeTeamIndex || 0);
+          setRound4Topic(savedState.round4Topic || 'cybersecurity');
           toast({
             title: "Game Loaded",
             description: "Your previous game state has been restored.",
@@ -99,6 +101,7 @@ export default function Home() {
         teams,
         questions,
         activeTeamIndex,
+        round4Topic,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToSave));
       if (showToast) {
@@ -117,7 +120,7 @@ export default function Home() {
         });
        }
     }
-  }, [gameState, currentRound, teams, questions, activeTeamIndex, toast]);
+  }, [gameState, currentRound, teams, questions, activeTeamIndex, round4Topic, toast]);
 
   React.useEffect(() => {
     if (gameState !== 'intro' && gameState !== 'tie-breaker') {
@@ -369,7 +372,21 @@ export default function Home() {
     }
   };
 
-  const questionsForRound = questions.filter(q => q.round === currentRound);
+  const handleRound4TopicChange = (topic: Round4Topic) => {
+    setRound4Topic(topic);
+    toast({
+        title: 'Final Round Topic Changed',
+        description: `The final round will now be on ${topic === 'cybersecurity' ? 'Cyber Security' : 'Healthcare & AI'}.`,
+    });
+  };
+
+  let questionsForRound: Question[];
+  if (currentRound === 4) {
+    questionsForRound = round4Topics[round4Topic].questions;
+  } else {
+    questionsForRound = questions.filter(q => q.round === currentRound);
+  }
+  
   const roundEnded = questionsForRound.every(q => q.status !== 'available');
 
   React.useEffect(() => {
@@ -393,9 +410,11 @@ export default function Home() {
       case 'overview':
         return <QuizOverview onContinue={startTransition} />;
       case 'transition':
-        const roundInfo = roundDetails[currentRound];
-        const roundTitle = roundInfo?.title || `Round ${currentRound}`;
-        const roundRules = roundInfo?.rules || '';
+        let roundTitle = roundDetails[currentRound]?.title || `Round ${currentRound}`;
+        if (currentRound === 4) {
+            roundTitle = round4Topics[round4Topic].title;
+        }
+        const roundRules = roundDetails[currentRound]?.rules || '';
         return (
           <RoundTransition
             roundNumber={currentRound}
@@ -411,7 +430,12 @@ export default function Home() {
         let teamForQuestion = teams[activeTeamIndex];
         let questionsToShow = questionsForRound;
         
-        let titleText = `Round ${currentRound}: ${roundDetails[currentRound]?.title}`;
+        let titleText: string;
+        if (currentRound === 4) {
+          titleText = `Round 4: ${round4Topics[round4Topic].title}`;
+        } else {
+          titleText = `Round ${currentRound}: ${roundDetails[currentRound]?.title}`;
+        }
         
         if(gameState === 'tie-breaker' && tieBreakerState) {
           questionsToShow = [tieBreakerQuestions[tieBreakerState.questionIndex]];
@@ -533,6 +557,20 @@ export default function Home() {
       </div>
 
       <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+        <Select
+          value={round4Topic}
+          onValueChange={(value) => handleRound4TopicChange(value as Round4Topic)}
+          disabled={gameState !== 'intro' && gameState !== 'overview'}
+        >
+          <SelectTrigger className="w-[240px] bg-card/70 backdrop-blur-sm font-headline">
+            <Settings className="mr-2 h-4 w-4" />
+            <SelectValue placeholder="Final Round Topic..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="cybersecurity">Cyber Security</SelectItem>
+            <SelectItem value="healthcare">Healthcare & AI</SelectItem>
+          </SelectContent>
+        </Select>
         <Link href="/tie-breaker">
           <Button variant="outline" className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white">
             <Swords className="mr-2 h-4 w-4" />

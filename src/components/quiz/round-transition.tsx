@@ -16,7 +16,7 @@ const RoundTransition = ({ roundNumber, roundTitle, rules, onContinue }: RoundTr
 
   return (
     <motion.div
-      key={`round-${roundNumber}`}
+      key={`round-${roundNumber}-${roundTitle}`}
       className="flex flex-col items-center justify-center min-h-screen text-center p-4"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
