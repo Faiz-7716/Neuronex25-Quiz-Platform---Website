@@ -31,14 +31,24 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
                   height={120}
                   className="rounded-full shadow-lg"
               />
-              <motion.h1 
-                  className="text-6xl md:text-8xl lg:text-9xl font-headline font-bold text-chrome"
-                  initial={{ y: -50, opacity: 0 }}
+              <div className="text-center">
+                <motion.h1 
+                    className="text-6xl md:text-8xl lg:text-9xl font-headline font-bold text-chrome"
+                    initial={{ y: -50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, type: 'spring' }}
+                >
+                  Neuronex'25
+                </motion.h1>
+                <motion.h2
+                  className="text-3xl md:text-4xl font-headline font-semibold text-accent -mt-2 md:-mt-4"
+                  initial={{ y: -30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, type: 'spring' }}
-              >
-                Neuronex'25
-              </motion.h1>
+                  transition={{ delay: 0.3, type: 'spring' }}
+                >
+                  Mind Crasher
+                </motion.h2>
+              </div>
               <Image
                   src="/event_logo/logo2.jpg"
                   alt="Department Logo"
