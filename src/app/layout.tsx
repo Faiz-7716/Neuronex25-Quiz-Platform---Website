@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Neuronex' 25 Mind Crasher",
   description: 'An interactive quiz competition for the sharpest minds in tech.',
   icons: {
-    icon: '/event_logo/logo.jpg',
+    icon: '/event_logo/logo.jpeg',
   },
 };
 
