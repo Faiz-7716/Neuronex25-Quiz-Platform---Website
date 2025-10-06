@@ -23,7 +23,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring' }}
         >
-            <Image src="/event_logo/logo.jpg" alt="Event Logo 1" width={150} height={150} unoptimized />
+            <Image src="/event_logo/logo.jpg" alt="Event Logo 1" width={100} height={100} />
             <motion.h1 
                 className="text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-primary mb-4"
                 initial={{ y: -50, opacity: 0 }}
@@ -32,7 +32,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
             >
               Neuronex' 25 Mind Crasher
             </motion.h1>
-            <Image src="/event_logo/logo2.jpeg" alt="Department Logo" width={150} height={150} unoptimized />
+            <Image src="/event_logo/logo2.jpeg" alt="Department Logo" width={100} height={100} />
         </motion.div>
         <motion.p 
             className="text-lg md:text-xl text-foreground/70 mb-12 max-w-2xl mx-auto"
