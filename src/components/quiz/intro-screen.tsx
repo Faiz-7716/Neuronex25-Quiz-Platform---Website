@@ -23,21 +23,30 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring' }}
         >
-            <Image
-                src="/event_logo/logo.jpeg"
-                alt="Neuronex'25 Logo"
-                width={120}
-                height={120}
-                className="rounded-full shadow-lg"
-            />
-            <motion.h1 
-                className="text-6xl md:text-8xl lg:text-9xl font-headline font-bold text-chrome"
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2, type: 'spring' }}
-            >
-              Neuronex'25
-            </motion.h1>
+            <div className="flex justify-center items-center gap-8">
+              <Image
+                  src="/event_logo/logo.jpeg"
+                  alt="Neuronex'25 Logo"
+                  width={120}
+                  height={120}
+                  className="rounded-full shadow-lg"
+              />
+              <motion.h1 
+                  className="text-6xl md:text-8xl lg:text-9xl font-headline font-bold text-chrome"
+                  initial={{ y: -50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, type: 'spring' }}
+              >
+                Neuronex'25
+              </motion.h1>
+              <Image
+                  src="/event_logo/logo2.jpeg"
+                  alt="Department Logo"
+                  width={120}
+                  height={120}
+                  className="rounded-full shadow-lg"
+              />
+            </div>
         </motion.div>
         <motion.p 
             className="text-lg md:text-xl text-foreground/70 mb-12 max-w-2xl mx-auto"
