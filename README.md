@@ -1,3 +1,4 @@
+# Neuronex25-Quiz-Platform---Website
 # QuizVerse Showdown
 
 An interactive quiz competition for the sharpest minds in tech. Built with Next.js, TypeScript, and Tailwind CSS.
@@ -99,5 +100,4 @@ src/
 ## License
 
 This project is licensed under the MIT License.
-# Neuronex25-Quiz-Platform---Website
 # Neuronex25-Quiz-Platform---Website
